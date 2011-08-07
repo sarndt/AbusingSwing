@@ -2,3 +2,6 @@
 .svn
 /target
 *.jar
+/.classpath
+/.project
+/.settings
