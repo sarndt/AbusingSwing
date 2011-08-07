@@ -110,6 +110,7 @@ import net.java.balloontip.styles.RoundedBalloonStyle;
 import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.JXTaskPane;
 import org.jdesktop.swingx.JXTaskPaneContainer;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.w3c.dom.Document;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
@@ -530,6 +531,9 @@ public class MagicPanel extends JPanel {
 		if ($def.$sorted)
 			Arrays.sort($def.$values);
 		JComboBox $box = new JComboBox($def.$model = new DefaultComboBoxModel($def.$values));
+		if ($def.$autoComplete) {
+			AutoCompleteDecorator.decorate($box);
+		}
 		
 		for (int $i = 0; $i < $def.$values.length; $i++) {
 			if ($def.$values[$i].$selected) {

@@ -111,6 +111,7 @@
 	%common-attributes;
 	onaction	CDATA	#IMPLIED
 	sorted (%bool;) #IMPLIED
+	autocomplete (%bool;) #IMPLIED
 	from CDATA #IMPLIED
 >
 <!ELEMENT val (#PCDATA)*>

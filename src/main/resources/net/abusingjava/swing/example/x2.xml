@@ -75,7 +75,10 @@
 	<hbox>
 		<vbox>
 			<flexi-space />
-			<button />
+			<combobox autocomplete="true">
+				<val>Frankreich</val>
+				<val>Franzäsisch Guinea</val>
+			</combobox>
 			<flexi-space />
 		</vbox>
 		<vbox>

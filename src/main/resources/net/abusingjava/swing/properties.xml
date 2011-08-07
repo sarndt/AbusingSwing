@@ -18,6 +18,7 @@
 	<font-style>label</font-style>
 	<font-size>label</font-size>
 	<sorted>combobox,select</sorted>
+	<autocomplete>combobox,select</autocomplete>
 	<from>combobox,select</from>
 	<validator>textfield</validator>
 	<action>button</action>

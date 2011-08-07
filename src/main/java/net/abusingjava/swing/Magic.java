@@ -312,6 +312,9 @@ public final class Magic {
 		@XmlAttribute
 		boolean $sorted;
 		
+		@XmlAttribute("autocomplete")
+		boolean $autoComplete;
+		
 		@XmlAttribute
 		JavaType $from;
 		
