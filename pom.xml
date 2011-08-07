@@ -12,6 +12,21 @@
     <maven.compiler.source>1.6</maven.compiler.source>
     <maven.compiler.target>1.6</maven.compiler.target>
   </properties>
+<build>
+<plugins>
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-jar-plugin</artifactId>
+    <configuration>
+      <archive>
+        <manifest>
+          <mainClass>net.abusingjava.swing.demo.Main</mainClass>
+        </manifest>
+      </archive>
+    </configuration>
+  </plugin>
+</plugins>
+</build>
   <dependencies>
 	<dependency>
 		<groupId>net.abusingjava</groupId>
