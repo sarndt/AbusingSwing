@@ -33,12 +33,7 @@ import net.abusingjava.AbusingJava;
 import net.abusingjava.Author;
 import net.abusingjava.Version;
 import net.abusingjava.functions.AbusingFunctions;
-import net.abusingjava.xml.XmlAttribute;
-import net.abusingjava.xml.XmlChildElement;
-import net.abusingjava.xml.XmlChildElements;
-import net.abusingjava.xml.XmlElement;
-import net.abusingjava.xml.XmlSelect;
-import net.abusingjava.xml.XmlTextContent;
+import net.abusingjava.xml.*;
 
 @Author("Julian Fleischer")
 @Version("2011-07-28")
@@ -47,6 +42,9 @@ public final class Magic {
 
 	@XmlSelect("title/text()")
 	String $title;
+	
+	@XmlChildElements(Binding.class)
+	Binding[] $bindings = {};
 	
 	@XmlChildElements({HBox.class, VBox.class})
 	Container[] $main = {};
@@ -526,6 +524,27 @@ public final class Magic {
 			Tabs.class, Panes.class, CheckBox.class, Numeric.class,
 			ComboBox.class, DatePicker.class, Password.class})
 		Component[] $content = {};
+	}
+	
+	@XmlElement("binding")
+	public static class Binding {
+		
+		@XmlAttribute
+		JavaType $class;
+		
+		@XmlChildElements(BindingProperty.class)
+		BindingProperty[] $properties;
+	}
+	
+	@XmlElement("prop")
+	public static class BindingProperty {
+		
+		@XmlAttribute
+		String $name;
+		
+		@XmlAttribute
+		String $component;
+		
 	}
 	
 	@XmlElement("hbox")

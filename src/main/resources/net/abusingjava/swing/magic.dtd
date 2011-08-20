@@ -1,4 +1,4 @@
-<!ELEMENT magic (title?,style?,groups?,(hbox|vbox))>
+<!ELEMENT magic (title?,style?,groups?,binding*,(hbox|vbox))>
 
 <!ENTITY % box-content "hbox|vbox|flexi-space|tabs|panes|button|table|label|textfield|numeric|textarea|checkbox|combobox|select|date|datepicker|password">
 <!ENTITY % bool "true|false">
@@ -177,3 +177,14 @@
 	requires-permission	CDATA #IMPLIED 
 >
 <!ELEMENT elem (#PCDATA)*>
+
+<!ELEMENT binding (prop*)>
+<!ATTLIST binding
+	class	CDATA	#REQUIRED
+>
+<!ELEMENT prop EMPTY>
+<!ATTLIST prop
+	name	CDATA	#REQUIRED
+	component	CDATA	#REQUIRED
+>
+
