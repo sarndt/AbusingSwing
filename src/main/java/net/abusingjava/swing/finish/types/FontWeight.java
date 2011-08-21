@@ -1,4 +1,4 @@
-package net.abusingjava.swing.finish.magic;
+package net.abusingjava.swing.finish.types;
 
 public class FontWeight {
 	final boolean $bold;

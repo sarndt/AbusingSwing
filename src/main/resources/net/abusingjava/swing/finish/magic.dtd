@@ -1,0 +1,34 @@
+<!ENTITY % component.attributes
+>
+<!ENTITY % textcomponent.attributes
+>
+
+<!ELEMENT combobox
+>
+<!ATTLIST combobox
+	%component.attributes;
+>
+
+<!ELEMENT table
+>
+<!ATTLIST table
+	%component.attributes;
+>
+
+<!ELEMENT textfield
+>
+<!ATTLIST textfield
+	%component.attributes;
+	%textcomponent.attributes;
+>
+
+<!ELEMENT password
+>
+<!ATTLIST password
+	%component.attributes;
+	%textcomponent.attributes
+>
+<!ELEMENT checkbox
+>
+<!ATTLIST checkbox
+>

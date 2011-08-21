@@ -1,0 +1,32 @@
+<window
+	min-width="300"
+	min-height="200"
+	
+	width="550"
+	height="350">
+
+	<panel>
+	
+		<hbox>
+			<vbox width="20%"></vbox>
+			<vbox background="red" />
+			<vbox background="blue" />
+			<vbox width="200px">
+				<textfield width="50%"></textfield>
+				<textfield>Value</textfield>
+				<textfield default-text="Click me..."></textfield>
+				<button>Button</button>
+				<button enabled="false">Button</button>
+				<checkbox>Checkbox 1</checkbox>
+				<checkbox selected="true">Checkbox 2</checkbox>
+				<busy-label busy="true" delay="2"></busy-label>
+			</vbox>
+			
+			<vbox>
+				
+			</vbox>
+		</hbox>
+	
+	</panel>
+
+</window>

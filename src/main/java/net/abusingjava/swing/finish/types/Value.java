@@ -1,10 +1,14 @@
-package net.abusingjava.swing.finish.magic;
+package net.abusingjava.swing.finish.types;
 
 import net.abusingjava.AbusingJava;
 
 public class Value {
 	int $value = -1;
 	Unit $unit = Unit.AUTO;
+	
+	public Value() {
+		
+	}
 	
 	public Value(final String $declaration) {
 		if (!"auto".equalsIgnoreCase($declaration)) {
@@ -13,7 +17,17 @@ public class Value {
 				$unit = Unit.PIXEL;
 			} else if ($declaration.endsWith("*")) {
 				$unit = Unit.STAR;
+			} else if ($declaration.endsWith("%")) {
+				$unit = Unit.PERCENT;
 			}
 		}
+	}
+	
+	public Unit getUnit() {
+		return $unit;
+	}
+	
+	public int getValue() {
+		return $value;
 	}
 }

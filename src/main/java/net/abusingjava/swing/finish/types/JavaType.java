@@ -1,6 +1,7 @@
-package net.abusingjava.swing.finish.magic;
+package net.abusingjava.swing.finish.types;
 
 public class JavaType {
+	
 	final Class<?> $class;
 	
 	public JavaType(final String $javaType) throws ClassNotFoundException {
@@ -33,4 +34,8 @@ public class JavaType {
 	public JavaType(final Class<?> $theClass) {
 		$class = $theClass;
 	} 
+	
+	public Class<?> getJavaType() {
+		return $class;
+	}
 }

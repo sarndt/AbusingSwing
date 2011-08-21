@@ -1,4 +1,4 @@
-package net.abusingjava.swing.finish.magic;
+package net.abusingjava.swing.finish.types;
 
 import java.lang.reflect.Field;
 
@@ -16,5 +16,9 @@ public class Color {
 
 	public Color(final java.awt.Color $color) {
 		this.$color = $color;
+	}
+	
+	public java.awt.Color getColor() {
+		return $color;
 	}
 }

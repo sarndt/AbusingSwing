@@ -1,4 +1,4 @@
-package net.abusingjava.swing.finish.magic;
+package net.abusingjava.swing.finish.types;
 
 public class FontStyle {
 	final boolean $italic;
