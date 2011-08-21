@@ -63,6 +63,16 @@ public class MagicLayoutManager implements LayoutManager {
 						$starsHeight++;
 						break;
 					}
+					switch ($c.getWidth().getUnit()) {
+					case STAR:
+						$starsWidth = Math.max($starsWidth, $c.getWidth().getValue());
+						break;
+					case AUTO:
+					case PIXEL:
+					case PERCENT:
+						// nothing
+						break;
+					}
 					break;
 					
 				case HORIZONTAL:
@@ -78,6 +88,16 @@ public class MagicLayoutManager implements LayoutManager {
 						break;
 					case AUTO:
 						$starsWidth++;
+						break;
+					}
+					switch ($c.getHeight().getUnit()) {
+					case STAR:
+						$starsHeight = Math.max($starsHeight, $c.getHeight().getValue());
+						break;
+					case AUTO:
+					case PIXEL:
+					case PERCENT:
+						// nothing
 						break;
 					}
 					break;
@@ -114,7 +134,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$newWidth = $c.getWidth().getValue();
 						break;
 					case STAR:
-						// TODO: Not supported
+						$newWidth = (int) (($c.getWidth().getValue() / (double) $starsWidth) * $width);
 						break;
 					case PERCENT:
 						$newWidth = (int) (($c.getWidth().getValue() / 100.0) * $width);
@@ -148,7 +168,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$newHeight = $c.getHeight().getValue();
 						break;
 					case STAR:
-						// TODO: Not supported
+						$newHeight = (int) (($c.getHeight().getValue() / (double) $starsHeight) * $height);
 						break;
 					case PERCENT:
 						$newHeight = (int) (($c.getHeight().getValue() / 100.0) * $height);

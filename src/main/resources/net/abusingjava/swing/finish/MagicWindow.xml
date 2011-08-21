@@ -13,8 +13,8 @@
 			<vbox background="blue" />
 			<vbox width="200px">
 				<textfield width="50%"></textfield>
-				<textfield>Value</textfield>
-				<textfield default-text="Click me..."></textfield>
+				<textfield width="3*">Value</textfield>
+				<textfield width="2*" default-text="Click me..."></textfield>
 				<button>Button</button>
 				<button enabled="false">Button</button>
 				<checkbox>Checkbox 1</checkbox>
