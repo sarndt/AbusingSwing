@@ -1,6 +1,8 @@
 package net.abusingjava.swing.finish.magic;
 
 import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import org.jdesktop.swingx.JXTable;
 
@@ -44,16 +46,42 @@ public class Table extends Component {
 	
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
-		JXTable $c = new JXTable();
 		
+		String[] $columnHeaders = new String[$columns.length];
+		for (int $i = 0; $i < $columns.length; $i++) {
+			$columnHeaders[$i] = $columns[$i].$text;
+		}
+		
+		TableModel $model = new DefaultTableModel($columnHeaders, 0) {
+			private static final long serialVersionUID = -135732270243460558L;
+
+			@Override public Class<?> getColumnClass(final int $col) {
+				try {
+					return $columns[$col].$type.getClass();
+				} catch (Exception $exc) {
+					return Object.class;
+				}
+			}
+		};
+		
+		JXTable $c = new JXTable($model);
 		$c.setEditable($editable);
 		$c.setSortable($sortable);
 		if ($gridColor != null) {
 			$c.setGridColor($gridColor.getColor());
 		}
 		
+		for (int $i = 0; $i < $columns.length; $i++) {
+			if ($columns[$i].$maxWidth != null)
+				$c.getColumn($columnHeaders[$i]).setMaxWidth($columns[$i].$maxWidth);
+			if ($columns[$i].$minWidth != null)
+				$c.getColumn($columnHeaders[$i]).setMinWidth($columns[$i].$minWidth);
+		}
+		
+		
 		$realComponent = $c;
 		$component = new JScrollPane($c);
+		$c.setFillsViewportHeight(true);
 		
 		super.create($main, $parent);
 	}

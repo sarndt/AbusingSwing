@@ -5,7 +5,7 @@ import net.abusingjava.xml.XmlChildElements;
 import net.abusingjava.xml.XmlElement;
 
 @XmlElement("tabs")
-public class Tabs {
+public class Tabs extends Component {
 
 	@XmlChildElements
 	Tab[] $tabs = new Tab[] {};

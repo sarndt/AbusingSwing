@@ -2,6 +2,8 @@ package net.abusingjava.swing.finish.magic;
 
 import java.awt.Dimension;
 
+import javax.swing.JScrollPane;
+
 import org.jdesktop.swingx.JXTaskPane;
 import org.jdesktop.swingx.JXTaskPaneContainer;
 
@@ -35,7 +37,8 @@ public class Panes extends Component {
 			$c.add($jxp);
 		}
 		
-		$component = $c;
+		$realComponent = $c;
+		$component = new JScrollPane($c);
 		
 		super.create($main, $parent);
 	}

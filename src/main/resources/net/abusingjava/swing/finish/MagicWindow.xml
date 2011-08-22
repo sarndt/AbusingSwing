@@ -9,15 +9,13 @@
 		 
 		<hbox padding="10px">
 			<vbox width="200px" padding-right="10px">
-				<panes>
+				<panes height="300px">
 					<pane height="100" title="t1">
 						<vbox>
 							<button />
 							<button />
 						</vbox>
 					</pane>
-				</panes>
-				<panes>
 					<pane height="100" title="Sonstwas">
 						<vbox>
 							<button />
@@ -25,6 +23,10 @@
 						</vbox>
 					</pane>
 				</panes>
+				<table>
+					<col type="java.lang.String">Name</col>
+					<col type="java.lang.String">Last Name</col>
+				</table>
 			</vbox>
 		
 			<vbox width="200px" padding-right="10px">
