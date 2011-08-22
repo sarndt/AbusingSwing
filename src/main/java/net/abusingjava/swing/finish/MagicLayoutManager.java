@@ -8,6 +8,7 @@ import java.awt.LayoutManager;
 import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
+import net.abusingjava.swing.finish.types.Unit;
 
 @Author("Julian Fleischer")
 @Version("2011-08-21")
@@ -37,14 +38,40 @@ public class MagicLayoutManager implements LayoutManager {
 	@Override
 	public void layoutContainer(final Container $container) {
 		if ($panel == $container) {
+			net.abusingjava.swing.finish.magic.Container $def = $panel.getDefinition();
+			
 			double $width = $container.getWidth();
 			double $height = $container.getHeight();
+			
+			int $starsWidth = 0;
+			int $starsHeight = 0;
+
+			double $posX = 0;
+			double $posY = 0;
+
+			if ($def.getPaddingLeft().getUnit() == Unit.PIXEL) {
+				$posX = $def.getPaddingLeft().getValue();
+				$width -= $posX;
+			}
+			if ($def.getPaddingTop().getUnit() == Unit.PIXEL) {
+				$posY = $def.getPaddingTop().getValue();
+				$height -= $posY;
+			}
+			if ($def.getPaddingRight().getUnit() == Unit.PIXEL) {
+				$width -= $def.getPaddingRight().getValue();
+			}
+			if ($def.getPaddingBottom().getUnit() == Unit.PIXEL) {
+				$height -= $def.getPaddingBottom().getValue();
+			}
 			
 			double $remainingWidth = $width;
 			double $remainingHeight = $height;
 			
-			int $starsWidth = 0;
-			int $starsHeight = 0;
+			int $newWidth = 0;
+			int $newHeight = 0;
+			
+			int $newX = 0;
+			int $newY = 0;
 			
 			for (net.abusingjava.swing.finish.magic.Component $c : this.$container) {
 				switch ($panel.getOrientation()) {
@@ -116,9 +143,6 @@ public class MagicLayoutManager implements LayoutManager {
 				}
 			}
 			
-			double $posX = 0, $posY = 0;
-			int $newWidth = 0, $newHeight = 0, $newX = 0, $newY = 0;
-			
 			for (net.abusingjava.swing.finish.magic.Component $c : this.$container) {
 				switch ($panel.getOrientation()) {
 				case VERTICAL:
@@ -157,6 +181,7 @@ public class MagicLayoutManager implements LayoutManager {
 						// TODO
 						break;
 					}
+					$newX = (int) $posX;
 					$newY = (int) $posY;
 					$posY += $newHeight;
 					break;
@@ -198,6 +223,7 @@ public class MagicLayoutManager implements LayoutManager {
 						break;
 					}
 					$newX = (int) $posX;
+					$newY = (int) $posY;
 					$posX += $newWidth;
 					break;
 					
@@ -275,4 +301,8 @@ public class MagicLayoutManager implements LayoutManager {
 		return minimumLayoutSize($c);
 	}
 
+	public MagicPanel getParent() {
+		// TODO: Is this needed? 
+		return $parent;
+	}
 }

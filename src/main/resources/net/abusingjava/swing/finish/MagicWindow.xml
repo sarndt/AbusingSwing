@@ -7,10 +7,8 @@
 
 	<panel>
 		 
-		<hbox>
-			<vbox background="red" />
-			<vbox background="blue" />
-			<vbox width="200px">
+		<hbox padding="10px">
+			<vbox width="200px" padding-right="10px">
 				<textfield width="50%"></textfield>
 				<textfield width="3*">Value</textfield>
 				<textfield width="2*" default-text="Click me..."></textfield>
@@ -26,32 +24,47 @@
 				<vbox />
 			</vbox>
 			
-			<vbox width="200px">
+			<vbox width="200px" padding-right="10px">
 			
 				<progressbar max="100" value="37" string-painted="true" string="%s%%" />
 			
-				<hbox height="100px">
+				<hbox height="100px" padding-y="5px">
 					<progressbar max="100" value="10" />
 					<progressbar max="100" value="20" />
 					<progressbar max="100" value="25" />
 					<progressbar max="100" value="60" />
+					<vbox padding-left="5px">
+						<button>Button</button>
+						<label width="100px" height="20px" foreground="red">Label</label>
+						<label foreground="green" background="yellow" opaque="true" text-align="center">X</label>
+						<label foreground="blue" background="yellow" opaque="false" text-align="right">Y</label>
+					</vbox>
 				</hbox>
 			
-				<box height="200px">
-					
-					<box x="0px" y="0px" width="100px" height="100px" background="red" />
-					<box x="100px" y="0px" width="100px" height="100px" background="blue" />
-					<box x="0px" y="100px" width="100px" height="100px" background="green" />
-					<box x="100px" y="100px" width="100px" height="100px" background="yellow" />
-					
-				</box>
+				<hbox height="27px">
+					<label>Passwort:</label> <password />
+				</hbox>
+				
+				<vsplit divider-location="100">
+					<vbox>
+						<button>BTN</button>
+					</vbox>
+					<vbox>
+						<button>BTN</button>
+					</vbox>
+				</vsplit>
 			
 			</vbox>
 			
 			<box background="black">
 				
-				<box x="50%" y="50%" width="100px" height="200px" background="white" />
-				
+				<box height="200px" width="200px" y="50%" x="50%">
+					<box x="0px" y="0px" width="100px" height="100px" background="red" />
+					<box x="100px" y="0px" width="100px" height="100px" background="blue" />
+					<box x="0px" y="100px" width="100px" height="100px" background="green" />
+					<box x="100px" y="100px" width="100px" height="100px" background="yellow" />
+				</box>
+			
 			</box>
 		</hbox>
 	
