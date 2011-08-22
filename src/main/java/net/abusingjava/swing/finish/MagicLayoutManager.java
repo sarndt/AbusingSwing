@@ -89,7 +89,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case AUTO:
 						$starsHeight++;
 						break;
-					case COMPUTE:
+					case INTRINSIC:
 						// TODO
 						break;
 					}
@@ -100,7 +100,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case AUTO:
 					case PIXEL:
 					case PERCENT:
-					case COMPUTE:
+					case INTRINSIC:
 						// nothing
 						break;
 					}
@@ -120,7 +120,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case AUTO:
 						$starsWidth++;
 						break;
-					case COMPUTE:
+					case INTRINSIC:
 						// TODO
 						break;
 					}
@@ -131,7 +131,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case AUTO:
 					case PIXEL:
 					case PERCENT:
-					case COMPUTE:
+					case INTRINSIC:
 						// nothing
 						break;
 					}
@@ -160,7 +160,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case AUTO:
 						$newHeight = (int) ((1 / (double) $starsHeight) * $remainingHeight);
 						break;
-					case COMPUTE:
+					case INTRINSIC:
 						// TODO
 						break;
 					}
@@ -177,7 +177,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case AUTO:
 						$newWidth = (int) $width;
 						break;
-					case COMPUTE:
+					case INTRINSIC:
 						// TODO
 						break;
 					}
@@ -201,7 +201,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case AUTO:
 						$newWidth = (int) ((1 / (double) $starsWidth) * $remainingWidth);
 						break;
-					case COMPUTE:
+					case INTRINSIC:
 						// TODO
 						break;
 					}
@@ -218,7 +218,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case AUTO:
 						$newHeight = (int) $height;
 						break;
-					case COMPUTE:
+					case INTRINSIC:
 						// TODO
 						break;
 					}
@@ -236,7 +236,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$newWidth = $c.getWidth().getValue();
 						break;
 					case STAR:
-					case COMPUTE:
+					case INTRINSIC:
 					case AUTO:
 						break;
 					}
@@ -248,7 +248,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$newHeight = $c.getHeight().getValue();
 						break;
 					case STAR:
-					case COMPUTE:
+					case INTRINSIC:
 					case AUTO:
 						// TODO: Better debugging
 						System.err.println("STAR, COMPUTE & AUTO are not allowed for positions in a box");
@@ -263,7 +263,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$newX = $c.getPosX().getValue();
 						break;
 					case STAR:
-					case COMPUTE:
+					case INTRINSIC:
 					case AUTO:
 						// TODO: Better debugging
 						System.err.println("STAR, COMPUTE & AUTO are not allowed for dimensions in a box");
@@ -277,7 +277,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$newY = $c.getPosY().getValue();
 						break;
 					case STAR:
-					case COMPUTE:
+					case INTRINSIC:
 					case AUTO:
 						// TODO: Better debugging
 						System.err.println("STAR, COMPUTE & AUTO are not allowed for dimensions in a box");

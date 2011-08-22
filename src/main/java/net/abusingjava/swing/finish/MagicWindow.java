@@ -18,6 +18,7 @@ final public class MagicWindow extends JFrame {
 	JFrame $fullscreenFrame = null;
 	Dimension $savedSize = null;
 	
+	final MagicPanel $magicPanel;
 
 	MagicWindow(final Window $window) {
 		
@@ -26,11 +27,22 @@ final public class MagicWindow extends JFrame {
 		}
 		if ($window.hasSize()) {
 			setSize($window.getSize());
+			setPreferredSize($window.getSize());
 		}
+		$magicPanel = new MagicPanel($window.getPanel());
 		setLocationRelativeTo(null);
-		setContentPane(new MagicPanel($window.getPanel()));
+		setContentPane($magicPanel);
+		$magicPanel.setInvocationHandler(this);
 		
 		pack();
+	}
+	
+	public void doIt() {
+		
+	}
+	
+	public MagicPanel getMagicPanel() {
+		return $magicPanel;
 	}
 	
 	public static void main(final String... $args) {

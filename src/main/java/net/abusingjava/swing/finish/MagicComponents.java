@@ -2,15 +2,19 @@ package net.abusingjava.swing.finish;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.text.JTextComponent;
 
 import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
+import net.abusingjava.swing.finish.magic.Component;
 
 /**
  * A Collection of Components on which you may apply a function as you want.
@@ -20,30 +24,43 @@ import net.abusingjava.Version;
 @Since(value="2011-08-19", version="1.0")
 public class MagicComponents {
 
-	final List<JComponent> $components;
-	final List<JTextComponent> $textComponents;
-	
+	final private ArrayList<JComponent> $components = new ArrayList<JComponent>();
+
+
 	public MagicComponents(final JComponent... $components) {
-		this.$components = new ArrayList<JComponent>($components.length);
-		this.$textComponents = new ArrayList<JTextComponent>();
+		this.$components.ensureCapacity($components.length);
 		for (JComponent $c : $components) {
 			this.$components.add($c);
-			if ($c instanceof JTextComponent) {
-				this.$textComponents.add((JTextComponent) $c);
-			}
 		}
 	}
 	
+	public MagicComponents(final Collection<Component> $components) {
+		this.$components.ensureCapacity($components.size());
+		for (Component $c : $components) {
+			this.$components.add($c.getJComponent());
+		}
+	}
+
 	public MagicComponents setText(final String $text) {
-		for (JTextComponent $c : $textComponents) {
-			$c.setText($text);
+		for (JComponent $c : $components) {
+			if ($c instanceof JTextComponent) {
+				((JTextComponent)$c).setText($text);
+			} else if ($c instanceof JButton) {
+				((JButton)$c).setText($text);
+			} else if ($c instanceof JLabel) {
+				((JLabel)$c).setText($text);
+			} else if ($c instanceof JCheckBox) {
+				((JCheckBox)$c).setText($text);
+			}
 		}
 		return this;
 	}
 	
 	public String getText() {
-		for (JTextComponent $c : $textComponents) {
-			return $c.getText();
+		for (JComponent $c : $components) {
+			if ($c instanceof JTextComponent) {
+				return ((JTextComponent)$c).getText();
+			}
 		}
 		return "";
 	}

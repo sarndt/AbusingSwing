@@ -1,12 +1,15 @@
 package net.abusingjava.swing.finish.magic;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JComponent;
 
 import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
+import net.abusingjava.reflection.AbusingReflection;
 import net.abusingjava.swing.Magic.MethodType;
 import net.abusingjava.swing.finish.MagicPanel;
 import net.abusingjava.swing.finish.types.*;
@@ -49,6 +52,9 @@ abstract public class Component {
 	
 	@XmlAttribute
 	MethodType $onaction;
+	
+	@XmlAttribute("onaction-dispatch")
+	boolean $onactionDispatch = true;
 	
 	@XmlAttribute
 	MethodType $onclick;
@@ -95,11 +101,35 @@ abstract public class Component {
 	@XmlAttribute
 	Boolean $opaque;
 	
+	@XmlAttribute
+	ClassNames $classes;
+	
+	@XmlAttribute
+	String $name;
+	
+	
 	protected JComponent $component;
+	
+	protected JComponent $realComponent = null;
 	
 	
 	public JComponent getJComponent() {
 		return $component;
+	}
+	
+	public JComponent getRealComponent() {
+		if ($realComponent == null) {
+			return $component;
+		}
+		return $realComponent;
+	}
+	
+	public String getName() {
+		return $name;
+	}
+	
+	public ClassNames getClasses() {
+		return $classes;
 	}
 	
 	public Value getWidth() {
@@ -122,6 +152,10 @@ abstract public class Component {
 			@SuppressWarnings("unused") final MagicPanel $main,
 			@SuppressWarnings("unused") final MagicPanel $parent) {
 		
+		if ($realComponent == null) {
+			$realComponent = $component;
+		}
+		
 		$component.setEnabled($enabled);
 		$component.setVisible($visible);
 		if (!$toolTip.isEmpty()) {
@@ -142,15 +176,39 @@ abstract public class Component {
 		if ($opaque != null) {
 			$component.setOpaque($opaque);
 		}
-
 		if (($fontWeight != null) && $fontWeight.isBold()) {
-			$component.setFont($component.getFont().deriveFont(Font.BOLD));
+			$realComponent.setFont($realComponent.getFont().deriveFont(Font.BOLD));
 		}
 		if (($fontStyle != null) && $fontStyle.isItalic()) {
-			$component.setFont($component.getFont().deriveFont(Font.ITALIC));
+			$realComponent.setFont($realComponent.getFont().deriveFont(Font.ITALIC));
 		}
 		if (($fontSize != null) && ($fontSize.getUnit() == Unit.PIXEL)) {
-			$component.setFont($component.getFont().deriveFont((float)$fontSize.getValue()));
+			$realComponent.setFont($realComponent.getFont().deriveFont((float)$fontSize.getValue()));
+		}
+		
+		if ($onaction != null) {
+			ActionListener $listener = new ActionListener() {
+				@Override
+				public void actionPerformed(final ActionEvent $ev) {
+					if ($onactionDispatch) {
+						new Thread(new Runnable() {
+							@Override
+							public void run() {
+								$onaction.call($main.getInvocationHandler());
+							}
+						}).start();
+					} else {
+						$onaction.call($main.getInvocationHandler());
+					}
+				}
+			};
+			if (AbusingReflection.hasMethod($realComponent, "addActionListener")) {
+				try {
+					$realComponent.getClass().getMethod("addActionListener", ActionListener.class).invoke($realComponent, $listener);
+				} catch (Exception $exc) {
+					System.err.println($exc);
+				}
+			}
 		}
 	}
 }

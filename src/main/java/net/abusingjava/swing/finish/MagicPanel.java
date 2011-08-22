@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 
 import net.abusingjava.swing.finish.magic.*;
 
@@ -27,6 +24,8 @@ final public class MagicPanel extends JPanel {
 	
 	Map<String,Component> $componentsByName = new HashMap<String,Component>();
 	ArrayList<Component> $myComponents = new ArrayList<Component>();
+
+	private Object $invocationHandler = null;
 	
 	public MagicPanel(final Panel $panel) {
 		$main = this;
@@ -73,11 +72,15 @@ final public class MagicPanel extends JPanel {
 		}
 	}
 	
+	public void registerComponent(final String $name, final Component $component) {
+		$componentsByName.put($name, $component);
+	}
+	
 	public MagicComponents $(final String $selector) {
 		if ($selector.equals("*")) {
-			
+			return new MagicComponents($componentsByName.values());
 		} else if ($selector.startsWith("#")) {
-			return new MagicComponents($componentsByName.get($selector.substring(1)).getJComponent());
+			return new MagicComponents($componentsByName.get($selector.substring(1)).getRealComponent());
 		} else if ($selector.startsWith(".")) {
 			
 		}
@@ -90,6 +93,26 @@ final public class MagicPanel extends JPanel {
 	
 	public Orientation getOrientation() {
 		return $orientation;
+	}
+	
+	public MagicPanel hideAll() {
+		$("*").hide();
+		return this;
+	}
+	
+	public MagicPanel showAll() {
+		$("*").show();
+		return this;
+	}
+	
+	public MagicPanel enableAll() {
+		$("*").enable();
+		return this;
+	}
+	
+	public MagicPanel disableAll() {
+		$("*").disable();
+		return this;
 	}
 	
 	public static void main(final String... $args) {
@@ -107,6 +130,15 @@ final public class MagicPanel extends JPanel {
 		
 		$x.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		$x.setVisible(true);
+	}
+
+	public MagicPanel setInvocationHandler(final Object $object) {
+		$invocationHandler = $object;
+		return this;
+	}
+	
+	public Object getInvocationHandler() {
+		return $invocationHandler;
 	}
 	
 }

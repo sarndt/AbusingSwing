@@ -52,6 +52,7 @@ public class Table extends Component {
 			$c.setGridColor($gridColor.getColor());
 		}
 		
+		$realComponent = $c;
 		$component = new JScrollPane($c);
 		
 		super.create($main, $parent);
