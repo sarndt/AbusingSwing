@@ -62,6 +62,9 @@ public class MagicLayoutManager implements LayoutManager {
 					case AUTO:
 						$starsHeight++;
 						break;
+					case COMPUTE:
+						// TODO
+						break;
 					}
 					switch ($c.getWidth().getUnit()) {
 					case STAR:
@@ -70,6 +73,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case AUTO:
 					case PIXEL:
 					case PERCENT:
+					case COMPUTE:
 						// nothing
 						break;
 					}
@@ -89,6 +93,9 @@ public class MagicLayoutManager implements LayoutManager {
 					case AUTO:
 						$starsWidth++;
 						break;
+					case COMPUTE:
+						// TODO
+						break;
 					}
 					switch ($c.getHeight().getUnit()) {
 					case STAR:
@@ -97,6 +104,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case AUTO:
 					case PIXEL:
 					case PERCENT:
+					case COMPUTE:
 						// nothing
 						break;
 					}
@@ -128,6 +136,9 @@ public class MagicLayoutManager implements LayoutManager {
 					case AUTO:
 						$newHeight = (int) ((1 / (double) $starsHeight) * $remainingHeight);
 						break;
+					case COMPUTE:
+						// TODO
+						break;
 					}
 					switch ($c.getWidth().getUnit()) {
 					case PIXEL:
@@ -141,6 +152,9 @@ public class MagicLayoutManager implements LayoutManager {
 						break;
 					case AUTO:
 						$newWidth = (int) $width;
+						break;
+					case COMPUTE:
+						// TODO
 						break;
 					}
 					$newY = (int) $posY;
@@ -162,6 +176,9 @@ public class MagicLayoutManager implements LayoutManager {
 					case AUTO:
 						$newWidth = (int) ((1 / (double) $starsWidth) * $remainingWidth);
 						break;
+					case COMPUTE:
+						// TODO
+						break;
 					}
 					switch ($c.getHeight().getUnit()) {
 					case PIXEL:
@@ -175,6 +192,9 @@ public class MagicLayoutManager implements LayoutManager {
 						break;
 					case AUTO:
 						$newHeight = (int) $height;
+						break;
+					case COMPUTE:
+						// TODO
 						break;
 					}
 					$newX = (int) $posX;
@@ -198,7 +218,7 @@ public class MagicLayoutManager implements LayoutManager {
 
 	@Override
 	public Dimension preferredLayoutSize(final Container $c) {
-		return new Dimension(600, 400);
+		return minimumLayoutSize($c);
 	}
 
 }

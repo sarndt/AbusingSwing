@@ -9,12 +9,12 @@ import net.abusingjava.xml.XmlElement;
 public class Label extends TextComponent {
 
 	@Override
-	public void create(final MagicPanel $parent) {
+	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		JXLabel $c = new JXLabel($text);
 		
 		$component = $c;
 		
-		super.create($parent);
+		super.create($main, $parent);
 	}
 	
 }

@@ -14,7 +14,7 @@ public class CheckBox extends TextComponent {
 	boolean $selected = false;
 	
 	@Override
-	public void create(final MagicPanel $parent) {
+	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		if ($height == null) {
 			$height = new Value("27px");
 		}
@@ -23,7 +23,7 @@ public class CheckBox extends TextComponent {
 		
 		$component = $c;
 		
-		super.create($parent);
+		super.create($main, $parent);
 	}
 	
 }

@@ -1,14 +1,13 @@
 <window
-	min-width="300"
+	min-width="400"
 	min-height="200"
 	
-	width="550"
+	width="650"
 	height="350">
 
 	<panel>
 	
 		<hbox>
-			<vbox width="20%"></vbox>
 			<vbox background="red" />
 			<vbox background="blue" />
 			<vbox width="200px">
@@ -18,8 +17,26 @@
 				<button>Button</button>
 				<button enabled="false">Button</button>
 				<checkbox>Checkbox 1</checkbox>
+				<hbox height="27px">
+					<checkbox width="27px" /><button>Lebenslauf</button>
+				</hbox>
 				<checkbox selected="true">Checkbox 2</checkbox>
 				<busy-label busy="true" delay="2"></busy-label>
+				
+				<vbox />
+			</vbox>
+			
+			<vbox width="200px">
+			
+				<progressbar max="100" value="37" string-painted="true" string="%s%%" />
+			
+				<hbox height="100px">
+					<progressbar max="100" value="10" />
+					<progressbar max="100" value="20" />
+					<progressbar max="100" value="25" />
+					<progressbar max="100" value="60" />
+				</hbox>
+			
 			</vbox>
 			
 			<vbox>

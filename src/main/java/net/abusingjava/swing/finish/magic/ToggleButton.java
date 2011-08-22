@@ -13,12 +13,12 @@ public class ToggleButton extends TextComponent {
 	boolean $selected;
 	
 	@Override
-	public void create(final MagicPanel $parent) {
+	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		JToggleButton $c = new JToggleButton($text, $selected);
 		
 		$component = $c;
 		
-		super.create($parent);
+		super.create($main, $parent);
 	}
 	
 }

@@ -24,7 +24,7 @@ public class TextField extends TextComponent {
 	boolean $textEntered = false;
 
 	@Override
-	public void create(final MagicPanel $parent) {
+	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		if ($height == null) {
 			$height = new Value("27px");
 		}
@@ -36,7 +36,7 @@ public class TextField extends TextComponent {
 		
 		$component = $c;
 
-		super.create($parent);
+		super.create($main, $parent);
 		
 		final Color $foreground = $c.getForeground();
 		

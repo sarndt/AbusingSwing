@@ -19,6 +19,8 @@ public class Value {
 				$unit = Unit.STAR;
 			} else if ($declaration.endsWith("%")) {
 				$unit = Unit.PERCENT;
+			} else if ("compute".equalsIgnoreCase($declaration)) {
+				$unit = Unit.COMPUTE;
 			}
 		}
 	}

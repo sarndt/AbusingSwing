@@ -27,12 +27,12 @@ abstract public class Container extends Component implements Iterable<Component>
 	}
 
 	@Override
-	public void create(final MagicPanel $parent) {
-		MagicPanel $c = new MagicPanel($parent, this);
+	public void create(final MagicPanel $main, final MagicPanel $parent) {
+		MagicPanel $c = new MagicPanel($main, this);
 		
 		$component = $c;
 		
-		super.create($parent);
+		super.create($main, $parent);
 	}
 	
 }

@@ -9,12 +9,12 @@ import net.abusingjava.xml.XmlElement;
 public class DatePicker extends Component {
 	
 	@Override
-	public void create(final MagicPanel $parent) {
+	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		JXDatePicker $c = new JXDatePicker();
 		
 		$component = $c;
 		
-		super.create($parent);
+		super.create($main, $parent);
 	}
 	
 }

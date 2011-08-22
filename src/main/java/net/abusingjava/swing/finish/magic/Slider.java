@@ -9,12 +9,12 @@ import net.abusingjava.xml.XmlElement;
 public class Slider extends Component {
 
 	@Override
-	public void create(final MagicPanel $parent) {
+	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		JSlider $c = new JSlider();
 		
 		$component = $c;
 		
-		super.create($parent);
+		super.create($main, $parent);
 	}
 	
 	

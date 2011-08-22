@@ -18,13 +18,13 @@ public class Any extends Component {
 	}
 
 	@Override
-	public void create(final MagicPanel $parent) {
+	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		try {
 			$component = (JComponent) $class.getJavaType().newInstance();
 		} catch (Exception $exc) {
 			$exc.printStackTrace(System.err);
 		}
 		
-		super.create($parent);
+		super.create($main, $parent);
 	}
 }

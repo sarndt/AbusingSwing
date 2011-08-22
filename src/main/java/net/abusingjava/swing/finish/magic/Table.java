@@ -43,7 +43,7 @@ public class Table extends Component {
 	}
 	
 	@Override
-	public void create(final MagicPanel $parent) {
+	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		JXTable $c = new JXTable();
 		
 		$c.setEditable($editable);
@@ -53,6 +53,8 @@ public class Table extends Component {
 		}
 		
 		$component = new JScrollPane($c);
+		
+		super.create($main, $parent);
 	}
 	
 }

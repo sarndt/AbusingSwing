@@ -98,7 +98,9 @@ abstract public class Component {
 		return $height;
 	}
 
-	public void create(@SuppressWarnings("unused") final MagicPanel $parent) {
+	public void create(
+			@SuppressWarnings("unused") final MagicPanel $main,
+			@SuppressWarnings("unused") final MagicPanel $parent) {
 		
 		$component.setEnabled($enabled);
 		$component.setVisible($visible);

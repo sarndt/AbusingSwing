@@ -48,7 +48,7 @@ final public class MagicPanel extends JPanel {
 	
 	private void buildPanel(final Container $container) {
 		for (Component $c : $container) {
-			$c.create($main);
+			$c.create($main, this);
 			System.out.println($c.getJComponent());
 			add($c.getJComponent());
 		}

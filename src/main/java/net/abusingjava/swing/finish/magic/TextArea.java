@@ -19,12 +19,12 @@ public class TextArea extends TextComponent {
 	int $tabSize = 4;
 
 	@Override
-	public void create(final MagicPanel $parent) {
+	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		JTextArea $c = new JTextArea($text);
 		
 		$component = $c;
 		
-		super.create($parent);
+		super.create($main, $parent);
 	}
 	
 }

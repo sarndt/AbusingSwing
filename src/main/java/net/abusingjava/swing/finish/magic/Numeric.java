@@ -24,7 +24,7 @@ public class Numeric extends Component {
 	Double $value;
 
 	@Override
-	public void create(final MagicPanel $parent) {
+	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		if ($value == null) {
 			$value = $min;
 		}
@@ -32,7 +32,7 @@ public class Numeric extends Component {
 		
 		$component = $c;
 		
-		super.create($parent);
+		super.create($main, $parent);
 	}
 	
 }

@@ -10,14 +10,14 @@ import net.abusingjava.xml.XmlElement;
 public class Button extends TextComponent {
 
 	@Override
-	public void create(final MagicPanel $parent) {
+	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		if ($height == null) {
 			$height = new Value("27px");
 		}
 		
 		$component = new JButton($text);
 		
-		super.create($parent);
+		super.create($main, $parent);
 	}
 	
 }
