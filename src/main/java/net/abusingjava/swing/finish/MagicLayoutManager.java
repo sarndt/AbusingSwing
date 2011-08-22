@@ -202,7 +202,61 @@ public class MagicLayoutManager implements LayoutManager {
 					break;
 					
 				case FIXED:
+					switch ($c.getWidth().getUnit()) {
+					case PERCENT:
+						$newWidth = (int) (($c.getWidth().getValue() / 100.0) * $width);
+						break;
+					case PIXEL:
+						$newWidth = $c.getWidth().getValue();
+						break;
+					case STAR:
+					case COMPUTE:
+					case AUTO:
+						break;
+					}
+					switch ($c.getHeight().getUnit()) {
+					case PERCENT:
+						$newHeight = (int) (($c.getHeight().getValue() / 100.0) * $height);
+						break;
+					case PIXEL:
+						$newHeight = $c.getHeight().getValue();
+						break;
+					case STAR:
+					case COMPUTE:
+					case AUTO:
+						// TODO: Better debugging
+						System.err.println("STAR, COMPUTE & AUTO are not allowed for positions in a box");
+						break;
+					}
 					
+					switch ($c.getPosX().getUnit()) {
+					case PERCENT:
+						$newX = (int) ((($c.getPosX().getValue() / 100.0) * $width) - (($c.getPosX().getValue() / 100.0) * $newWidth));
+						break;
+					case PIXEL:
+						$newX = $c.getPosX().getValue();
+						break;
+					case STAR:
+					case COMPUTE:
+					case AUTO:
+						// TODO: Better debugging
+						System.err.println("STAR, COMPUTE & AUTO are not allowed for dimensions in a box");
+						break;
+					}
+					switch ($c.getPosY().getUnit()) {
+					case PERCENT:
+						$newY = (int) ((($c.getPosY().getValue() / 100.0) * $height) - (($c.getPosY().getValue() / 100.0) * $newHeight));
+						break;
+					case PIXEL:
+						$newY = $c.getPosY().getValue();
+						break;
+					case STAR:
+					case COMPUTE:
+					case AUTO:
+						// TODO: Better debugging
+						System.err.println("STAR, COMPUTE & AUTO are not allowed for dimensions in a box");
+						break;
+					}
 					break;
 				}
 				$c.getJComponent().setSize($newWidth, $newHeight);

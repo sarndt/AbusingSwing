@@ -46,10 +46,16 @@ final public class MagicPanel extends JPanel {
 		return Orientation.FIXED;
 	}
 	
+	
+	
+	@Override
+	public boolean isOptimizedDrawingEnabled() {
+		return $orientation != Orientation.FIXED;
+	}
+
 	private void buildPanel(final Container $container) {
 		for (Component $c : $container) {
 			$c.create($main, this);
-			System.out.println($c.getJComponent());
 			add($c.getJComponent());
 		}
 	}

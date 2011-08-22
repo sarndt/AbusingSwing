@@ -6,7 +6,7 @@
 	height="350">
 
 	<panel>
-	
+		 
 		<hbox>
 			<vbox background="red" />
 			<vbox background="blue" />
@@ -37,11 +37,22 @@
 					<progressbar max="100" value="60" />
 				</hbox>
 			
+				<box height="200px">
+					
+					<box x="0px" y="0px" width="100px" height="100px" background="red" />
+					<box x="100px" y="0px" width="100px" height="100px" background="blue" />
+					<box x="0px" y="100px" width="100px" height="100px" background="green" />
+					<box x="100px" y="100px" width="100px" height="100px" background="yellow" />
+					
+				</box>
+			
 			</vbox>
 			
-			<vbox>
+			<box background="black">
 				
-			</vbox>
+				<box x="50%" y="50%" width="100px" height="200px" background="white" />
+				
+			</box>
 		</hbox>
 	
 	</panel>

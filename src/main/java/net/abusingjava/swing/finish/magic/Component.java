@@ -24,10 +24,16 @@ abstract public class Component {
 	Value $height;
 	
 	@XmlAttribute
-	Value $posX;
+	Value $minWidth = new Value("0px");
 	
 	@XmlAttribute
-	Value $posY;
+	Value $minHeight = new Value("0px");
+	
+	@XmlAttribute("x")
+	Value $posX = new Value("0px");
+	
+	@XmlAttribute("y")
+	Value $posY = new Value("0px");
 	
 	@XmlAttribute
 	Color $foreground;
@@ -96,6 +102,14 @@ abstract public class Component {
 	
 	public Value getHeight() {
 		return $height;
+	}
+	
+	public Value getPosX() {
+		return $posX;
+	}
+	
+	public Value getPosY() {
+		return $posY;
 	}
 
 	public void create(
