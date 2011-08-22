@@ -6,4 +6,8 @@ public class FontStyle {
 	public FontStyle(final String $style) {
 		$italic = "italic".equalsIgnoreCase($style);
 	}
+
+	public boolean isItalic() {
+		return $italic;
+	}
 }

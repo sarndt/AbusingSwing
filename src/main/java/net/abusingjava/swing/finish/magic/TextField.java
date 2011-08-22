@@ -21,6 +21,10 @@ public class TextField extends TextComponent {
 	@XmlChildElements
 	Filter[] $filter = new Filter[] {};
 	
+	@XmlAttribute("select-on-focus")
+	boolean $selectOnFocus = true;
+	
+	
 	boolean $textEntered = false;
 
 	@Override
@@ -39,6 +43,15 @@ public class TextField extends TextComponent {
 		super.create($main, $parent);
 		
 		final Color $foreground = $c.getForeground();
+		
+		if ($selectOnFocus) {
+			$component.addFocusListener(new FocusAdapter() {
+				@Override
+				public void focusGained(final FocusEvent $ev) {
+					$c.selectAll();
+				}
+			});
+		}
 		
 		if (!$defaultText.isEmpty()) {
 			$component.addFocusListener(new FocusAdapter() {

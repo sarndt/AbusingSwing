@@ -6,4 +6,8 @@ public class FontWeight {
 	public FontWeight(final String $weight) {
 		$bold = "bold".equalsIgnoreCase($weight);
 	}
+
+	public boolean isBold() {
+		return $bold;
+	}
 }

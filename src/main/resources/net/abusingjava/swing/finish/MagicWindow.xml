@@ -1,9 +1,9 @@
 <window
 	min-width="400"
-	min-height="200"
+	min-height="400"
 	
 	width="650"
-	height="350">
+	height="550">
 
 	<panel>
 		 
@@ -12,7 +12,7 @@
 				<textfield width="50%"></textfield>
 				<textfield width="3*">Value</textfield>
 				<textfield width="2*" default-text="Click me..."></textfield>
-				<button>Button</button>
+				<button font-size="20px">Button</button>
 				<button enabled="false">Button</button>
 				<checkbox>Checkbox 1</checkbox>
 				<hbox height="27px">
@@ -20,6 +20,9 @@
 				</hbox>
 				<checkbox selected="true">Checkbox 2</checkbox>
 				<busy-label busy="true" delay="2"></busy-label>
+				
+				<numeric min="0" max="100" />
+				<numeric min="0" max="10" step="0.25" />
 				
 				<vbox />
 			</vbox>
@@ -35,7 +38,7 @@
 					<progressbar max="100" value="60" />
 					<vbox padding-left="5px">
 						<button>Button</button>
-						<label width="100px" height="20px" foreground="red">Label</label>
+						<label font-weight="bold" width="100px" height="20px" foreground="red">Label</label>
 						<label foreground="green" background="yellow" opaque="true" text-align="center">X</label>
 						<label foreground="blue" background="yellow" opaque="false" text-align="right">Y</label>
 					</vbox>

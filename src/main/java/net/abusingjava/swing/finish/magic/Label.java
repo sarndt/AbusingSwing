@@ -15,6 +15,9 @@ public class Label extends TextComponent {
 	@XmlAttribute("text-align")
 	String $textAlign;
 	
+	@XmlAttribute("vertical-align")
+	String $verticalAlignment;
+	
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		if ($height == null) {
@@ -29,6 +32,16 @@ public class Label extends TextComponent {
 		}
 		
 		JLabel $c = new JLabel($text, $align);
+		
+		if ("top".equals($verticalAlignment)) {
+			$c.setVerticalAlignment(JLabel.TOP);
+		} else if ("bottom".equals($verticalAlignment)) {
+			$c.setVerticalAlignment(JLabel.BOTTOM);
+		}
+
+		if (($background != null) && ($opaque == null)) {
+			$opaque = true;
+		}
 		
 		$component = $c;
 		

@@ -1,5 +1,7 @@
 package net.abusingjava.swing.finish.magic;
 
+import java.awt.Font;
+
 import javax.swing.JComponent;
 
 import net.abusingjava.Author;
@@ -7,9 +9,7 @@ import net.abusingjava.Since;
 import net.abusingjava.Version;
 import net.abusingjava.swing.Magic.MethodType;
 import net.abusingjava.swing.finish.MagicPanel;
-import net.abusingjava.swing.finish.types.Color;
-import net.abusingjava.swing.finish.types.FontWeight;
-import net.abusingjava.swing.finish.types.Value;
+import net.abusingjava.swing.finish.types.*;
 import net.abusingjava.xml.XmlAttribute;
 
 @Author("Julian Fleischer")
@@ -86,6 +86,12 @@ abstract public class Component {
 	@XmlAttribute("font-weight")
 	FontWeight $fontWeight;
 	
+	@XmlAttribute("font-style")
+	FontStyle $fontStyle;
+	
+	@XmlAttribute("font-size")
+	Value $fontSize;
+	
 	@XmlAttribute
 	Boolean $opaque;
 	
@@ -135,6 +141,16 @@ abstract public class Component {
 		}
 		if ($opaque != null) {
 			$component.setOpaque($opaque);
+		}
+
+		if (($fontWeight != null) && $fontWeight.isBold()) {
+			$component.setFont($component.getFont().deriveFont(Font.BOLD));
+		}
+		if (($fontStyle != null) && $fontStyle.isItalic()) {
+			$component.setFont($component.getFont().deriveFont(Font.ITALIC));
+		}
+		if (($fontSize != null) && ($fontSize.getUnit() == Unit.PIXEL)) {
+			$component.setFont($component.getFont().deriveFont((float)$fontSize.getValue()));
 		}
 	}
 }
