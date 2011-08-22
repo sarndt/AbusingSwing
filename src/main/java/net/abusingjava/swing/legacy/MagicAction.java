@@ -16,25 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.abusingjava.swing.example;
+package net.abusingjava.swing.legacy;
 
-import java.util.regex.Pattern;
 
-import net.abusingjava.Author;
-import net.abusingjava.Version;
-import net.abusingjava.swing.legacy.Validator;
-
-@Author("Julian Fleischer")
-@Version("2011-06-30")
-public class PLZValidator implements Validator<String> {
-
-	@Override
-	public boolean validate(final String $input) {
-		return Pattern.matches("^[0-9]{5}$", $input);
-	}
-
-	@Override
-	public String getMessage() {
-		return "Dies ist keine gültige PLZ!";
-	}
+public interface MagicAction {
+	
+	void performAction(MagicPanel $parent, Object $sender, MagicEvent $ev);
+	
 }

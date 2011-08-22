@@ -21,7 +21,7 @@ package net.abusingjava.swing.example;
 import net.abusingjava.Author;
 import net.abusingjava.Version;
 import net.abusingjava.swing.AbusingSwing;
-import net.abusingjava.swing.MagicPanel;
+import net.abusingjava.swing.legacy.MagicPanel;
 
 @Author("Julian Fleischer")
 @Version("2011-06-20")

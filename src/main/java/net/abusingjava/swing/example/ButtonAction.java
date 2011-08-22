@@ -20,9 +20,9 @@ package net.abusingjava.swing.example;
 
 import net.abusingjava.Author;
 import net.abusingjava.Version;
-import net.abusingjava.swing.MagicAction;
-import net.abusingjava.swing.MagicEvent;
-import net.abusingjava.swing.MagicPanel;
+import net.abusingjava.swing.legacy.MagicAction;
+import net.abusingjava.swing.legacy.MagicEvent;
+import net.abusingjava.swing.legacy.MagicPanel;
 
 @Author("Julian Fleischer")
 @Version("2011-06-30")
