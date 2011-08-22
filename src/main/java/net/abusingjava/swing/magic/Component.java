@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 
 import net.abusingjava.Author;
 import net.abusingjava.Since;
@@ -149,7 +150,7 @@ abstract public class Component {
 
 	public void create(final MagicPanel $main,
 			@SuppressWarnings("unused") final MagicPanel $parent) {
-		
+
 		if ($realComponent == null) {
 			$realComponent = $component;
 		}
@@ -190,16 +191,12 @@ abstract public class Component {
 			ActionListener $listener = new ActionListener() {
 				@Override
 				public void actionPerformed(final ActionEvent $ev) {
-					if ($onactionDispatch) {
-						new Thread(new Runnable() {
-							@Override
-							public void run() {
-								$onaction.call($main.getInvocationHandler());
-							}
-						}).start();
-					} else {
-						$onaction.call($main.getInvocationHandler());
-					}
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+					$onaction.call($main.getInvocationHandler());
+						}
+					});
 				}
 			};
 			if (AbusingReflection.hasMethod($realComponent, "addActionListener")) {

@@ -2,6 +2,8 @@ package net.abusingjava.swing;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Font;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -68,10 +70,6 @@ public class MagicComponents {
 		return "";
 	}
 	
-	public MagicComponents show() {
-		return this;
-	}
-	
 	public MagicComponents show(final int $index) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
@@ -87,7 +85,6 @@ public class MagicComponents {
 			JComponent $c = $comp.getRealComponent();
 			if ($c.getLayout() instanceof CardLayout) {
 				((CardLayout)$c.getLayout()).next($c);
-				System.out.println("harhar");
 			}
 		}
 		return this;
@@ -123,47 +120,86 @@ public class MagicComponents {
 		return this;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public <T extends JComponent> T as(final Class<T> $class) {
+		for (Component $comp : $components) {
+			JComponent $c = $comp.getRealComponent();
+			if ($class.isAssignableFrom($c.getClass())) {
+				return (T) $c;
+			}
+		}
+		return null;
+	}
+
+	public MagicComponents show() {
+		for (Component $comp : $components) {
+			$comp.getJComponent().setVisible(true);
+		}
+		return this;
+	}
+	
 	public MagicComponents hide() {
+		for (Component $comp : $components) {
+			$comp.getJComponent().setVisible(false);
+		}
 		return this;
 	}
 	
 	public MagicComponents enable() {
+		for (Component $comp : $components) {
+			$comp.getJComponent().setEnabled(true);
+		}
 		return this;
 	}
 	
 	public MagicComponents disable() {
+		for (Component $comp : $components) {
+			$comp.getJComponent().setEnabled(false);
+		}
 		return this;
 	}
 	
 	public MagicComponents setForeground(final Color $color) {
+		for (Component $comp : $components) {
+			$comp.getRealComponent().setForeground($color);
+		}
 		return this;
 	}
 	
 	public MagicComponents setForeground(final String $hexColor) {
+		for (Component $comp : $components) {
+			$comp.getRealComponent().setForeground(new net.abusingjava.swing.types.Color($hexColor).getColor());
+		}
 		return this;
 	}
 	
 	public MagicComponents setBackground(final Color $color) {
+		for (Component $comp : $components) {
+			$comp.getRealComponent().setBackground($color);
+		}
 		return this;
 	}
 	
 	public MagicComponents setBackground(final String $hexColor) {
+		for (Component $comp : $components) {
+			$comp.getRealComponent().setBackground(new net.abusingjava.swing.types.Color($hexColor).getColor());
+		}
 		return this;
 	}
 	
 	public MagicComponents setFont(final String $font) {
+		for (Component $comp : $components) {
+			JComponent $c = $comp.getRealComponent();
+			$c.setFont(Font.decode($font));
+		}
 		return this;
 	}
 	
 	public MagicComponents setFontSize(final int $size) {
-		return this;
-	}
-	
-	public MagicComponents showBalloonTip(final String $message) {
-		return this;
-	}
-	
-	public MagicComponents showBalloonTip(final String $message, final int $timeout) {
+		for (Component $comp : $components) {
+			JComponent $c = $comp.getRealComponent();
+			$c.setFont($c.getFont().deriveFont((float) $size));
+		}
 		return this;
 	}
 	
@@ -176,10 +212,40 @@ public class MagicComponents {
 	}
 	
 	public MagicComponents setValue(final int $value) {
+		for (Component $comp : $components) {
+			JComponent $c = $comp.getRealComponent();
+			try {
+				Method $m;
+				if (($m = $c.getClass().getMethod("setValue", int.class)) != null) {
+					$m.invoke($c, $value);
+				} else if (($m = $c.getClass().getMethod("setValue", Integer.class)) != null) {
+					$m.invoke($c, $value);
+				} else if (($m = $c.getClass().getMethod("setValue", double.class)) != null) {
+					$m.invoke($c, (double) $value);
+				}
+			} catch (Exception $exc) {
+				$exc.printStackTrace(System.err);
+			}
+		}
 		return this;
 	}
 	
 	public MagicComponents setMax(final int $value) {
+		for (Component $comp : $components) {
+			JComponent $c = $comp.getRealComponent();
+			try {
+				Method $m;
+				if (($m = $c.getClass().getMethod("setMax", int.class)) != null) {
+					$m.invoke($c, $value);
+				} else if (($m = $c.getClass().getMethod("setMax", Integer.class)) != null) {
+					$m.invoke($c, $value);
+				} else if (($m = $c.getClass().getMethod("setMax", double.class)) != null) {
+					$m.invoke($c, (double) $value);
+				}
+			} catch (Exception $exc) {
+				$exc.printStackTrace(System.err);
+			}
+		}
 		return this;
 	}
 	

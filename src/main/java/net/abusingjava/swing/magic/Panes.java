@@ -58,7 +58,7 @@ public class Panes extends Component {
 		for (Pane $p : $panes) {
 			JXTaskPane $jxp = new JXTaskPane();
 			Container $con = $p.getContainer();
-
+			$con.create($main, $parent);
 			MagicPanel $mp = new MagicPanel($main, $con);
 			
 			$jxp.add($mp);

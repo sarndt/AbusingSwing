@@ -10,7 +10,7 @@ import net.abusingjava.xml.XmlElement;
 @XmlElement("vsplit")
 public class VSplit extends Component {
 
-	@XmlChildElements({HBox.class, VBox.class, Box.class})
+	@XmlChildElements({HBox.class, VBox.class, FixedBox.class})
 	Container[] $container;
 	
 	@XmlAttribute
@@ -21,6 +21,10 @@ public class VSplit extends Component {
 	
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
+		
+		$container[0].create($main, $parent);
+		$container[1].create($main, $parent);
+		
 		final JSplitPane $c = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
 				$continuous,
 				new MagicPanel($main, $container[0]),

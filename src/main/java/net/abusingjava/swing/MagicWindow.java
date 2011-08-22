@@ -12,17 +12,17 @@ import net.abusingjava.swing.AbusingSwing;
 import net.abusingjava.swing.magic.Window;
 
 @Author("Julian Fleischer")
-final public class MagicWindow extends JFrame {
+public class MagicWindow extends JFrame {
 
 	private static final long serialVersionUID = 8856951705627589850L;
 
 	JFrame $fullscreenFrame = null;
 	Dimension $savedSize = null;
-	
+
 	final MagicPanel $magicPanel;
 
 	MagicWindow(final Window $window) {
-		
+
 		if ($window.hasMinSize()) {
 			setMinimumSize($window.getMinSize());
 		}
@@ -33,28 +33,42 @@ final public class MagicWindow extends JFrame {
 		$magicPanel = new MagicPanel($window.getPanel());
 		setLocationRelativeTo(null);
 		setContentPane($magicPanel);
-		$magicPanel.setInvocationHandler(this);
-		
+
 		pack();
 	}
-	
-	public void doIt() {
-		System.out.println("GRUMMEL");
-		$magicPanel.$("#cards").showNext();
-	}
-	
+
 	public MagicPanel getMagicPanel() {
 		return $magicPanel;
 	}
-	
+
+	public static class Toggle {
+		final MagicPanel $panel;
+		final MagicWindow $window;
+		
+		Toggle(final MagicWindow $window) {
+			this.$panel = $window.getMagicPanel();
+			this.$window = $window;
+		}
+
+		public void toggle() {
+			$panel.$("#top").showNext();
+		}
+		
+		public void fullscreen() {
+			$window.toggleFullscreen();
+		}
+	}
+
 	public static void main(final String... $args) {
 		AbusingSwing.setNimbusLookAndFeel();
-		
+
 		final MagicWindow $win = MagicFactory.makeWindow(MagicWindow.class.getResourceAsStream("MagicWindow.xml"));
 		$win.setVisible(true);
 		$win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		$win.getMagicPanel().setInvocationHandler(new Toggle($win));
 	}
-	
+
 	public void toggleFullscreen() {
 		final GraphicsDevice $dev = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		if ($dev.isFullScreenSupported()) {
@@ -92,7 +106,7 @@ final public class MagicWindow extends JFrame {
 				setAlwaysOnTop(true);
 				pack();
 				setSize(Toolkit.getDefaultToolkit().getScreenSize());
-				setLocation(0,0);
+				setLocation(0, 0);
 				setVisible(true);
 			}
 		}

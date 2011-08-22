@@ -54,10 +54,8 @@ public class Tabs extends Component {
 		int $i = 0;
 		for (Tab $t : $tabs) {
 			Container $con = $t.getContainer();
-
-			MagicPanel $mp = new MagicPanel($main, $con);
-			
-			$c.add(new JScrollPane($mp));
+			$con.create($main, $parent);
+			$c.add(new JScrollPane($con.getJComponent()));
 			$c.setTitleAt($i++, $t.getTitle());
 		}
 

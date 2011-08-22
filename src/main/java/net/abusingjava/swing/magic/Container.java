@@ -16,6 +16,13 @@ import net.abusingjava.xml.XmlChildElements;
 @Since(value = "2011-08-21", version = "1.0")
 abstract public class Container extends Component implements Iterable<Component> {
 
+	@XmlChildElements({HBox.class, VBox.class, Any.class, FixedBox.class, Button.class,
+		Cards.class, CheckBox.class, ComboBox.class, DatePicker.class, List.class,
+		Numeric.class, Panel.class, Panes.class, Password.class, ProgressBar.class,
+		Slider.class, Table.class, Tabs.class, TextArea.class, TextField.class,
+		ToggleButton.class, Tree.class, Label.class, HSplit.class, VSplit.class})
+	Component[] $components = new Component[] {};
+
 	@XmlAttribute
 	Value $padding = new Value("0px");
 	
@@ -36,13 +43,6 @@ abstract public class Container extends Component implements Iterable<Component>
 	
 	@XmlAttribute("padding-bottom")
 	Value $paddingBottom;
-	
-	@XmlChildElements({HBox.class, VBox.class, Any.class, Box.class, Button.class,
-		Cards.class, CheckBox.class, ComboBox.class, DatePicker.class, List.class,
-		Numeric.class, Panel.class, Panes.class, Password.class, ProgressBar.class,
-		Slider.class, Table.class, Tabs.class, TextArea.class, TextField.class,
-		ToggleButton.class, Tree.class, Label.class, HSplit.class, VSplit.class})
-	Component[] $components = new Component[] {};
 
 	@Override
 	public Iterator<Component> iterator() {
@@ -51,7 +51,6 @@ abstract public class Container extends Component implements Iterable<Component>
 	
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
-
 		if ($paddingX == null) {
 			$paddingX = $padding;
 		}
@@ -70,7 +69,7 @@ abstract public class Container extends Component implements Iterable<Component>
 		if ($paddingRight == null) {
 			$paddingRight = $paddingX;
 		}
-		
+
 		if ($parent != null) {
 			MagicPanel $c = new MagicPanel($main, this);
 			$component = $c;

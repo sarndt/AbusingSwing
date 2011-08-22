@@ -31,7 +31,7 @@ public class MagicPanel extends JPanel {
 
 	private Object $invocationHandler = null;
 	
-	protected MagicPanel(final InputStream $stream) {
+	public MagicPanel(final InputStream $stream) {
 		Panel $panel = AbusingXML.loadXML($stream, Panel.class);
 
 		$main = this;
@@ -97,7 +97,6 @@ public class MagicPanel extends JPanel {
 		if ($name == null) {
 			$name = "#" + $noName++;
 		}
-		
 		$componentsByName.put($name, $component);
 	}
 	
@@ -105,7 +104,11 @@ public class MagicPanel extends JPanel {
 		if ($selector.equals("*")) {
 			return new MagicComponents($componentsByName.values());
 		} else if ($selector.startsWith("#")) {
-			return new MagicComponents($componentsByName.get($selector.substring(1)));
+			Component $c = $componentsByName.get($selector.substring(1));
+			if ($c != null) {
+				return new MagicComponents($c);
+			}
+			return new MagicComponents();
 		} else if ($selector.startsWith(".")) {
 			
 		}

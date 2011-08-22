@@ -17,7 +17,7 @@ public class TextArea extends TextComponent {
 	boolean $wrapStyleWord = true;
 	
 	@XmlAttribute("tabsize")
-	int $tabSize = 4;
+	Integer $tabSize = 4;
 	
 	@XmlAttribute("editable")
 	boolean $editable = true;
@@ -29,7 +29,9 @@ public class TextArea extends TextComponent {
 		$c.setEditable($editable);
 		$c.setLineWrap($lineWrap);
 		$c.setWrapStyleWord($wrapStyleWord);
-		$c.setTabSize($tabSize);
+		if ($tabSize != null) {
+			$c.setTabSize($tabSize);
+		}
 		
 		$realComponent = $c;
 		$component = new JScrollPane($c);

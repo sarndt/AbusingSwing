@@ -6,11 +6,11 @@ import net.abusingjava.xml.XmlElement;
 @XmlElement("panel")
 public class Panel {
 
-	@XmlChildElements({HBox.class, VBox.class, Box.class})
-	Container[] $container = new Container[] {};
+	@XmlChildElements({HBox.class, VBox.class, FixedBox.class})
+	Container[] $containers = new Container[] {};
 	
 	public Container getContainer() {
-		return $container[0];
+		return $containers[0];
 	}
 	
 }
