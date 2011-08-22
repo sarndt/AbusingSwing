@@ -3,6 +3,8 @@ package net.abusingjava.swing.magic;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
@@ -60,9 +62,6 @@ abstract public class Component {
 	MethodType $onclick;
 	
 	@XmlAttribute
-	MethodType $ondblclick;
-
-	@XmlAttribute
 	MethodType $onblur;
 	
 	@XmlAttribute
@@ -75,7 +74,10 @@ abstract public class Component {
 	MethodType $onmouseup;
 	
 	@XmlAttribute
-	MethodType $onmousemove;
+	MethodType $onmouseover;
+
+	@XmlAttribute
+	MethodType $onmouseout;
 	
 	@XmlAttribute
 	MethodType $onkeydown;
@@ -206,6 +208,72 @@ abstract public class Component {
 					System.err.println($exc);
 				}
 			}
+		}
+
+		if ($onaction != null) {
+			ActionListener $listener = new ActionListener() {
+				@Override
+				public void actionPerformed(final ActionEvent $ev) {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							$onaction.call($main.getInvocationHandler());
+						}
+					}).start();
+				}
+			};
+			if (AbusingReflection.hasMethod($realComponent, "addActionListener")) {
+				try {
+					$realComponent.getClass().getMethod("addActionListener", ActionListener.class).invoke($realComponent, $listener);
+				} catch (Exception $exc) {
+					System.err.println($exc);
+				}
+			}
+		}
+
+		if ($onclick != null) {
+			MouseAdapter $listener = new MouseAdapter() {
+				@Override
+				public void mouseClicked(final MouseEvent $ev) {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							$onclick.call($main.getInvocationHandler());
+						}
+					}).run();
+				}
+			};
+			$realComponent.addMouseListener($listener);
+		}
+
+		if ($onmouseover != null) {
+			MouseAdapter $listener = new MouseAdapter() {
+				@Override
+				public void mouseEntered(final MouseEvent $ev) {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							$onmouseover.call($main.getInvocationHandler());
+						}
+					}).run();
+				}
+			};
+			$realComponent.addMouseListener($listener);
+		}
+
+		if ($onmouseout != null) {
+			MouseAdapter $listener = new MouseAdapter() {
+				@Override
+				public void mouseExited(final MouseEvent $ev) {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							$onmouseout.call($main.getInvocationHandler());
+						}
+					}).run();
+				}
+			};
+			$realComponent.addMouseListener($listener);
 		}
 	}
 }

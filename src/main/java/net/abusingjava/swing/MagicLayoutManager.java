@@ -161,7 +161,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$newHeight = (int) ((1 / (double) $starsHeight) * $remainingHeight);
 						break;
 					case INTRINSIC:
-						// TODO
+						$newWidth = minimumLayoutSize($container).height;
 						break;
 					}
 					switch ($c.getWidth().getUnit()) {
@@ -175,10 +175,8 @@ public class MagicLayoutManager implements LayoutManager {
 						$newWidth = (int) (($c.getWidth().getValue() / 100.0) * $width);
 						break;
 					case AUTO:
-						$newWidth = (int) $width;
-						break;
 					case INTRINSIC:
-						// TODO
+						$newWidth = (int) $width;
 						break;
 					}
 					$newX = (int) $posX;
@@ -202,7 +200,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$newWidth = (int) ((1 / (double) $starsWidth) * $remainingWidth);
 						break;
 					case INTRINSIC:
-						// TODO
+						$newWidth = minimumLayoutSize($container).width;
 						break;
 					}
 					switch ($c.getHeight().getUnit()) {
@@ -216,10 +214,8 @@ public class MagicLayoutManager implements LayoutManager {
 						$newHeight = (int) (($c.getHeight().getValue() / 100.0) * $height);
 						break;
 					case AUTO:
-						$newHeight = (int) $height;
-						break;
 					case INTRINSIC:
-						// TODO
+						$newHeight = (int) $height;
 						break;
 					}
 					$newX = (int) $posX;
@@ -238,6 +234,8 @@ public class MagicLayoutManager implements LayoutManager {
 					case STAR:
 					case INTRINSIC:
 					case AUTO:
+						// TODO: Better debugging
+						System.err.println("STAR, COMPUTE & AUTO are not allowed for positions in a fixed box");
 						break;
 					}
 					switch ($c.getHeight().getUnit()) {
@@ -251,7 +249,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case INTRINSIC:
 					case AUTO:
 						// TODO: Better debugging
-						System.err.println("STAR, COMPUTE & AUTO are not allowed for positions in a box");
+						System.err.println("STAR, COMPUTE & AUTO are not allowed for dimensions in a fixed box");
 						break;
 					}
 					
@@ -266,7 +264,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case INTRINSIC:
 					case AUTO:
 						// TODO: Better debugging
-						System.err.println("STAR, COMPUTE & AUTO are not allowed for dimensions in a box");
+						System.err.println("STAR, COMPUTE & AUTO are not allowed for positions in a fixed box");
 						break;
 					}
 					switch ($c.getPosY().getUnit()) {
@@ -280,7 +278,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case INTRINSIC:
 					case AUTO:
 						// TODO: Better debugging
-						System.err.println("STAR, COMPUTE & AUTO are not allowed for dimensions in a box");
+						System.err.println("STAR, COMPUTE & AUTO are not allowed for dimensions in a fixed box");
 						break;
 					}
 					break;
@@ -292,8 +290,102 @@ public class MagicLayoutManager implements LayoutManager {
 	}
 
 	@Override
-	public Dimension minimumLayoutSize(final Container $c) {
-		return new Dimension(0, 0);
+	public Dimension minimumLayoutSize(final Container $container) {
+		int $width = 0;
+		int $height = 0;
+		if ($panel == $container) {
+			
+			for (net.abusingjava.swing.magic.Component $c : this.$container) {
+				switch ($panel.getOrientation()) {
+				case HORIZONTAL:
+					switch ($c.getWidth().getUnit()) {
+					case PIXEL:
+						$width += $c.getWidth().getValue();
+						break;
+					case INTRINSIC:
+						if ($c.getJComponent().getLayout() instanceof MagicLayoutManager) {
+							$height += $c.getJComponent().getLayout().minimumLayoutSize($c.getJComponent()).width;
+						}
+						break;
+					case PERCENT:
+					case STAR:
+					case AUTO:
+						System.err.println("PERCENT, STAR, and AUTO not yet supported within INTRINSIC");
+						break;
+					}
+					
+					switch ($c.getHeight().getUnit()) {
+					case PIXEL:
+						$height = Math.max($height, $c.getHeight().getValue());
+						break;
+					case INTRINSIC:
+						if ($c.getJComponent().getLayout() instanceof MagicLayoutManager) {
+							$height = Math.max($height, $c.getJComponent().getLayout().minimumLayoutSize($c.getJComponent()).height);
+						}
+						break;
+					case PERCENT:
+					case STAR:
+					case AUTO:
+						System.err.println("PERCENT, STAR, and AUTO not yet supported within INTRINSIC");
+						break;
+					}
+					break;
+					
+				case VERTICAL:
+					switch ($c.getHeight().getUnit()) {
+					case PIXEL:
+						$height += $c.getHeight().getValue();
+						break;
+					case INTRINSIC:
+						if ($c.getJComponent().getLayout() instanceof MagicLayoutManager) {
+							$height += $c.getJComponent().getLayout().minimumLayoutSize($c.getJComponent()).height;
+						}
+						break;
+					case PERCENT:
+					case STAR:
+					case AUTO:
+						System.err.println("PERCENT, STAR, and AUTO not yet supported within INTRINSIC");
+						break;
+					}
+					
+					switch ($c.getWidth().getUnit()) {
+					case PIXEL:
+						$width = Math.max($width, $c.getWidth().getValue());
+						break;
+					case INTRINSIC:
+						if ($c.getJComponent().getLayout() instanceof MagicLayoutManager) {
+							$width = Math.max($width, $c.getJComponent().getLayout().minimumLayoutSize($c.getJComponent()).width);
+						}
+						break;
+					case PERCENT:
+					case STAR:
+					case AUTO:
+						System.err.println("PERCENT, STAR, and AUTO not yet supported within INTRINSIC");
+						break;
+					}
+					break;
+				case FIXED:
+					int $x = 0;
+					int $y = 0;
+					if ($c.getWidth().getUnit() == Unit.PIXEL) {
+						$x += $c.getWidth().getValue();
+					}
+					if ($c.getHeight().getUnit() == Unit.PIXEL) {
+						$y += $c.getHeight().getValue();
+					}
+					if ($c.getPosX().getUnit() == Unit.PIXEL) {
+						$x += $c.getPosX().getValue();
+					}
+					if ($c.getPosY().getUnit() == Unit.PIXEL) {
+						$y += $c.getPosY().getValue();
+					}
+					$width = Math.max($width, $x);
+					$height = Math.max($height, $y);
+					break;
+				}
+			}
+		}
+		return new Dimension($width, $height);
 	}
 
 	@Override

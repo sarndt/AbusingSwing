@@ -8,10 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
+import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
 import net.abusingjava.Author;
@@ -24,11 +21,10 @@ import net.abusingjava.swing.magic.Component;
  */
 @Author("Julian Fleischer")
 @Version("2011-08-19")
-@Since(value="2011-08-19", version="1.0")
+@Since(value = "2011-08-19", version = "1.0")
 public class MagicComponents {
 
 	final private ArrayList<Component> $components = new ArrayList<Component>();
-
 
 	public MagicComponents(final Component... $components) {
 		this.$components.ensureCapacity($components.length);
@@ -36,7 +32,7 @@ public class MagicComponents {
 			this.$components.add($c);
 		}
 	}
-	
+
 	public MagicComponents(final Collection<Component> $components) {
 		this.$components.ensureCapacity($components.size());
 		for (Component $c : $components) {
@@ -48,78 +44,103 @@ public class MagicComponents {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JTextComponent) {
-				((JTextComponent)$c).setText($text);
+				((JTextComponent) $c).setText($text);
 			} else if ($c instanceof JButton) {
-				((JButton)$c).setText($text);
+				((JButton) $c).setText($text);
 			} else if ($c instanceof JLabel) {
-				((JLabel)$c).setText($text);
+				((JLabel) $c).setText($text);
 			} else if ($c instanceof JCheckBox) {
-				((JCheckBox)$c).setText($text);
+				((JCheckBox) $c).setText($text);
 			}
 		}
 		return this;
 	}
-	
+
 	public String getText() {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JTextComponent) {
-				return ((JTextComponent)$c).getText();
+				return ((JTextComponent) $c).getText();
 			}
 		}
 		return "";
 	}
-	
+
 	public MagicComponents show(final int $index) {
-		for (Component $comp : $components) {
-			JComponent $c = $comp.getRealComponent();
-			if ($c.getLayout() instanceof CardLayout) {
-				((CardLayout)$c.getLayout()).show($c, "card" + $index);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Component $comp : $components) {
+					JComponent $c = $comp.getRealComponent();
+					if ($c.getLayout() instanceof CardLayout) {
+						((CardLayout) $c.getLayout()).show($c, "card" + $index);
+					}
+				}
 			}
-		}
+		});
 		return this;
 	}
 
 	public MagicComponents showNext() {
-		for (Component $comp : $components) {
-			JComponent $c = $comp.getRealComponent();
-			if ($c.getLayout() instanceof CardLayout) {
-				((CardLayout)$c.getLayout()).next($c);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Component $comp : $components) {
+					JComponent $c = $comp.getRealComponent();
+					if ($c.getLayout() instanceof CardLayout) {
+						((CardLayout) $c.getLayout()).next($c);
+					}
+				}
 			}
-		}
+		});
 		return this;
 	}
 
 	public MagicComponents showPrev() {
-		for (Component $comp : $components) {
-			JComponent $c = $comp.getRealComponent();
-			if ($c.getLayout() instanceof CardLayout) {
-				((CardLayout)$c.getLayout()).previous($c);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Component $comp : $components) {
+					JComponent $c = $comp.getRealComponent();
+					if ($c.getLayout() instanceof CardLayout) {
+						((CardLayout) $c.getLayout()).previous($c);
+					}
+				}
 			}
-		}
+		});
 		return this;
 	}
 
 	public MagicComponents showFirst() {
-		for (Component $comp : $components) {
-			JComponent $c = $comp.getRealComponent();
-			if ($c.getLayout() instanceof CardLayout) {
-				((CardLayout)$c.getLayout()).first($c);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Component $comp : $components) {
+					JComponent $c = $comp.getRealComponent();
+					if ($c.getLayout() instanceof CardLayout) {
+						((CardLayout) $c.getLayout()).first($c);
+					}
+				}
 			}
-		}
+		});
 		return this;
 	}
 
 	public MagicComponents showLast() {
-		for (Component $comp : $components) {
-			JComponent $c = $comp.getRealComponent();
-			if ($c.getLayout() instanceof CardLayout) {
-				((CardLayout)$c.getLayout()).last($c);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Component $comp : $components) {
+					JComponent $c = $comp.getRealComponent();
+					if ($c.getLayout() instanceof CardLayout) {
+						((CardLayout) $c.getLayout()).last($c);
+					}
+				}
 			}
-		}
+		});
 		return this;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public <T extends JComponent> T as(final Class<T> $class) {
 		for (Component $comp : $components) {
@@ -132,139 +153,200 @@ public class MagicComponents {
 	}
 
 	public MagicComponents show() {
-		for (Component $comp : $components) {
-			$comp.getJComponent().setVisible(true);
-		}
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Component $comp : $components) {
+					$comp.getJComponent().setVisible(true);
+				}
+			}
+		});
 		return this;
 	}
-	
+
 	public MagicComponents hide() {
-		for (Component $comp : $components) {
-			$comp.getJComponent().setVisible(false);
-		}
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Component $comp : $components) {
+					$comp.getJComponent().setVisible(false);
+				}
+			}
+		});
 		return this;
 	}
-	
+
 	public MagicComponents enable() {
-		for (Component $comp : $components) {
-			$comp.getJComponent().setEnabled(true);
-		}
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+
+				for (Component $comp : $components) {
+					$comp.getJComponent().setEnabled(true);
+				}
+			}
+		});
 		return this;
 	}
-	
+
 	public MagicComponents disable() {
-		for (Component $comp : $components) {
-			$comp.getJComponent().setEnabled(false);
-		}
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Component $comp : $components) {
+					$comp.getJComponent().setEnabled(false);
+				}
+			}
+		});
 		return this;
 	}
-	
+
 	public MagicComponents setForeground(final Color $color) {
-		for (Component $comp : $components) {
-			$comp.getRealComponent().setForeground($color);
-		}
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Component $comp : $components) {
+					$comp.getRealComponent().setForeground($color);
+				}
+			}
+		});
 		return this;
 	}
-	
+
 	public MagicComponents setForeground(final String $hexColor) {
-		for (Component $comp : $components) {
-			$comp.getRealComponent().setForeground(new net.abusingjava.swing.types.Color($hexColor).getColor());
-		}
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Component $comp : $components) {
+					$comp.getRealComponent().setForeground(new net.abusingjava.swing.types.Color($hexColor).getColor());
+				}
+			}
+		});
 		return this;
 	}
-	
+
 	public MagicComponents setBackground(final Color $color) {
-		for (Component $comp : $components) {
-			$comp.getRealComponent().setBackground($color);
-		}
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Component $comp : $components) {
+					$comp.getRealComponent().setBackground($color);
+				}
+			}
+		});
 		return this;
 	}
-	
+
 	public MagicComponents setBackground(final String $hexColor) {
-		for (Component $comp : $components) {
-			$comp.getRealComponent().setBackground(new net.abusingjava.swing.types.Color($hexColor).getColor());
-		}
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Component $comp : $components) {
+					$comp.getRealComponent().setBackground(new net.abusingjava.swing.types.Color($hexColor).getColor());
+				}
+			}
+		});
 		return this;
 	}
-	
+
 	public MagicComponents setFont(final String $font) {
-		for (Component $comp : $components) {
-			JComponent $c = $comp.getRealComponent();
-			$c.setFont(Font.decode($font));
-		}
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Component $comp : $components) {
+					JComponent $c = $comp.getRealComponent();
+					$c.setFont(Font.decode($font));
+				}
+			}
+		});
 		return this;
 	}
-	
+
 	public MagicComponents setFontSize(final int $size) {
-		for (Component $comp : $components) {
-			JComponent $c = $comp.getRealComponent();
-			$c.setFont($c.getFont().deriveFont((float) $size));
-		}
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Component $comp : $components) {
+					JComponent $c = $comp.getRealComponent();
+					$c.setFont($c.getFont().deriveFont((float) $size));
+				}
+			}
+		});
 		return this;
 	}
-	
+
 	public MagicComponents add(final Object[] $values) {
 		return this;
 	}
-	
+
 	public MagicComponents add(final Object $value) {
 		return this;
 	}
-	
+
 	public MagicComponents setValue(final int $value) {
-		for (Component $comp : $components) {
-			JComponent $c = $comp.getRealComponent();
-			try {
-				Method $m;
-				if (($m = $c.getClass().getMethod("setValue", int.class)) != null) {
-					$m.invoke($c, $value);
-				} else if (($m = $c.getClass().getMethod("setValue", Integer.class)) != null) {
-					$m.invoke($c, $value);
-				} else if (($m = $c.getClass().getMethod("setValue", double.class)) != null) {
-					$m.invoke($c, (double) $value);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Component $comp : $components) {
+					JComponent $c = $comp.getRealComponent();
+					try {
+						Method $m;
+						if (($m = $c.getClass().getMethod("setValue", int.class)) != null) {
+							$m.invoke($c, $value);
+						} else if (($m = $c.getClass().getMethod("setValue", Integer.class)) != null) {
+							$m.invoke($c, $value);
+						} else if (($m = $c.getClass().getMethod("setValue", double.class)) != null) {
+							$m.invoke($c, (double) $value);
+						}
+					} catch (Exception $exc) {
+						$exc.printStackTrace(System.err);
+					}
 				}
-			} catch (Exception $exc) {
-				$exc.printStackTrace(System.err);
 			}
-		}
+		});
 		return this;
 	}
-	
+
 	public MagicComponents setMax(final int $value) {
-		for (Component $comp : $components) {
-			JComponent $c = $comp.getRealComponent();
-			try {
-				Method $m;
-				if (($m = $c.getClass().getMethod("setMax", int.class)) != null) {
-					$m.invoke($c, $value);
-				} else if (($m = $c.getClass().getMethod("setMax", Integer.class)) != null) {
-					$m.invoke($c, $value);
-				} else if (($m = $c.getClass().getMethod("setMax", double.class)) != null) {
-					$m.invoke($c, (double) $value);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Component $comp : $components) {
+					JComponent $c = $comp.getRealComponent();
+					try {
+						Method $m;
+						if (($m = $c.getClass().getMethod("setMax", int.class)) != null) {
+							$m.invoke($c, $value);
+						} else if (($m = $c.getClass().getMethod("setMax", Integer.class)) != null) {
+							$m.invoke($c, $value);
+						} else if (($m = $c.getClass().getMethod("setMax", double.class)) != null) {
+							$m.invoke($c, (double) $value);
+						}
+					} catch (Exception $exc) {
+						$exc.printStackTrace(System.err);
+					}
 				}
-			} catch (Exception $exc) {
-				$exc.printStackTrace(System.err);
 			}
-		}
+		});
 		return this;
 	}
-	
+
 	public int getMax() {
 		return 0;
 	}
-	
+
 	public int getMin() {
 		return 0;
 	}
-	
+
 	public int getValue() {
 		return 0;
 	}
-	
+
 	public MagicComponents setDate(final Date $date) {
 		return this;
 	}
-	
+
 	public Date getDate() {
 		return null;
 	}

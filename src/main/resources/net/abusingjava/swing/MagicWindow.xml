@@ -14,11 +14,31 @@
 									<vbox width="200px" padding-right="10px">
 										<button onaction="toggle">TOGGLE</button>
 										<button onaction="fullscreen">FULLSCREEN</button>
-										<button />
-										<button />
-										<button />
-										<button />
+										
+										<hbox height="intrinsic">
+											<label>Label</label>
+											<textfield default-text="Name..." />
+										</hbox>
+										
+										<hbox height="intrinsic">
+											<label>Label</label>
+											<textfield default-text="Name..." />
+										</hbox>
+										
+										<hbox height="intrinsic">
+											<label>Label</label>
+											<textfield default-text="Name..." height="40px" />
+										</hbox>
+										
+										<hbox height="intrinsic">
+											<label>Label</label>
+											<textfield default-text="Name..." height="40px" />
+										</hbox>
+										
+										<button></button>
+										
 									</vbox>
+									
 
 									<vbox width="200px" padding-right="10px">
 										<textfield width="50%"></textfield>
