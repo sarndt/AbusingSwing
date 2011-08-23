@@ -9,6 +9,8 @@ import org.jdesktop.swingx.JXTable;
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.types.Color;
 import net.abusingjava.swing.types.JavaType;
+import net.abusingjava.swing.types.Unit;
+import net.abusingjava.swing.types.Value;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlChildElements;
 import net.abusingjava.xml.XmlElement;
@@ -28,6 +30,9 @@ public class Table extends Component {
 		
 	@XmlChildElements
 	Column[] $columns;
+	
+	@XmlAttribute("column-control-visible")
+	boolean $columnControlVisible;
 
 	@XmlElement("col")
 	public static class Column {
@@ -35,10 +40,13 @@ public class Table extends Component {
 		JavaType $type = new JavaType(java.lang.Object.class);
 		
 		@XmlAttribute("min-width")
-		Integer $minWidth;
+		Value $minWidth;
 		
 		@XmlAttribute("max-width")
-		Integer $maxWidth;
+		Value $maxWidth;
+		
+		@XmlAttribute("width")
+		Value $width;
 		
 		@XmlTextContent
 		String $text = "";
@@ -67,15 +75,21 @@ public class Table extends Component {
 		JXTable $c = new JXTable($model);
 		$c.setEditable($editable);
 		$c.setSortable($sortable);
+		$c.setColumnControlVisible($columnControlVisible);
 		if ($gridColor != null) {
 			$c.setGridColor($gridColor.getColor());
 		}
 		
 		for (int $i = 0; $i < $columns.length; $i++) {
-			if ($columns[$i].$maxWidth != null)
-				$c.getColumn($columnHeaders[$i]).setMaxWidth($columns[$i].$maxWidth);
-			if ($columns[$i].$minWidth != null)
-				$c.getColumn($columnHeaders[$i]).setMinWidth($columns[$i].$minWidth);
+			if (($columns[$i].$maxWidth != null) && ($columns[$i].$maxWidth.getUnit() == Unit.PIXEL)) {
+				$c.getColumn($columnHeaders[$i]).setMaxWidth($columns[$i].$maxWidth.getValue());
+			}
+			if (($columns[$i].$minWidth != null)  && ($columns[$i].$maxWidth.getUnit() == Unit.PIXEL)) {
+				$c.getColumn($columnHeaders[$i]).setMinWidth($columns[$i].$minWidth.getValue());
+			}
+			if (($columns[$i].$width != null)  && ($columns[$i].$width.getUnit() == Unit.PIXEL)) {
+				$c.getColumn($columnHeaders[$i]).setPreferredWidth($columns[$i].$width.getValue());
+			}
 		}
 		
 		

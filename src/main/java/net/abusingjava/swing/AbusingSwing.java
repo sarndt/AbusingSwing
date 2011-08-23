@@ -18,6 +18,8 @@
  */
 package net.abusingjava.swing;
 
+import java.io.InputStream;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -26,7 +28,11 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import net.abusingjava.Author;
+import net.abusingjava.NotGonnaHappenException;
 import net.abusingjava.Version;
+import net.abusingjava.swing.magic.Panel;
+import net.abusingjava.swing.magic.Window;
+import net.abusingjava.xml.AbusingXML;
 
 @Author("Julian Fleischer")
 @Version("2011-06-21")
@@ -111,4 +117,32 @@ final public class AbusingSwing {
 		});
 		return $frame;
 	}
+
+	public static MagicWindow showWindow(final String $resource) {
+		MagicWindow $window = makeWindow($resource);
+		$window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		$window.setVisible(true);
+		return $window;
+	}
+	
+	public static MagicWindow makeWindow(final String $resource) {
+		String $className = new Exception().getStackTrace()[0].getClassName();
+		try {
+			InputStream $stream = Class.forName($className).getResourceAsStream($resource);
+			return makeWindow($stream);
+		} catch (ClassNotFoundException $exc) {
+			throw new NotGonnaHappenException($exc);
+		}
+	}
+	
+	public static MagicWindow makeWindow(final InputStream $stream) {
+		Window $window = AbusingXML.loadXML($stream, Window.class);
+		return new MagicWindow($window);
+	}
+	
+	public static MagicPanel makePanel(final InputStream $stream) {
+		Panel $panel = AbusingXML.loadXML($stream, Panel.class);
+		return new MagicPanel($panel);
+	}
+	
 }

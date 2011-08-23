@@ -9,36 +9,152 @@
 	<script type="text/javascript" src="shBrushXML.js"></script>
 	<link type="text/css" rel="stylesheet" href="shCoreDefault.css"/>
 	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	<style type="text/css">
+		body { background: white; color: black; font-family: Helvetica, Arial; }
+		h2 { border-bottom: 1px solid silver; }
+		h1 small { font-size: 0.77em; color: silver; }
+		.syntaxhighlighter { overflow-y: hidden !important; }
+		table { border-collapse: collapse; border: none; }
+		td { padding: .4em; font-family: "Courier", monospace; }
+		td + td { border-left: 1px solid silver; font-family: inherit; }
+		tr + tr td { border-top: 1px solid silver; }
+	</style>
 </head>
 
-<body style="background: white; font-family: Helvetica, Arial">
+<body style="background: white; font-family: Helvetica, Arial" id="spec">
 
-<h1>AbusingSwing</h1>
+<h1>AbusingSwing <small>(1.0-SNAPSHOT, 2011-08-23)</small></h1>
 
 <h2>Install</h2>
 
 <h3>Checkout Git Repository</h3>
 
+Since there is no stable version of AbusingSwing yet, there is no final version uploaded to a Maven repository yet. Thus you have to checkout AbusingSwing and AbusingJava and install them into you local maven repository (<a href="http://www.AbusingJava.net/Library">AbusingJava</a> is a dependency).
+
 <pre class="brush: bash;">
+git clone git://github.com/scravy/AbusingSwing.git AbusingJava
+cd AbusingJava
+mvn install
+cd ..
 git clone git://github.com/scravy/AbusingSwing.git AbusingSwing
 cd AbusingSwing
 mvn install
 </pre>
 
-<h3>Add Maven Dependency</h3>
+<h3>Add Maven Dependency to your Maven project</h3>
 
 <pre class="brush: xml;">
-&lt;dependency>
-	&lt;groupId>net.abusingjava&lt;/groupId>
-	&lt;artifactId>AbusingSwing&lt;/artifactId>
-	&lt;version>1.0-SNAPSHOT&lt;/version>
-&lt;/dependency>
+&lt;dependency&gt;
+	&lt;groupId&gt;net.abusingjava&lt;/groupId&gt;
+	&lt;artifactId&gt;AbusingSwing&lt;/artifactId&gt;
+	&lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+&lt;/dependency&gt;
 </pre>
 
+<h2>First steps</h2>
+
+<p>Save the following as <code>MyFirstAbusingSwingWindow.xml</code>:</p>
+<pre class="brush: xml;">
+&lt;window min-width="300" min-height="200" width="600" height="400"&gt;
+	&lt;panel&gt;
+	    &lt;box&gt;
+	        &lt;label
+	        	x="50%" y="50%" width="200px" height="50px"
+	        	font-size="30px"&gt;Hello World!&lt;/label&gt;
+	    &lt;/box&gt;
+	&lt;/panel&gt;
+&lt;/window&gt;
+</pre>
+
+<p>Save this as <code>MyFirstAbusingSwingWindow.java</code>:</p>
 <pre class="brush: java;">
-public static void main(String… $args) {
-	System.out.println("Hello World!");
+import net.abusingjava.xml.AbusingXML;
+
+public static class MyFirstAbusingSwingWindow {
+	public static void main(String... $args) {
+		AbusingSwing.showWindow("MyFirstAbusingSwingWindow.xml");
+	}
 }
 </pre>
+
+<p>Compile and run!</p>
+<pre class="brush: bash;">
+javac MyFirstAbusingSwingWindow.java
+java MyFirstAbusingSwingWindow
+</pre>
+
+<h2>API Reference</h2>
+
+
+
+<h2>XML Reference</h2>
+
+<h3>Common attributes</h3>
+
+<table>
+	<tr>
+		<td>height</td>
+		<td>The height of the component.</td>
+	</tr>
+	<tr>
+		<td>width</td>
+		<td>The width of the component.</td>
+	</tr>
+	<tr>
+		<td>foreground</td>
+		<td>The <span style="color: fuchsia;">foreground</span> color (the color used for the text).</td>
+	</tr>
+	<tr>
+		<td>background</td>
+		<td>The <span style="background: yellow;">background</span> color.</td>
+	</tr>
+	<tr>
+		<td>font-style</td>
+		<td>The <i>styling</i> of the font, <code>italic</code> or <code>normal</code>.</td>
+	</tr>
+	<tr>
+		<td>font-weight</td>
+		<td>The <b>weight</b> of the font, <code>bold</code> or <code>normal</code>.</td>
+	</tr>
+</table>
+
+<h3>Root Container</h3>
+
+<h4>&lt;panel></h4>
+
+<h4>&lt;window></h4>
+
+<table>
+	<tr>
+		<td>height</td>
+		<td>The initial height of the window.</td>
+	</tr>
+	<tr>
+		<td>width</td>
+		<td>The initial width of the window.</td>
+	</tr>
+	<tr>
+		<td>min-height</td>
+		<td>The minimum height to be always kept.</td>
+	</tr>
+	<tr>
+		<td>min-width</td>
+		<td>The minimum width to be always kept.</td>
+	</tr>
+</table>
+
+
+<h3>Container</h3>
+
+<h4>&lt;box></h4>
+
+<h4>&lt;hbox></h4>
+
+<h4>&lt;vbox></h4>
+
+
+
+
+</body>
 
 </html>

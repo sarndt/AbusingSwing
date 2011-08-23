@@ -9,6 +9,8 @@ import java.util.Collection;
 import java.util.Date;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.text.JTextComponent;
 
 import net.abusingjava.Author;
@@ -275,12 +277,130 @@ public class MagicComponents {
 		return this;
 	}
 
+	public MagicComponents add(final Iterable<Object> $values) {
+		for (Component $comp : $components) {
+			JComponent $c = $comp.getRealComponent();
+			if ($c instanceof JComboBox) {
+				ComboBoxModel $m = ((JComboBox)$c).getModel();
+				if ($m instanceof DefaultComboBoxModel) {
+					for (Object $value : $values) {
+						((DefaultComboBoxModel)$m).addElement($value);
+					}
+				}
+			} else if ($c instanceof JList) {
+				ListModel $m = ((JList)$c).getModel();
+				if ($m instanceof DefaultListModel) {
+					for (Object $value : $values) {
+						((DefaultListModel)$m).addElement($value);
+					}
+				}
+			}
+		}
+		return this;
+	}
+
+	public MagicComponents addRow(final Object[] $values) {
+		for (Component $comp : $components) {
+			JComponent $c = $comp.getRealComponent();
+			if ($c instanceof JTable) {
+				TableModel $m = ((JTable)$c).getModel();
+				if ($m instanceof DefaultTableModel) {
+					((DefaultTableModel)$m).addRow($values);
+				}
+			}
+		}
+		return this;
+	}
+
+	public MagicComponents addRows(final Object[][] $values) {
+		for (Component $comp : $components) {
+			JComponent $c = $comp.getRealComponent();
+			if ($c instanceof JTable) {
+				TableModel $m = ((JTable)$c).getModel();
+				if ($m instanceof DefaultTableModel) {
+					for (Object[] $row : $values) {
+						((DefaultTableModel)$m).addRow($row);
+					}
+				}
+			}
+		}
+		return this;
+	}
+
 	public MagicComponents add(final Object[] $values) {
+		for (Component $comp : $components) {
+			JComponent $c = $comp.getRealComponent();
+			if ($c instanceof JComboBox) {
+				ComboBoxModel $m = ((JComboBox)$c).getModel();
+				if ($m instanceof DefaultComboBoxModel) {
+					for (Object $value : $values) {
+						((DefaultComboBoxModel)$m).addElement($value);
+					}
+				}
+			} else if ($c instanceof JList) {
+				ListModel $m = ((JList)$c).getModel();
+				if ($m instanceof DefaultListModel) {
+					for (Object $value : $values) {
+						((DefaultListModel)$m).addElement($value);
+					}
+				}
+			}
+		}
 		return this;
 	}
 
 	public MagicComponents add(final Object $value) {
+		for (Component $comp : $components) {
+			JComponent $c = $comp.getRealComponent();
+			if ($c instanceof JComboBox) {
+				ComboBoxModel $m = ((JComboBox)$c).getModel();
+				if ($m instanceof DefaultComboBoxModel) {
+					((DefaultComboBoxModel)$m).addElement($value);
+				}
+			} else if ($c instanceof JList) {
+				ListModel $m = ((JList)$c).getModel();
+				if ($m instanceof DefaultListModel) {
+					((DefaultListModel)$m).addElement($value);
+				}
+			}
+		}
 		return this;
+	}
+
+	public MagicComponents setSelectedItem(final Object $item) {
+		for (Component $comp : $components) {
+			JComponent $c = $comp.getRealComponent();
+			if ($c instanceof JComboBox) {
+				ComboBoxModel $m = ((JComboBox)$c).getModel();
+				if ($m instanceof DefaultComboBoxModel) {
+					$m.setSelectedItem($item);
+				}
+			} else if ($c instanceof JList) {
+				ListModel $m = ((JList)$c).getModel();
+				((JList)$c).setSelectedValue($item, true);
+			}
+		}
+		return this;
+	}
+
+	public Object getSelectedItem() {
+		for (Component $comp : $components) {
+			JComponent $c = $comp.getRealComponent();
+			if ($c instanceof JComboBox) {
+				ComboBoxModel $m = ((JComboBox)$c).getModel();
+				if ($m instanceof DefaultComboBoxModel) {
+					return $m.getSelectedItem();
+				}
+			} else if ($c instanceof JList) {
+				ListModel $m = ((JList)$c).getModel();
+				try {
+					return $m.getElementAt(((JList)$c).getSelectedIndex());
+				} catch (ArrayIndexOutOfBoundsException $exc) {
+					return null;
+				}
+			}
+		}
+		return null;
 	}
 
 	public MagicComponents setValue(final int $value) {

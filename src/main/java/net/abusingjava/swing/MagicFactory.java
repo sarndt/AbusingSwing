@@ -3,6 +3,7 @@ package net.abusingjava.swing;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.swing.JFrame;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
@@ -54,6 +55,18 @@ public class MagicFactory {
 		} catch (Exception $exc) {
 			throw new RuntimeException($exc);
 		}
+	}
+	
+	public static MagicWindow showWindow(final String $resource) {
+		MagicWindow $window = makeWindow($resource);
+		$window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		$window.setVisible(true);
+		return $window;
+	}
+	
+	public static MagicWindow makeWindow(final String $resource) {
+		InputStream $stream = new Exception().getStackTrace()[0].getClass().getResourceAsStream($resource);
+		return makeWindow($stream);
 	}
 	
 	public static MagicWindow makeWindow(final InputStream $stream) {

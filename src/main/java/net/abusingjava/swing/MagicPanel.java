@@ -1,14 +1,10 @@
 package net.abusingjava.swing;
 
-import java.awt.Dimension;
 import java.io.InputStream;
 import java.util.*;
 import java.util.List;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
 
 import net.abusingjava.swing.magic.*;
 import net.abusingjava.xml.AbusingXML;
@@ -152,20 +148,19 @@ public class MagicPanel extends JPanel {
 	}
 	
 	public static void main(final String... $args) {
-		
-		JFrame $x = new JFrame();
+		AbusingSwing.setNimbusLookAndFeel();
+		AbusingSwing.showWindow("MagicPanel.xml");
+		/*
+		JFrame $f = new JFrame();
+		$f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JSplitPane $p = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JTextArea(), new JTextArea());
+		MagicPanel $m = MagicFactory.makePanel(MagicPanel.class.getResourceAsStream("MagicPanel.xml"));
+		$f.setContentPane($m);
 		
-		$p.setDividerLocation(70);
-
-		$x.setContentPane($p);
-		$x.pack();
-		
-		$x.setMinimumSize(new Dimension(500, 300));
-		
-		$x.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		$x.setVisible(true);
+		$f.setMinimumSize(new Dimension(300, 200));
+		$f.setSize(600, 400);
+		$f.setVisible(true);
+		*/
 	}
 
 	public MagicPanel setInvocationHandler(final Object $object) {

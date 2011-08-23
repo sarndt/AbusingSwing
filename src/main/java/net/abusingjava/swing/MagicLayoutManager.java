@@ -310,7 +310,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case PERCENT:
 					case STAR:
 					case AUTO:
-						System.err.println("PERCENT, STAR, and AUTO not yet supported within INTRINSIC");
+						// System.err.println("PERCENT, STAR, and AUTO not yet supported within INTRINSIC");
 						break;
 					}
 					
@@ -326,7 +326,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case PERCENT:
 					case STAR:
 					case AUTO:
-						System.err.println("PERCENT, STAR, and AUTO not yet supported within INTRINSIC");
+						// System.err.println("PERCENT, STAR, and AUTO not yet supported within INTRINSIC");
 						break;
 					}
 					break;
@@ -344,7 +344,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case PERCENT:
 					case STAR:
 					case AUTO:
-						System.err.println("PERCENT, STAR, and AUTO not yet supported within INTRINSIC");
+						// System.err.println("PERCENT, STAR, and AUTO not yet supported within INTRINSIC");
 						break;
 					}
 					
@@ -360,7 +360,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case PERCENT:
 					case STAR:
 					case AUTO:
-						System.err.println("PERCENT, STAR, and AUTO not yet supported within INTRINSIC");
+						// System.err.println("PERCENT, STAR, and AUTO not yet supported within INTRINSIC");
 						break;
 					}
 					break;

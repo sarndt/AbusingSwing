@@ -1,0 +1,28 @@
+<window min-width="300" min-height="200" width="600" height="400">
+
+
+	<panel>
+	
+		<vbox>
+		
+			<combobox name="combobox" />
+			
+			<hbox>
+				<table column-control-visible="true" name="table">
+					
+					<col type="string">Vorname</col>
+					<col type="string">Nachname</col>
+					<col type="int" max-width="100px">Alter</col>
+					
+				</table>
+				<list name="list">
+				
+				</list>
+			</hbox>
+		
+		</vbox>
+	
+	</panel>
+
+
+</window>

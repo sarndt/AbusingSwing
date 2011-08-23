@@ -62,13 +62,7 @@
 
 										<datepicker />
 
-										<textarea height="150px">Donec ullamcorper nulla non metus
-											auctor fringilla. Nulla vitae elit libero, a pharetra augue.
-											Integer posuere erat a ante venenatis dapibus posuere velit
-											aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum
-											at eros. Praesent commodo cursus magna, vel scelerisque nisl
-											consectetur et. Donec sed odio dui.
-										</textarea>
+										<textarea height="150px">Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui.</textarea>
 
 										<any name="datePicker" class="org.jdesktop.swingx.JXDatePicker" height="27px" />
 
@@ -107,24 +101,19 @@
 
 										<!-- <vsplit divider-location="100"> <vbox> <button>BTN</button> 
 											</vbox> <vbox> <button>BTN</button> </vbox> </vsplit> -->
-
 									</vbox>
-
 									<box background="black">
-
-										<box height="200px" width="200px" y="50%" x="50%">
-											<box x="0px" y="0px" width="100px" height="100px"
+										<box height="200px" width="200px" top="50%" left="50%">
+											<box left="0px" top="0px" width="100px" height="100px"
 												background="red" />
-											<box x="100px" y="0px" width="100px" height="100px"
+											<box left="100px" top="0px" width="100px" height="100px"
 												background="blue" />
-											<box x="0px" y="100px" width="100px" height="100px"
+											<box left="0px" top="100px" width="100px" height="100px"
 												background="green" />
-											<box x="100px" y="100px" width="100px" height="100px"
+											<box left="100px" top="100px" width="100px" height="100px"
 												background="yellow" />
 										</box>
-
 									</box>
-
 								</hbox>
 
 							</tab>
@@ -147,8 +136,7 @@
 				</card>
 				<card>
 					<box>
-						<button x="50%" y="50%" width="200px" onaction="toggle">TOGGLE
-						</button>
+						<button left="50%" top="50%" width="200px" onaction="toggle">TOGGLE</button>
 					</box>
 				</card>
 			</cards>

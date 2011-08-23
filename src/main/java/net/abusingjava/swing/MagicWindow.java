@@ -67,16 +67,6 @@ public class MagicWindow extends JFrame {
 		}
 	}
 
-	public static void main(final String... $args) {
-		AbusingSwing.setNimbusLookAndFeel();
-
-		final MagicWindow $win = MagicFactory.makeWindow(MagicWindow.class.getResourceAsStream("MagicWindow.xml"));
-		$win.setVisible(true);
-		$win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		$win.getMagicPanel().setInvocationHandler(new Toggle($win));
-	}
-
 	public void toggleFullscreen() {
 		final GraphicsDevice $dev = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		if ($dev.isFullScreenSupported()) {
@@ -119,4 +109,40 @@ public class MagicWindow extends JFrame {
 			}
 		}
 	}
+	
+	public MagicComponents $(final String $selector) {
+		return $magicPanel.$($selector);
+	}
+	
+	public MagicWindow setInvocationHandler(final Object $object) {
+		$magicPanel.setInvocationHandler($object);
+		return this;
+	}
+
+	public static void main(final String... $args) {
+		AbusingSwing.setNimbusLookAndFeel();
+
+		MagicWindow $win = AbusingSwing.showWindow("MagicTable.xml");
+		$win.getMagicPanel().setInvocationHandler(new Toggle($win));
+		
+		$win.getMagicPanel().$("#table").addRows(new Object[][] {
+				{"Julian", "Meier", 27},
+				{"Georg", "Meyer", 32},
+				{"Christian", "Müller", 35},
+				{"Stephan", "From", 23},
+				{"Michael", "Meister", 23},
+				{"Michal", "Youth", 100},
+		});
+		
+		for (int $i = 0; $i < 100; $i++) {
+			$win.$("#list").add($i);
+		}
+		System.out.println($win.$("#list").getSelectedItem());
+		$win.$("#list").setSelectedItem(27);
+		
+		$win.$("#combobox").add(new String[] {
+				"Huhu", "Hula", "Hulalala", "Hullalalaalla"
+		}).setSelectedItem("Hula");
+	}
+
 }

@@ -97,6 +97,9 @@ public class Style {
 
 		@XmlAttribute("auto-complete")
 		Boolean $autoComplete;
+		
+		@XmlAttribute("column-control-visible")
+		Boolean $columnControlVisible;
 	}
 	
 	@XmlChildElements()

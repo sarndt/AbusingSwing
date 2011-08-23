@@ -31,10 +31,10 @@ abstract public class Component {
 	@XmlAttribute
 	Value $minHeight = new Value("0px");
 	
-	@XmlAttribute("x")
+	@XmlAttribute("left")
 	Value $posX = new Value("0px");
 	
-	@XmlAttribute("y")
+	@XmlAttribute("top")
 	Value $posY = new Value("0px");
 	
 	@XmlAttribute
