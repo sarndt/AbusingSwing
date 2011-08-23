@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Hello SyntaxHighlighter</title>
+	<script type="text/javascript" src="shCore.js"></script>
+	<script type="text/javascript" src="shBrushJava.js"></script>
+	<script type="text/javascript" src="shBrushBash.js"></script>
+	<script type="text/javascript" src="shBrushXML.js"></script>
+	<link type="text/css" rel="stylesheet" href="shCoreDefault.css"/>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+</head>
+
+<body style="background: white; font-family: Helvetica, Arial">
+
+<h1>AbusingSwing</h1>
+
+<h2>Install</h2>
+
+<h3>Checkout Git Repository</h3>
+
+<pre class="brush: bash;">
+git clone git://github.com/scravy/AbusingSwing.git AbusingSwing
+cd AbusingSwing
+mvn install
+</pre>
+
+<h3>Add Maven Dependency</h3>
+
+<pre class="brush: xml;">
+&lt;dependency>
+	&lt;groupId>net.abusingjava&lt;/groupId>
+	&lt;artifactId>AbusingSwing&lt;/artifactId>
+	&lt;version>1.0-SNAPSHOT&lt;/version>
+&lt;/dependency>
+</pre>
+
+<pre class="brush: java;">
+public static void main(String… $args) {
+	System.out.println("Hello World!");
+}
+</pre>
+
+</html>

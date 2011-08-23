@@ -1,10 +1,7 @@
 package net.abusingjava.swing.magic;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
@@ -55,9 +52,6 @@ abstract public class Component {
 	@XmlAttribute
 	MethodType $onaction;
 	
-	@XmlAttribute("onaction-dispatch")
-	boolean $onactionDispatch = true;
-	
 	@XmlAttribute
 	MethodType $onclick;
 	
@@ -78,6 +72,12 @@ abstract public class Component {
 
 	@XmlAttribute
 	MethodType $onmouseout;
+
+	@XmlAttribute
+	MethodType $onmousemove;
+
+	@XmlAttribute
+	MethodType $onmousewheel;
 	
 	@XmlAttribute
 	MethodType $onkeydown;
@@ -196,30 +196,9 @@ abstract public class Component {
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
-					$onaction.call($main.getInvocationHandler());
-						}
-					});
-				}
-			};
-			if (AbusingReflection.hasMethod($realComponent, "addActionListener")) {
-				try {
-					$realComponent.getClass().getMethod("addActionListener", ActionListener.class).invoke($realComponent, $listener);
-				} catch (Exception $exc) {
-					System.err.println($exc);
-				}
-			}
-		}
-
-		if ($onaction != null) {
-			ActionListener $listener = new ActionListener() {
-				@Override
-				public void actionPerformed(final ActionEvent $ev) {
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
 							$onaction.call($main.getInvocationHandler());
 						}
-					}).start();
+					});
 				}
 			};
 			if (AbusingReflection.hasMethod($realComponent, "addActionListener")) {
@@ -238,7 +217,7 @@ abstract public class Component {
 					new Thread(new Runnable() {
 						@Override
 						public void run() {
-							$onclick.call($main.getInvocationHandler());
+							$onclick.call($main.getInvocationHandler(), $ev);
 						}
 					}).run();
 				}
@@ -253,7 +232,7 @@ abstract public class Component {
 					new Thread(new Runnable() {
 						@Override
 						public void run() {
-							$onmouseover.call($main.getInvocationHandler());
+							$onmouseover.call($main.getInvocationHandler(), $ev);
 						}
 					}).run();
 				}
@@ -268,12 +247,152 @@ abstract public class Component {
 					new Thread(new Runnable() {
 						@Override
 						public void run() {
-							$onmouseout.call($main.getInvocationHandler());
+							$onmouseout.call($main.getInvocationHandler(), $ev);
 						}
 					}).run();
 				}
 			};
 			$realComponent.addMouseListener($listener);
 		}
+
+		if ($onmousemove != null) {
+			MouseAdapter $listener = new MouseAdapter() {
+				@Override
+				public void mouseMoved(final MouseEvent $ev) {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							$onmousemove.call($main.getInvocationHandler(), $ev);
+						}
+					}).run();
+				}
+			};
+			$realComponent.addMouseListener($listener);
+		}
+
+		if ($onmousedown != null) {
+			MouseAdapter $listener = new MouseAdapter() {
+				@Override
+				public void mousePressed(final MouseEvent $ev) {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							$onmousedown.call($main.getInvocationHandler(), $ev);
+						}
+					}).run();
+				}
+			};
+			$realComponent.addMouseListener($listener);
+		}
+
+		if ($onmouseup != null) {
+			MouseAdapter $listener = new MouseAdapter() {
+				@Override
+				public void mouseReleased(final MouseEvent $ev) {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							$onmouseup.call($main.getInvocationHandler(), $ev);
+						}
+					}).run();
+				}
+			};
+			$realComponent.addMouseListener($listener);
+		}
+
+		if ($onmousewheel != null) {
+			MouseWheelListener $listener = new MouseWheelListener() {
+				
+				@Override
+				public void mouseWheelMoved(final MouseWheelEvent $ev) {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							$onmousewheel.call($main.getInvocationHandler(), $ev);
+						}
+					}).run();
+				}
+			};
+			$realComponent.addMouseWheelListener($listener);
+		}
+
+		if ($onkeydown != null) {
+			KeyAdapter $listener = new KeyAdapter() {
+				
+				@Override
+				public void keyPressed(final KeyEvent $ev) {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							$onkeydown.call($main.getInvocationHandler(), $ev);
+						}
+					}).run();
+				}
+			};
+			$realComponent.addKeyListener($listener);
+		}
+
+		if ($onkeyup != null) {
+			KeyAdapter $listener = new KeyAdapter() {
+				
+				@Override
+				public void keyReleased(final KeyEvent $ev) {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							$onkeyup.call($main.getInvocationHandler(), $ev);
+						}
+					}).run();
+				}
+			};
+			$realComponent.addKeyListener($listener);
+		}
+
+		if ($onkeypress != null) {
+			KeyAdapter $listener = new KeyAdapter() {
+				
+				@Override
+				public void keyTyped(final KeyEvent $ev) {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							$onkeypress.call($main.getInvocationHandler(), $ev);
+						}
+					}).run();
+				}
+			};
+			$realComponent.addKeyListener($listener);
+		}
+		
+		if ($onfocus != null) {
+			FocusAdapter $listener = new FocusAdapter() {
+				@Override
+				public void focusGained(final FocusEvent $ev) {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							$onfocus.call($main.getInvocationHandler(), $ev);
+						}
+					}).run();
+				}
+			};
+			$realComponent.addFocusListener($listener);
+		}
+
+		if ($onblur != null) {
+			FocusAdapter $listener = new FocusAdapter() {
+				@Override
+				public void focusLost(final FocusEvent $ev) {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							$onfocus.call($main.getInvocationHandler(), $ev);
+						}
+					}).run();
+				}
+			};
+			$realComponent.addFocusListener($listener);
+		}
+		
 	}
 }

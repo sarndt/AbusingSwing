@@ -6,7 +6,7 @@ import net.abusingjava.xml.XmlElement;
 @XmlElement("combobox")
 public class ComboBox {
 
-	@XmlAttribute("autocomplete")
+	@XmlAttribute("auto-complete")
 	boolean $autoComplete;
 	
 }

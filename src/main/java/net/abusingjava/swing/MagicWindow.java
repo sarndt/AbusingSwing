@@ -57,6 +57,14 @@ public class MagicWindow extends JFrame {
 		public void fullscreen() {
 			$window.toggleFullscreen();
 		}
+		
+		public void mouseover() {
+			System.out.println("mouseover");
+		}
+		
+		public void mouseout() {
+			System.out.println("mouseout");
+		}
 	}
 
 	public static void main(final String... $args) {

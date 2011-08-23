@@ -42,7 +42,7 @@
 
 									<vbox width="200px" padding-right="10px">
 										<textfield width="50%"></textfield>
-										<textfield width="3*">Value</textfield>
+										<textfield width="3*" onmouseover="mouseover" onmouseout="mouseout">Value</textfield>
 										<textfield width="2*" default-text="Click me..."></textfield>
 										<button font-size="20px" onaction="doIt">Button</button>
 										<button enabled="false">Button</button>
