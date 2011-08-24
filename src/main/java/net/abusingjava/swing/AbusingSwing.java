@@ -18,13 +18,10 @@
  */
 package net.abusingjava.swing;
 
+import java.awt.Dimension;
 import java.io.InputStream;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import net.abusingjava.Author;
@@ -124,9 +121,35 @@ final public class AbusingSwing {
 		$window.setVisible(true);
 		return $window;
 	}
+
+	public static MagicPanel showPanel(final String $resource, final int $width, final int $height) {
+		MagicPanel $panel = makePanel($resource);
+		JFrame $window = new JFrame();
+		$window.setContentPane($panel);
+		$window.setMinimumSize(new Dimension($width, $height));
+		$window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		$window.setVisible(true);
+		return $panel;
+	}
+
+	public static MagicPanel makePanel(final String $resource) {
+		int $i = 0;
+		String $className;
+		do {
+			$className = new Exception().getStackTrace()[$i++].getClassName();
+		} while ($className.equals(AbusingSwing.class.getCanonicalName()));
+		System.out.println($className);
+		try {
+			InputStream $stream = Class.forName($className).getResourceAsStream($resource);
+			return makePanel($stream);
+		} catch (ClassNotFoundException $exc) {
+			throw new NotGonnaHappenException($exc);
+		}
+	}
 	
 	public static MagicWindow makeWindow(final String $resource) {
-		String $className = new Exception().getStackTrace()[0].getClassName();
+		String $className = new Exception().getStackTrace()[2].getClassName();
+		System.out.println($className);
 		try {
 			InputStream $stream = Class.forName($className).getResourceAsStream($resource);
 			return makeWindow($stream);

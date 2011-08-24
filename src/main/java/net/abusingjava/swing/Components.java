@@ -28,6 +28,7 @@ public class Components {
 
 	final private ArrayList<Component> $components = new ArrayList<Component>();
 
+	
 	public Components(final Component... $components) {
 		this.$components.ensureCapacity($components.length);
 		for (Component $c : $components) {
@@ -41,6 +42,7 @@ public class Components {
 			this.$components.add($c);
 		}
 	}
+	
 
 	public Components setText(final String $text) {
 		for (Component $comp : $components) {
@@ -94,7 +96,10 @@ public class Components {
 	public String getText() {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
-			if ($c instanceof JTextComponent) {
+			System.out.println($c.getClass());
+			if ($c instanceof JPasswordField) {
+				return new String(((JPasswordField) $c).getPassword());
+			} else if ($c instanceof JTextComponent) {
 				return ((JTextComponent) $c).getText();
 			}
 		}

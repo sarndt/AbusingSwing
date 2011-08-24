@@ -35,5 +35,6 @@ public class Password extends TextField {
 		}
 		
 		$component = $c;
+		$realComponent = $c;
 	}
 }

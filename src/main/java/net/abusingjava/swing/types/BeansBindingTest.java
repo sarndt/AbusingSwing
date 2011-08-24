@@ -75,13 +75,15 @@ public class BeansBindingTest implements Runnable {
 		
 		String $name;
 		int $number = 4711;
+		boolean $boolean;
 		
 		public Thingie() {
 		}
 		
-		public Thingie(final String $string, final int $i) {
+		public Thingie(final String $string, final int $i, final boolean $b) {
 			$name = $string;
 			$number = $i;
+			$boolean = $b;
 		}
 
 		public String getName() {
@@ -89,9 +91,21 @@ public class BeansBindingTest implements Runnable {
 		}
 		
 		public void setName(final String $name) {
+			System.out.println($name);
 			String $oldValue = $name;
 			this.$name = $name;
 			$x.firePropertyChange("name", $oldValue, $name);
+		}
+		
+		public boolean getBoolean() {
+			return $boolean;
+		}
+		
+		public void setBoolean(final boolean $b) {
+			System.out.println($b);
+			boolean $oldValue = $boolean;
+			$boolean = $b;
+			$x.firePropertyChange("name", $oldValue, $boolean);
 		}
 		
 		public int getNumberProperty() {
@@ -146,8 +160,7 @@ public class BeansBindingTest implements Runnable {
 		$thingie.setName("Pretending I am weightless");
 		$list.add($thingie);
 		
-		$thingie = new Thingie("Are you in?", 42);
-		$window.getMagicPanel().bind("binding", $thingie);
+		$window.getMagicPanel().bind("binding", new Thingie("Are you in?", 42, true));
 		
 		try {
 			Thread.sleep(3000);
@@ -159,8 +172,7 @@ public class BeansBindingTest implements Runnable {
 			public void run() {
 				$window.getMagicPanel().bind("table-binding", $list);
 				
-				Thingie $t = new Thingie("Hi, I’m a thingie.", 17);
-				$window.getMagicPanel().bind("binding", $t);
+				$window.getMagicPanel().bind("binding", new Thingie("Hi, I’m a thingie.", 17, false));
 			}
 		});
 		
@@ -171,7 +183,7 @@ public class BeansBindingTest implements Runnable {
 		
 		final List<Thingie> $list2 = new LinkedList<Thingie>();
 		
-		$list2.add(new Thingie("Name", 37));
+		$list2.add(new Thingie("Name", 37, true));
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {

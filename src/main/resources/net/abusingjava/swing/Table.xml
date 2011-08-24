@@ -9,12 +9,14 @@
 		<binding name="binding">
 			<property name="name">field1</property>
 			<property name="numberProperty">field2</property>
+			<property name="boolean">checkmate</property>
 		</binding>
 
 		<vbox>
 			<hbox>
 				<textfield name="field1" />
 				<textfield name="field2" />
+				<checkbox name="checkmate" />
 			</hbox>
 			<table editable="true" name="table">
 				<col type="string">Crame</col>

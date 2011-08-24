@@ -4,9 +4,11 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.List;
 
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.text.JTextComponent;
 
 import org.jdesktop.beansbinding.*;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
@@ -36,7 +38,7 @@ public class MagicPanel extends JPanel {
 	Map<String,Component> $componentsByName = new HashMap<String,Component>();
 	ArrayList<Component> $myComponents = new ArrayList<Component>();
 
-	private Object $invocationHandler = null;
+	private Object $invocationHandler = this;
 	
 	public MagicPanel(final InputStream $stream) {
 		if ($stream == null) {
@@ -217,11 +219,19 @@ public class MagicPanel extends JPanel {
 			BindingGroup $bindingGroup = new BindingGroup();
 			
 			for (Property $p : $b) {
+				JComponent $target = $main.$("#" + $p.getTarget()).as(JComponent.class); 
+				
+				String $targetProperty = "";
+				
+				if ($target instanceof JTextComponent) {
+					$targetProperty = "text";
+				} else if ($target instanceof JCheckBox) {
+					$targetProperty = "selected";
+				}
+				
 				AutoBinding $binding = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
 						$object, BeanProperty.create($p.getName()),
-						$main.$("#" + $p.getTarget()).as(JComponent.class), BeanProperty.create("text"));
-				
-				
+						$target, BeanProperty.create($targetProperty));
 				
 				/* try {
 					Class<?> $type = $object.getClass().getMethod("get" + AbusingStrings.capitalize($p.getName())).getReturnType();

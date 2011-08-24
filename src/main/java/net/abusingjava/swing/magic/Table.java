@@ -38,7 +38,7 @@ public class Table extends Component {
 	@SuppressWarnings("rawtypes")
 	JTableBinding $binding = null;
 	
-	@SuppressWarnings({"rawtypes"})
+	@SuppressWarnings("rawtypes")
 	public void setBinding(final JTableBinding $binding) {
 		this.$binding = $binding;
 	}
