@@ -4,17 +4,19 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.List;
 
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
-import org.jdesktop.beansbinding.AutoBinding;
-import org.jdesktop.beansbinding.BeanProperty;
+import org.jdesktop.beansbinding.*;
+import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.JTableBinding.ColumnBinding;
 import org.jdesktop.swingbinding.SwingBindings;
 
 import net.abusingjava.swing.magic.*;
 import net.abusingjava.swing.magic.Binding.Property;
+import net.abusingjava.swing.magic.Binding;
 import net.abusingjava.xml.AbusingXML;
 
 
@@ -209,6 +211,44 @@ public class MagicPanel extends JPanel {
 			
 			$tableDefinition.setBinding($tableBinding);
 			$tableBinding.bind();
+		} else {
+			$b.clearBinding();
+			
+			BindingGroup $bindingGroup = new BindingGroup();
+			
+			for (Property $p : $b) {
+				AutoBinding $binding = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
+						$object, BeanProperty.create($p.getName()),
+						$main.$("#" + $p.getTarget()).as(JComponent.class), BeanProperty.create("text"));
+				
+				
+				
+				/* try {
+					Class<?> $type = $object.getClass().getMethod("get" + AbusingStrings.capitalize($p.getName())).getReturnType();
+					if (($type == Integer.class) || ($type == int.class)) {
+						$binding.setConverter(new Converter() {
+							
+							@Override
+							public Object convertForward(final Object $value) {
+								return $value.toString();
+							}
+
+							@Override
+							public Object convertReverse(final Object $value) {
+								return Integer.parseInt($value.toString());
+							}
+							
+						});
+					}
+				} catch (Exception $exc) {
+					System.err.println("Binding: No such source property found." + $exc);
+				} */
+				
+				$bindingGroup.addBinding($binding);
+			}
+			
+			$b.setBinding($bindingGroup);
+			$bindingGroup.bind();
 		}
 		
 		return this;

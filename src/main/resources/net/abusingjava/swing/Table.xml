@@ -6,11 +6,20 @@
 			<property name="numberProperty">Crumber</property>
 		</binding>
 
-		<hbox>
+		<binding name="binding">
+			<property name="name">field1</property>
+			<property name="numberProperty">field2</property>
+		</binding>
+
+		<vbox>
+			<hbox>
+				<textfield name="field1" />
+				<textfield name="field2" />
+			</hbox>
 			<table editable="true" name="table">
 				<col type="string">Crame</col>
 				<col type="int">Crumber</col>
 			</table>
-		</hbox>
+		</vbox>
 	</panel>
 </window>

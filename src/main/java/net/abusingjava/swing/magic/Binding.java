@@ -2,6 +2,8 @@ package net.abusingjava.swing.magic;
 
 import java.util.Iterator;
 
+import org.jdesktop.beansbinding.BindingGroup;
+
 import net.abusingjava.arrays.AbusingArrays;
 import net.abusingjava.swing.magic.Binding.Property;
 import net.abusingjava.xml.XmlAttribute;
@@ -35,6 +37,19 @@ public class Binding implements Iterable<Property> {
 		
 		public String getTarget() {
 			return $target;
+		}
+	}
+	
+	BindingGroup $group = null;
+	
+	public void setBinding(final BindingGroup $group) {
+		this.$group = $group;
+	}
+	
+	public void clearBinding() {
+		if ($group != null) {
+			$group.unbind();
+			$group = null;
 		}
 	}
 	

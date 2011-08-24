@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -72,7 +73,7 @@ public class BeansBindingTest implements Runnable {
 	public static class Thingie {
 		PropertyChangeSupport $x = new PropertyChangeSupport(this);
 		
-		String $name = "koool";
+		String $name;
 		int $number = 4711;
 		
 		public Thingie() {
@@ -124,7 +125,7 @@ public class BeansBindingTest implements Runnable {
 	public void run() {
 		AbusingSwing.setNimbusLookAndFeel();
 		
-		MagicWindow $window = AbusingSwing.showWindow("Table.xml");
+		final MagicWindow $window = AbusingSwing.showWindow("Table.xml");
 			
 		JTable $table = $window.getMagicPanel().$(JTable.class).as(JXTable.class);
 		
@@ -135,7 +136,7 @@ public class BeansBindingTest implements Runnable {
 			}
 		});
 
-		List<Thingie> $list = new LinkedList<Thingie>();
+		final List<Thingie> $list = new LinkedList<Thingie>();
 		
 		Thingie $thingie = new Thingie();
 		$thingie.setName("I lean against the wind");
@@ -145,52 +146,40 @@ public class BeansBindingTest implements Runnable {
 		$thingie.setName("Pretending I am weightless");
 		$list.add($thingie);
 		
-		/*ObservableList<Thingie> $list = ObservableCollections.observableList(new LinkedList<Thingie>());
-		
-		$thingie.setName("Legend");
-		$thingie.setNumberProperty(7);
-		$list.add($thingie);
-		
-		BindingGroup $bindingGroup = new BindingGroup();
-		
-		JTableBinding $tableBinding = SwingBindings.createJTableBinding(
-				AutoBinding.UpdateStrategy.READ_WRITE, $list, $table);
-		
-		ColumnBinding $columnBinding = $tableBinding.addColumnBinding(
-				ELProperty.create("${name}"));
-		$columnBinding.setColumnName("Crame");
-		$columnBinding.setColumnClass(String.class);
-		
-		$columnBinding = $tableBinding.addColumnBinding(
-				ELProperty.create("${numberProperty}"));
-		$columnBinding.setColumnName("Crumber");
-		$columnBinding.setColumnClass(String.class);
-		
-		$bindingGroup.addBinding($tableBinding);
-		
-		$tableBinding.bind();
-		
-		$bindingGroup.bind();
-		
-		$list.add(new Thingie()); */
-
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException $exc) {
-		}
-		
-		$window.getMagicPanel().bind("table-binding", $list);
+		$thingie = new Thingie("Are you in?", 42);
+		$window.getMagicPanel().bind("binding", $thingie);
 		
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException $exc) {
 		}
 		
-		List<Thingie> $list2 = new LinkedList<Thingie>();
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				$window.getMagicPanel().bind("table-binding", $list);
+				
+				Thingie $t = new Thingie("Hi, I’m a thingie.", 17);
+				$window.getMagicPanel().bind("binding", $t);
+			}
+		});
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException $exc) {
+		}
+		
+		final List<Thingie> $list2 = new LinkedList<Thingie>();
 		
 		$list2.add(new Thingie("Name", 37));
-		
-		$window.getMagicPanel().bind("table-binding", $list2);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				$window.getMagicPanel().bind("table-binding", $list2);
+				
+				$window.getMagicPanel().bind("binding", new Thingie());
+			}
+		});
 	}
 	
 	public static void main(final String... $args) {
