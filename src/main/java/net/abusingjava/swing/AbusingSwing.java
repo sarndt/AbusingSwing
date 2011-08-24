@@ -148,7 +148,11 @@ final public class AbusingSwing {
 	}
 	
 	public static MagicWindow makeWindow(final String $resource) {
-		String $className = new Exception().getStackTrace()[2].getClassName();
+		int $i = 0;
+		String $className;
+		do {
+			$className = new Exception().getStackTrace()[$i++].getClassName();
+		} while ($className.equals(AbusingSwing.class.getCanonicalName()));
 		System.out.println($className);
 		try {
 			InputStream $stream = Class.forName($className).getResourceAsStream($resource);

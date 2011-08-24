@@ -27,6 +27,12 @@ public class Window {
 	@XmlAttribute("height")
 	Integer $height;
 
+	@XmlAttribute("title")
+	String $title = "";
+	
+	@XmlAttribute
+	boolean $resizable = true;
+	
 	@XmlChildElement
 	Menu $menu;
 	
@@ -50,6 +56,13 @@ public class Window {
 		return new Dimension($width, $height);
 	}
 	
+	public boolean getResizable() {
+		return $resizable;
+	}
+	
+	public String getTitle() {
+		return $title;
+	}
 	
 	public Panel getPanel() {
 		return $contentPane;

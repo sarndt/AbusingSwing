@@ -90,7 +90,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$starsHeight++;
 						break;
 					case INTRINSIC:
-						// TODO
+						$remainingHeight -= minimumLayoutSize($container).height;
 						break;
 					}
 					switch ($c.getWidth().getUnit()) {
@@ -121,7 +121,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$starsWidth++;
 						break;
 					case INTRINSIC:
-						// TODO
+						$remainingHeight -= minimumLayoutSize($container).width;
 						break;
 					}
 					switch ($c.getHeight().getUnit()) {
@@ -161,7 +161,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$newHeight = (int) ((1 / (double) $starsHeight) * $remainingHeight);
 						break;
 					case INTRINSIC:
-						$newWidth = minimumLayoutSize($container).height;
+						$newHeight = minimumLayoutSize($container).height;
 						break;
 					}
 					switch ($c.getWidth().getUnit()) {

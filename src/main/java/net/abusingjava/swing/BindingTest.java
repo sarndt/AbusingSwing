@@ -41,6 +41,8 @@ public class BindingTest {
 			pack();
 		}}.setVisible(true);
 		
+		
+		
 	}
 	
 }

@@ -1,4 +1,4 @@
-package net.abusingjava.swing.types;
+package net.abusingjava.swing;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -15,8 +15,6 @@ import org.jdesktop.observablecollections.ObservableList;
 import org.jdesktop.observablecollections.ObservableListListener;
 import org.jdesktop.swingx.JXTable;
 
-import net.abusingjava.swing.AbusingSwing;
-import net.abusingjava.swing.MagicWindow;
 
 public class BeansBindingTest implements Runnable {
 

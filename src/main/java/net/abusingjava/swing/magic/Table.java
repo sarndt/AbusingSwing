@@ -34,9 +34,24 @@ public class Table extends Component {
 	
 	@XmlAttribute("column-control-visible")
 	boolean $columnControlVisible = true;
+	
+	@XmlAttribute("horizontal-scroll-enabled")
+	boolean $horizontalScrollEnabled = false;
 
+	@XmlAttribute("column-margin")
+	Integer $columnMargin;
+	
+	@XmlAttribute("terminate-edit-on-focus-lost")
+	boolean $terminateEditOnFocusLost = true;
+	
+	@XmlAttribute("sorts-on-update")
+	boolean $sortsOnUpdate = true;
+	
 	@SuppressWarnings("rawtypes")
 	JTableBinding $binding = null;
+
+	@XmlAttribute("row-height")
+	Value $rowHeight;
 	
 	@SuppressWarnings("rawtypes")
 	public void setBinding(final JTableBinding $binding) {
@@ -106,10 +121,18 @@ public class Table extends Component {
 		$c.setEditable($editable);
 		$c.setSortable($sortable);
 		$c.setColumnControlVisible($columnControlVisible);
+		$c.setHorizontalScrollEnabled($horizontalScrollEnabled);
+		$c.setSortsOnUpdates($sortsOnUpdate);
+		$c.setTerminateEditOnFocusLost($terminateEditOnFocusLost);
+		if (($rowHeight != null) && ($rowHeight.getUnit() == Unit.PIXEL) && ($rowHeight.getValue() >= 0)) {
+			$c.setRowHeight($rowHeight.getValue());
+		}
+		if (($columnMargin != null) && ($columnMargin >= 0)) {
+			$c.setColumnMargin($columnMargin);
+		}
 		if ($gridColor != null) {
 			$c.setGridColor($gridColor.getColor());
 		}
-		
 		for (int $i = 0; $i < $columns.length; $i++) {
 			if (($columns[$i].$maxWidth != null) && ($columns[$i].$maxWidth.getUnit() == Unit.PIXEL)) {
 				$c.getColumn($columnHeaders[$i]).setMaxWidth($columns[$i].$maxWidth.getValue());
@@ -121,8 +144,6 @@ public class Table extends Component {
 				$c.getColumn($columnHeaders[$i]).setPreferredWidth($columns[$i].$width.getValue());
 			}
 		}
-		
-		
 		$realComponent = $c;
 		$component = new JScrollPane($c);
 		$c.setFillsViewportHeight(true);

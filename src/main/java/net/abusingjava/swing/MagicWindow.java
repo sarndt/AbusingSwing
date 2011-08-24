@@ -8,7 +8,6 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 import net.abusingjava.Author;
-import net.abusingjava.swing.AbusingSwing;
 import net.abusingjava.swing.magic.Window;
 
 @Author("Julian Fleischer")
@@ -22,7 +21,7 @@ public class MagicWindow extends JFrame {
 	final MagicPanel $magicPanel;
 
 	MagicWindow(final Window $window) {
-
+		super($window.getTitle());
 		if ($window.hasMinSize()) {
 			setMinimumSize($window.getMinSize());
 		}
@@ -33,6 +32,7 @@ public class MagicWindow extends JFrame {
 		$magicPanel = new MagicPanel($window.getPanel());
 		setLocationRelativeTo(null);
 		setContentPane($magicPanel);
+		setResizable($window.getResizable());
 
 		pack();
 	}
@@ -118,7 +118,7 @@ public class MagicWindow extends JFrame {
 		$magicPanel.setInvocationHandler($object);
 		return this;
 	}
-
+	
 	public static void main(final String... $args) {
 		AbusingSwing.setNimbusLookAndFeel();
 

@@ -2,6 +2,7 @@ package net.abusingjava.swing.magic;
 
 import java.awt.Font;
 import java.awt.event.*;
+import java.util.Locale;
 
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
@@ -132,6 +133,10 @@ abstract public class Component {
 	
 	public ClassNames getClasses() {
 		return $classes;
+	}
+	
+	public boolean hasClass(final String $className) {
+		return $classes.contains($className);
 	}
 	
 	public Value getWidth() {
@@ -394,5 +399,6 @@ abstract public class Component {
 			$realComponent.addFocusListener($listener);
 		}
 		
+		$realComponent.setLocale(Locale.GERMAN);
 	}
 }

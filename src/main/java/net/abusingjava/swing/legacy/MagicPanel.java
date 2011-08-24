@@ -528,8 +528,9 @@ public class MagicPanel extends JPanel {
 				$def.$values[$i] = new Magic.ComboBox.Val($values[$i].toString());
 			}
 		}
-		if ($def.$sorted)
+		if ($def.$sorted) {
 			Arrays.sort($def.$values);
+		}
 		JComboBox $box = new JComboBox($def.$model = new DefaultComboBoxModel($def.$values));
 		if ($def.$autoComplete) {
 			AutoCompleteDecorator.decorate($box);

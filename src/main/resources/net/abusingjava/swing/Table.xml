@@ -1,26 +1,16 @@
-<window width="600" height="400">
+<window width="600" height="400" title="Title of this window">
 	<panel>
 		
-		<binding name="table-binding" table="table">
-			<property name="name">Crame</property>
-			<property name="numberProperty">Crumber</property>
-		</binding>
-
-		<binding name="binding">
-			<property name="name">field1</property>
-			<property name="numberProperty">field2</property>
-			<property name="boolean">checkmate</property>
-		</binding>
-
 		<vbox>
-			<hbox>
-				<textfield name="field1" />
-				<textfield name="field2" />
+			<hbox height="intrinsic">
+				<textfield name="field1" filters="#table(Crame)" />
+				<textfield name="field2" filters="#table()" />
 				<checkbox name="checkmate" />
 			</hbox>
 			<table editable="true" name="table">
-				<col type="string">Crame</col>
-				<col type="int">Crumber</col>
+				<col type="string">Name1</col>
+				<col type="string">Name2</col>
+				<col type="bool" max-width="20px" min-width="20px">Brool</col>
 			</table>
 		</vbox>
 	</panel>

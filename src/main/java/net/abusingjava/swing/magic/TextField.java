@@ -3,13 +3,13 @@ package net.abusingjava.swing.magic;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.regex.Pattern;
 
 import javax.swing.JTextField;
 
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.types.Value;
 import net.abusingjava.xml.XmlAttribute;
-import net.abusingjava.xml.XmlChildElements;
 import net.abusingjava.xml.XmlElement;
 
 @XmlElement("textfield")
@@ -18,14 +18,22 @@ public class TextField extends TextComponent {
 	@XmlAttribute("default-text")
 	String $defaultText = "";
 
-	@XmlChildElements
-	Filter[] $filter = new Filter[] {};
+	@XmlAttribute
+	Filters $filter;
 	
 	@XmlAttribute("select-on-focus")
 	boolean $selectOnFocus = true;
 	
+	public static class Filters {
+		
+		public Filters(final String $filters) {
+			if (Pattern.matches("\#[a-z]+\(\)", "")) {
+				
+			}
+		}
+	}
 	
-	boolean $textEntered = false;
+	private boolean $textEntered = false;
 
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {

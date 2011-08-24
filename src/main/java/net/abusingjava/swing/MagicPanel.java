@@ -20,6 +20,7 @@ import net.abusingjava.swing.magic.*;
 import net.abusingjava.swing.magic.Binding.Property;
 import net.abusingjava.swing.magic.Binding;
 import net.abusingjava.xml.AbusingXML;
+import net.abusingjava.xml.XmlElement;
 
 
 public class MagicPanel extends JPanel {
@@ -133,9 +134,23 @@ public class MagicPanel extends JPanel {
 			}
 			return new Components();
 		} else if ($selector.startsWith(".")) {
-			
+			String $className = $selector.substring(1);
+			List<Component> $list = new LinkedList<Component>();
+			for (Component $c : $componentsByName.values()) {
+				if ($c.hasClass($className)) {
+					$list.add($c);
+				}
+			}
+			return new Components($list);
+		} else {
+			List<Component> $list = new LinkedList<Component>();
+			for (Component $c : $componentsByName.values()) {
+				if ($c.getClass().getAnnotation(XmlElement.class).value().equals($selector)) {
+					$list.add($c);
+				}
+			}
+			return new Components($list);
 		}
-		return null;
 	}
 	
 	public Components $(final Class<?> $componentClass) {

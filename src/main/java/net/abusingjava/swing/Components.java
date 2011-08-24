@@ -44,6 +44,10 @@ public class Components {
 	}
 	
 
+	public Component get(final int $index) {
+		return $components.get($index);
+	}
+	
 	public Components setText(final String $text) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
@@ -512,13 +516,5 @@ public class Components {
 
 	public int getValue() {
 		return 0;
-	}
-
-	public Components setDate(final Date $date) {
-		return this;
-	}
-
-	public Date getDate() {
-		return null;
 	}
 }
