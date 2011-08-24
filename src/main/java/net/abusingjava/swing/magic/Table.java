@@ -4,6 +4,7 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingx.JXTable;
 
 import net.abusingjava.swing.MagicPanel;
@@ -32,8 +33,23 @@ public class Table extends Component {
 	Column[] $columns;
 	
 	@XmlAttribute("column-control-visible")
-	boolean $columnControlVisible;
+	boolean $columnControlVisible = true;
 
+	@SuppressWarnings("rawtypes")
+	JTableBinding $binding = null;
+	
+	@SuppressWarnings({"rawtypes"})
+	public void setBinding(final JTableBinding $binding) {
+		this.$binding = $binding;
+	}
+	
+	public void clearBinding() {
+		if ($binding != null) {
+			$binding.unbind();
+			$binding = null;
+		}
+	}
+	
 	@XmlElement("col")
 	public static class Column {
 		@XmlAttribute
@@ -50,6 +66,19 @@ public class Table extends Component {
 		
 		@XmlTextContent
 		String $text = "";
+		
+		public Class<?> getJavaType() {
+			return $type.getJavaType();
+		}
+	}
+	
+	public Column getColumn(final String $label) {
+		for (Column $c : $columns) {
+			if ($c.$text.equals($label)) {
+				return $c;
+			}
+		}
+		return null;
 	}
 	
 	@Override
@@ -63,9 +92,10 @@ public class Table extends Component {
 		TableModel $model = new DefaultTableModel($columnHeaders, 0) {
 			private static final long serialVersionUID = -135732270243460558L;
 
-			@Override public Class<?> getColumnClass(final int $col) {
+			@Override
+			public Class<?> getColumnClass(final int $col) {
 				try {
-					return $columns[$col].$type.getClass();
+					return $columns[$col].$type.getJavaType();
 				} catch (Exception $exc) {
 					return Object.class;
 				}

@@ -3,15 +3,15 @@ package net.abusingjava.swing;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.text.JTextComponent;
+import javax.swing.tree.TreeModel;
 
 import net.abusingjava.Author;
 import net.abusingjava.Since;
@@ -24,25 +24,25 @@ import net.abusingjava.swing.magic.Component;
 @Author("Julian Fleischer")
 @Version("2011-08-19")
 @Since(value = "2011-08-19", version = "1.0")
-public class MagicComponents {
+public class Components {
 
 	final private ArrayList<Component> $components = new ArrayList<Component>();
 
-	public MagicComponents(final Component... $components) {
+	public Components(final Component... $components) {
 		this.$components.ensureCapacity($components.length);
 		for (Component $c : $components) {
 			this.$components.add($c);
 		}
 	}
 
-	public MagicComponents(final Collection<Component> $components) {
+	public Components(final Collection<Component> $components) {
 		this.$components.ensureCapacity($components.size());
 		for (Component $c : $components) {
 			this.$components.add($c);
 		}
 	}
 
-	public MagicComponents setText(final String $text) {
+	public Components setText(final String $text) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JTextComponent) {
@@ -53,6 +53,39 @@ public class MagicComponents {
 				((JLabel) $c).setText($text);
 			} else if ($c instanceof JCheckBox) {
 				((JCheckBox) $c).setText($text);
+			}
+		}
+		return this;
+	}
+	
+	public Components setModel(final Object $model) {
+		if ($model instanceof TableModel) {
+			for (Component $comp : $components) {
+				JComponent $c = $comp.getRealComponent();
+				if ($c instanceof JTable) {
+					((JTable)$c).setModel((TableModel) $model);
+				}
+			}
+		} else if ($model instanceof ListModel) {
+			for (Component $comp : $components) {
+				JComponent $c = $comp.getRealComponent();
+				if ($c instanceof JList) {
+					((JList)$c).setModel((ListModel) $model);
+				}
+			}
+		} else if ($model instanceof TreeModel) {
+			for (Component $comp : $components) {
+				JComponent $c = $comp.getRealComponent();
+				if ($c instanceof JTree) {
+					((JTree)$c).setModel((TreeModel) $model);
+				}
+			}
+		} else if ($model instanceof ComboBoxModel) {
+			for (Component $comp : $components) {
+				JComponent $c = $comp.getRealComponent();
+				if ($c instanceof JComboBox) {
+					((JComboBox)$c).setModel((ComboBoxModel) $model);
+				}
 			}
 		}
 		return this;
@@ -68,7 +101,7 @@ public class MagicComponents {
 		return "";
 	}
 
-	public MagicComponents show(final int $index) {
+	public Components show(final int $index) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -83,7 +116,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents showNext() {
+	public Components showNext() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -98,7 +131,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents showPrev() {
+	public Components showPrev() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -113,7 +146,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents showFirst() {
+	public Components showFirst() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -128,7 +161,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents showLast() {
+	public Components showLast() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -145,6 +178,16 @@ public class MagicComponents {
 
 	@SuppressWarnings("unchecked")
 	public <T extends JComponent> T as(final Class<T> $class) {
+		if ($class.isArray()) {
+			List<T> $list = new LinkedList<T>();
+			for (Component $comp : $components) {
+				JComponent $c = $comp.getRealComponent();
+				if ($class.isAssignableFrom($c.getClass())) {
+					$list.add((T) $c);
+				}
+			}
+			return (T) (Object) $list.toArray((Object[]) Array.newInstance($class.getComponentType(), $list.size()));
+		}
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($class.isAssignableFrom($c.getClass())) {
@@ -153,8 +196,12 @@ public class MagicComponents {
 		}
 		return null;
 	}
-
-	public MagicComponents show() {
+	
+	public int count() {
+		return $components.size();
+	}
+	
+	public Components show() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -166,7 +213,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents hide() {
+	public Components hide() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -178,7 +225,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents enable() {
+	public Components enable() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -191,7 +238,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents disable() {
+	public Components disable() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -203,7 +250,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents setForeground(final Color $color) {
+	public Components setForeground(final Color $color) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -215,7 +262,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents setForeground(final String $hexColor) {
+	public Components setForeground(final String $hexColor) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -227,7 +274,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents setBackground(final Color $color) {
+	public Components setBackground(final Color $color) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -239,7 +286,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents setBackground(final String $hexColor) {
+	public Components setBackground(final String $hexColor) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -251,7 +298,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents setFont(final String $font) {
+	public Components setFont(final String $font) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -264,7 +311,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents setFontSize(final int $size) {
+	public Components setFontSize(final int $size) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -277,7 +324,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents add(final Iterable<Object> $values) {
+	public Components add(final Iterable<Object> $values) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
@@ -299,7 +346,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents addRow(final Object[] $values) {
+	public Components addRow(final Object[] $values) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JTable) {
@@ -312,7 +359,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents addRows(final Object[][] $values) {
+	public Components addRows(final Object[][] $values) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JTable) {
@@ -327,7 +374,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents add(final Object[] $values) {
+	public Components add(final Object[] $values) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
@@ -349,7 +396,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents add(final Object $value) {
+	public Components add(final Object $value) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
@@ -367,7 +414,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents setSelectedItem(final Object $item) {
+	public Components setSelectedItem(final Object $item) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
@@ -376,7 +423,6 @@ public class MagicComponents {
 					$m.setSelectedItem($item);
 				}
 			} else if ($c instanceof JList) {
-				ListModel $m = ((JList)$c).getModel();
 				((JList)$c).setSelectedValue($item, true);
 			}
 		}
@@ -403,7 +449,7 @@ public class MagicComponents {
 		return null;
 	}
 
-	public MagicComponents setValue(final int $value) {
+	public Components setValue(final int $value) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -427,7 +473,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents setMax(final int $value) {
+	public Components setMax(final int $value) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -463,7 +509,7 @@ public class MagicComponents {
 		return 0;
 	}
 
-	public MagicComponents setDate(final Date $date) {
+	public Components setDate(final Date $date) {
 		return this;
 	}
 

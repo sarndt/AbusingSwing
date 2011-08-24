@@ -110,7 +110,7 @@ public class MagicWindow extends JFrame {
 		}
 	}
 	
-	public MagicComponents $(final String $selector) {
+	public Components $(final String $selector) {
 		return $magicPanel.$($selector);
 	}
 	

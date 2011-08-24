@@ -1,23 +1,22 @@
-<window min-width="300" min-height="200" width="600" height="400">
+<window min-width="300" min-height="200" width="900" height="400">
 
 
 	<panel>
 	
 		<vbox>
 		
-			<combobox name="combobox" />
+			<combobox name="combobox" auto-complete="true" />
 			
 			<hbox>
-				<table column-control-visible="true" name="table">
+				<table column-control-visible="true" name="table" width="2*">
 					
-					<col type="string">Vorname</col>
+					<col type="string">Vorname</col>skyp
 					<col type="string">Nachname</col>
 					<col type="int" max-width="100px">Alter</col>
 					
 				</table>
-				<list name="list">
-				
-				</list>
+				<multilist name="multilist" />
+				<list name="list" />
 			</hbox>
 		
 		</vbox>

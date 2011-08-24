@@ -6,24 +6,25 @@ public class JavaType {
 	
 	public JavaType(final String $javaType) throws ClassNotFoundException {
 		Class<?> $class = null;
-		if ("string".equalsIgnoreCase($javaType))
+		if ("string".equalsIgnoreCase($javaType)) {
 			$class = java.lang.String.class;
-		else if ("byte".equalsIgnoreCase($javaType))
-			$class = byte.class;
-		else if ("short".equalsIgnoreCase($javaType))
-			$class = int.class;
-		else if ("long".equalsIgnoreCase($javaType))
-			$class = long.class;
-		else if ("int".equalsIgnoreCase($javaType) || "integer".equalsIgnoreCase("javaType"))
-			$class = int.class;
-		else if ("boolean".equalsIgnoreCase($javaType) || "bool".equalsIgnoreCase("javaType"))
-			$class = boolean.class;
-		else if ("float".equalsIgnoreCase($javaType))
-			$class = float.class;
-		else if ("double".equalsIgnoreCase($javaType))
-			$class = double.class;
-		else if ("date".equalsIgnoreCase($javaType))
+		} else if ("byte".equalsIgnoreCase($javaType)) {
+			$class = Byte.class;
+		} else if ("short".equalsIgnoreCase($javaType)) {
+			$class = Short.class;
+		} else if ("long".equalsIgnoreCase($javaType)) {
+			$class = Long.class;
+		} else if ("int".equalsIgnoreCase($javaType) || "integer".equalsIgnoreCase($javaType)) {
+			$class = Integer.class;
+		} else if ("boolean".equalsIgnoreCase($javaType) || "bool".equalsIgnoreCase($javaType)) {
+			$class = Boolean.class;
+		} else if ("float".equalsIgnoreCase($javaType)) {
+			$class = Float.class;
+		} else if ("double".equalsIgnoreCase($javaType)) {
+			$class = Double.class;
+		} else if ("date".equalsIgnoreCase($javaType)) {
 			$class = java.util.Date.class;
+		}
 		
 		if ($class == null)
 			$class = Class.forName($javaType);

@@ -24,7 +24,7 @@ public class Label extends TextComponent {
 			$height = new Value("20px");
 		}
 
-		int $align = JXLabel.LEFT;
+		int $align = JLabel.LEFT;
 		if ("right".equals($textAlign)) {
 			$align = JLabel.RIGHT;
 		} else if ("center".equals($textAlign)) {
@@ -34,9 +34,9 @@ public class Label extends TextComponent {
 		JLabel $c = new JLabel($text, $align);
 		
 		if ("top".equals($verticalAlignment)) {
-			$c.setVerticalAlignment(JLabel.TOP);
+			$c.setVerticalAlignment(JXLabel.TOP);
 		} else if ("bottom".equals($verticalAlignment)) {
-			$c.setVerticalAlignment(JLabel.BOTTOM);
+			$c.setVerticalAlignment(JXLabel.BOTTOM);
 		}
 
 		if (($background != null) && ($opaque == null)) {

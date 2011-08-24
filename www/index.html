@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Hello SyntaxHighlighter</title>
+	<title>AbusingSwing (1.0-SNAPSHOT, 2011-08-23)</title>
 	<script type="text/javascript" src="shCore.js"></script>
 	<script type="text/javascript" src="shBrushJava.js"></script>
 	<script type="text/javascript" src="shBrushBash.js"></script>
@@ -15,15 +15,19 @@
 		h1 small { font-size: 0.77em; color: silver; }
 		.syntaxhighlighter { overflow-y: hidden !important; }
 		table { border-collapse: collapse; border: none; }
+		th { padding: .4em; border-bottom: 1px solid black; }
 		td { padding: .4em; font-family: "Courier", monospace; }
 		td + td { border-left: 1px solid silver; font-family: inherit; }
 		tr + tr td { border-top: 1px solid silver; }
+		.experimental { color: maroon; font-variant: small-caps; }
 	</style>
 </head>
 
 <body style="background: white; font-family: Helvetica, Arial" id="spec">
 
 <h1>AbusingSwing <small>(1.0-SNAPSHOT, 2011-08-23)</small></h1>
+
+<h2>About</h2>
 
 <h2>Install</h2>
 
@@ -83,8 +87,16 @@ javac MyFirstAbusingSwingWindow.java
 java MyFirstAbusingSwingWindow
 </pre>
 
-<h2>API Reference</h2>
 
+<h2>The Magic Panel</h2>
+
+<h3>The $-selector</h3>
+
+<h3>Actions &amp; Events</h3>
+
+
+
+<h2>API Reference</h2>
 
 
 <h2>XML Reference</h2>
@@ -99,6 +111,22 @@ java MyFirstAbusingSwingWindow
 	<tr>
 		<td>width</td>
 		<td>The width of the component.</td>
+	</tr>
+	<tr>
+		<td>min-height</td>
+		<td><i>Only applies to Components within a VBox or HBox that has intrinsic dimensions.</i></td>
+	</tr>
+	<tr>
+		<td>min-width</td>
+		<td><i>Only applies to Components within a VBox or HBox that has intrinsic dimensions.</i></td>
+	</tr>
+	<tr>
+		<td>top</td>
+		<td><i>Only applies to Components within a Box (neither VBox nor HBox, a fixed box).</i></td>
+	</tr>
+	<tr>
+		<td>left</td>
+		<td><i>Only applies to Components within a Box (neither VBox nor HBox, a fixed box).</i></td>
 	</tr>
 	<tr>
 		<td>foreground</td>
@@ -153,6 +181,223 @@ java MyFirstAbusingSwingWindow
 <h4>&lt;vbox></h4>
 
 
+<h3>“Half container, half component”</h3>
+
+<p>The components mentioned in this section are called “half containers” since on the one hand they can contain other elements,
+on the other hand they can not be used in places where an hbox, vbox, or box could be (they are ordinary components);
+in other words: you have to surround them with a vbox or box if you want to use them:</p>
+
+<pre class="brush: xml;">
+&lt;panel&gt;
+	&lt;hbox&gt;&lt;!-- important! --&gt;
+		&lt;tabs&gt;
+			&lt;tab title="A Tab"&gt;
+				&lt;hbox&gt;&lt;panel&gt;hbox inside&lt;/hbox&gt;&lt;/hbox&gt;
+			&lt;/tab&gt;
+			&lt;tab title="Another Tab"&gt;
+				&lt;vbox&gt;&lt;panel&gt;vbox inside&lt;/panel&gt;&lt;/vbox&gt;
+			&lt;/tab&gt;
+		&lt;/tabs&gt;
+	&lt;/hbox&gt;
+&lt;/panel&gt;
+</pre>
+
+<p>The components in this sections are typically being used to tidy up complex layouts.</p>
+
+<h4>&lt;cards></h4>
+
+<h4>&lt;panes></h4>
+
+<h4>&lt;tabs></h4>
+
+<h5>Sample</h5>
+
+<pre class="brush: xml;">
+&lt;tabs&gt;
+	&lt;tab title="First tab"&gt;
+		&lt;vbox&gt;
+			&lt;button&gt;A Button&lt;/button&gt;
+			&lt;button&gt;Another button&lt;/button&gt;
+		&lt;/vbox&gt;
+	&lt;/tab&gt;
+	&lt;tab title="Second tab"&gt;
+		&lt;hbox&gt;
+			&lt;label&gt;Here there is an HBox&lt;/label&gt;
+		&lt;/hbox&gt;
+	&lt;/tab&gt;
+	&lt;tab title="Third tab"&gt;
+		&lt;hbox&gt;
+			&lt;table name="table1"&gt;
+				&lt;col&gt;First&lt;/col&gt;
+				&lt;col&gt;Second&lt;/col&gt;
+			&lt;/table&gt;
+			&lt;list name="list1" /&gt;
+		&lt;/hbox&gt;
+	&lt;/tab&gt;
+&lt;/tabs&gt;
+</pre>
+
+<h4>&lt;hsplit> <span class="experimental">experimental</span></h4>
+
+<p>Under the hood, tables are realized using a
+	<a href="doc/SwingX-1.6.3/org/jdesktop/swingx/JXMultiSplitPane.html">JXMultiSplitPane</a>.</p>
+
+
+<h4>&lt;vsplit> <span class="experimental">experimental</span></h4>
+
+<p>Under the hood, tables are realized using a
+	<a href="doc/SwingX-1.6.3/org/jdesktop/swingx/JXMultiSplitPane.html">JXMultiSplitPane</a>.</p>
+
+
+
+<h3>Components</h3>
+
+<h4>&lt;any></h4>
+
+<h4>&lt;button></h4>
+
+
+<h4>&lt;checkbox></h4>
+
+<h4>&lt;combobox></h4>
+
+<h4>&lt;datepicker></h4>
+
+<p>Under the hood, datepickers are realized using a
+	<a href="doc/SwingX-1.6.3/org/jdesktop/swingx/JXDatePicker.html"><code>JXDatePicker</code></a>.</p>
+
+
+<h4>&lt;label></h4>
+
+<p>Under the hood, labels are realized using a
+	<a href="http://download.oracle.com/javase/6/docs/api/javax/swing/JLabel.html"><code>JLabel</code></a>.</p>
+
+
+<h4>&lt;list></h4>
+
+<p>Under the hood, lists are realized using a
+	<a href="doc/SwingX-1.6.3/org/jdesktop/swingx/JXList.html"><code>JXList</code></a> with a
+	<a href="http://download.oracle.com/javase/6/docs/api/javax/swing/DefaultListModel.html"><code>DefaultListModel</code></a>.</p>
+
+
+<h4>&lt;multilist></h4>
+
+<p>Under the hood, multilists are realized using a
+	<a href="http://download.oracle.com/javase/6/docs/api/javax/swing/JTable.html"><code>JTable</code></a> with 2 columns,
+	<a href="http://download.oracle.com/javase/6/docs/api/javax/swing/JCheckBox.html"><code>JCheckBox</code>es</a> in the first.</p>
+
+
+<h4>&lt;numeric></h4>
+
+<p>Under the hood, numerics are realized using a
+	<a href="http://download.oracle.com/javase/6/docs/api/javax/swing/JSpinner.html"><code>JSpinner</code></a> with a
+	<a href="http://download.oracle.com/javase/6/docs/api/javax/swing/SpinnerNumberModel.html"><code>SpinnerNumberModel</code></a>.
+
+
+<h4>&lt;password></h4>
+
+<h4>&lt;progressbar></h4>
+
+<p>Under the hood, progressbars are realized using a
+	<a href="http://download.oracle.com/javase/6/docs/api/javax/swing/JTextArea.html"><code>JProgressBar</code></a>.</p>
+
+
+<h4>&lt;slider></h4>
+
+<p>Under the hood, sliders are realized using a
+	<a href="http://download.oracle.com/javase/6/docs/api/javax/swing/JTextArea.html"><code>JSlider</code></a>.</p>
+
+
+<h4>&lt;table></h4>
+
+<p>Under the hood, tables are realized using a
+	<a href="doc/SwingX-1.6.3/org/jdesktop/swingx/JXTable.html"><code>JXTable</code></a>.</p>
+
+<table>
+	<tr>
+		<th>Attribute</th>
+		<th>Default</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td>sortable</td>
+		<td><code>true</code></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>editable</td>
+		<td><code>false</code></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>grid-color</td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>column-control-visible</td>
+		<td></td>
+		<td></td>
+	</tr>
+</table>
+
+<h5>Columns: &lt;col></h5>
+
+<table>
+	<tr>
+		<th>Attribute</th>
+		<th>Default</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td>type</td>
+		<td><code>java.lang.Object</code></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>min-width</td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>max-width</td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>width</td>
+		<td></td>
+		<td></td>
+	</tr>
+</table>
+
+<h5>Sample</h5>
+
+<pre class="brush: xml;">
+&lt;table column-control-visible="true" name="table" grid-color="cccccc"&gt;
+	&lt;col type="string" min-width="100px"&gt;First name&lt;/col&gt;
+	&lt;col type="string" min-width="100px"&gt;Last name&lt;/col&gt;
+	&lt;col type="int" min-width="50px" max-width="100px"&gt;Alter&lt;/col&gt;
+&lt;/table&gt;
+</pre>
+
+
+<h4>&lt;textarea></h4>
+
+<p>Under the hood, textareas are implemented using a
+	<a href="http://download.oracle.com/javase/6/docs/api/javax/swing/JTextArea.html"><code>JTextArea</code></a>.</p>
+
+
+
+<h4>&lt;textfield></h4>
+
+<p>Under the hood, textfields are implemented using a
+	<a href="http://download.oracle.com/javase/6/docs/api/javax/swing/JTextField.html"><code>JTextField</code></a>.</p>
+
+<h4>&lt;tree> <span class="experimental">experimental</span></h4>
+
+<p>Under the hood, trees are implemented using a
+	<a href="doc/SwingX-1.6.3/org/jdesktop/swingx/JXTree.html"><code>JXTree</code></a>.</p>
 
 
 </body>
