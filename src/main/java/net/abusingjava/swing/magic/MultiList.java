@@ -6,7 +6,9 @@ import javax.swing.table.DefaultTableModel;
 
 import org.jdesktop.swingx.JXTable;
 
+import net.abusingjava.functions.AbusingFunctions;
 import net.abusingjava.swing.MagicPanel;
+import net.abusingjava.swing.types.JavaType;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlElement;
 
@@ -15,6 +17,9 @@ public class MultiList extends Table {
 
 	@XmlAttribute("column-head")
 	String $columnHead;
+
+	@XmlAttribute("from")
+	JavaType $from;
 
 	
 	@Override
@@ -40,6 +45,13 @@ public class MultiList extends Table {
 				return $column == 0;
 			}
 		});
+
+		if ($from != null) {
+			Object[] $values = (Object[]) AbusingFunctions.callback($from.getJavaType(), "values").call();
+			for (Object $v : $values) {
+				((DefaultTableModel)$c.getModel()).addRow(new Object[]{ false, $v});
+			}
+		}
 		
 		$c.getColumn("").setMinWidth(22);
 		$c.getColumn("").setMaxWidth(22);
@@ -47,8 +59,6 @@ public class MultiList extends Table {
 		$c.setHorizontalScrollEnabled(true);
 		$c.setSortsOnUpdates(false);
 		$c.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		// $c.setCellSelectionEnabled(false);
-		// $c.setRowSelectionAllowed(false);
 		
 		/*
 		$c.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
