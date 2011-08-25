@@ -1,5 +1,7 @@
 package net.abusingjava.swing.magic;
 
+import java.util.Iterator;
+
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -7,18 +9,22 @@ import javax.swing.table.TableModel;
 import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingx.JXTable;
 
+import net.abusingjava.arrays.AbusingArrays;
 import net.abusingjava.swing.MagicPanel;
-import net.abusingjava.swing.types.Color;
-import net.abusingjava.swing.types.JavaType;
-import net.abusingjava.swing.types.Unit;
-import net.abusingjava.swing.types.Value;
+import net.abusingjava.swing.magic.Table.Column;
+import net.abusingjava.swing.types.*;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlChildElements;
 import net.abusingjava.xml.XmlElement;
 import net.abusingjava.xml.XmlTextContent;
 
 @XmlElement("table")
-public class Table extends Component {
+public class Table extends Component implements Iterable<Column> {
+
+	
+	@XmlChildElements
+	Column[] $columns;
+	
 	
 	@XmlAttribute
 	boolean $sortable = true;
@@ -29,9 +35,6 @@ public class Table extends Component {
 	@XmlAttribute
 	boolean $editable = false;
 		
-	@XmlChildElements
-	Column[] $columns;
-	
 	@XmlAttribute("column-control-visible")
 	boolean $columnControlVisible = true;
 	
@@ -47,16 +50,21 @@ public class Table extends Component {
 	@XmlAttribute("sorts-on-update")
 	boolean $sortsOnUpdate = true;
 	
-	@SuppressWarnings("rawtypes")
-	JTableBinding $binding = null;
-
 	@XmlAttribute("row-height")
 	Value $rowHeight;
 	
+	@XmlAttribute("filter-mode")
+	FilterMode $filterMode = new FilterMode("and");
+
+	
+	@SuppressWarnings("rawtypes")
+	private JTableBinding $binding = null;
+
 	@SuppressWarnings("rawtypes")
 	public void setBinding(final JTableBinding $binding) {
 		this.$binding = $binding;
 	}
+	
 	
 	public void clearBinding() {
 		if ($binding != null) {
@@ -64,6 +72,7 @@ public class Table extends Component {
 			$binding = null;
 		}
 	}
+	
 	
 	@XmlElement("col")
 	public static class Column {
@@ -149,6 +158,11 @@ public class Table extends Component {
 		$c.setFillsViewportHeight(true);
 		
 		super.create($main, $parent);
+	}
+
+	@Override
+	public Iterator<Column> iterator() {
+		return AbusingArrays.array($columns).iterator();
 	}
 	
 }

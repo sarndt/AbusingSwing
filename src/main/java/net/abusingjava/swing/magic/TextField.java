@@ -3,8 +3,6 @@ package net.abusingjava.swing.magic;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.util.regex.Pattern;
-
 import javax.swing.JTextField;
 
 import net.abusingjava.swing.MagicPanel;
@@ -27,9 +25,7 @@ public class TextField extends TextComponent {
 	public static class Filters {
 		
 		public Filters(final String $filters) {
-			if (Pattern.matches("\#[a-z]+\(\)", "")) {
-				
-			}
+			
 		}
 	}
 	

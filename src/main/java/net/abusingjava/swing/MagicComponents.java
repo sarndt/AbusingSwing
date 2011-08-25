@@ -24,19 +24,19 @@ import net.abusingjava.swing.magic.Component;
 @Author("Julian Fleischer")
 @Version("2011-08-19")
 @Since(value = "2011-08-19", version = "1.0")
-public class Components {
+public class MagicComponents {
 
 	final private ArrayList<Component> $components = new ArrayList<Component>();
 
 	
-	public Components(final Component... $components) {
+	public MagicComponents(final Component... $components) {
 		this.$components.ensureCapacity($components.length);
 		for (Component $c : $components) {
 			this.$components.add($c);
 		}
 	}
 
-	public Components(final Collection<Component> $components) {
+	public MagicComponents(final Collection<Component> $components) {
 		this.$components.ensureCapacity($components.size());
 		for (Component $c : $components) {
 			this.$components.add($c);
@@ -48,7 +48,7 @@ public class Components {
 		return $components.get($index);
 	}
 	
-	public Components setText(final String $text) {
+	public MagicComponents setText(final String $text) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JTextComponent) {
@@ -64,7 +64,7 @@ public class Components {
 		return this;
 	}
 	
-	public Components setModel(final Object $model) {
+	public MagicComponents setModel(final Object $model) {
 		if ($model instanceof TableModel) {
 			for (Component $comp : $components) {
 				JComponent $c = $comp.getRealComponent();
@@ -110,7 +110,7 @@ public class Components {
 		return "";
 	}
 
-	public Components show(final int $index) {
+	public MagicComponents show(final int $index) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -125,7 +125,7 @@ public class Components {
 		return this;
 	}
 
-	public Components showNext() {
+	public MagicComponents showNext() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -140,7 +140,7 @@ public class Components {
 		return this;
 	}
 
-	public Components showPrev() {
+	public MagicComponents showPrev() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -155,7 +155,7 @@ public class Components {
 		return this;
 	}
 
-	public Components showFirst() {
+	public MagicComponents showFirst() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -170,7 +170,7 @@ public class Components {
 		return this;
 	}
 
-	public Components showLast() {
+	public MagicComponents showLast() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -210,7 +210,7 @@ public class Components {
 		return $components.size();
 	}
 	
-	public Components show() {
+	public MagicComponents show() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -222,7 +222,7 @@ public class Components {
 		return this;
 	}
 
-	public Components hide() {
+	public MagicComponents hide() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -234,7 +234,7 @@ public class Components {
 		return this;
 	}
 
-	public Components enable() {
+	public MagicComponents enable() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -247,7 +247,7 @@ public class Components {
 		return this;
 	}
 
-	public Components disable() {
+	public MagicComponents disable() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -259,7 +259,7 @@ public class Components {
 		return this;
 	}
 
-	public Components setForeground(final Color $color) {
+	public MagicComponents setForeground(final Color $color) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -271,7 +271,7 @@ public class Components {
 		return this;
 	}
 
-	public Components setForeground(final String $hexColor) {
+	public MagicComponents setForeground(final String $hexColor) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -283,7 +283,7 @@ public class Components {
 		return this;
 	}
 
-	public Components setBackground(final Color $color) {
+	public MagicComponents setBackground(final Color $color) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -295,7 +295,7 @@ public class Components {
 		return this;
 	}
 
-	public Components setBackground(final String $hexColor) {
+	public MagicComponents setBackground(final String $hexColor) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -307,7 +307,7 @@ public class Components {
 		return this;
 	}
 
-	public Components setFont(final String $font) {
+	public MagicComponents setFont(final String $font) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -320,7 +320,7 @@ public class Components {
 		return this;
 	}
 
-	public Components setFontSize(final int $size) {
+	public MagicComponents setFontSize(final int $size) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -333,7 +333,7 @@ public class Components {
 		return this;
 	}
 
-	public Components add(final Iterable<Object> $values) {
+	public MagicComponents add(final Iterable<Object> $values) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
@@ -355,7 +355,7 @@ public class Components {
 		return this;
 	}
 
-	public Components addRow(final Object[] $values) {
+	public MagicComponents addRow(final Object[] $values) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JTable) {
@@ -368,7 +368,7 @@ public class Components {
 		return this;
 	}
 
-	public Components addRows(final Object[][] $values) {
+	public MagicComponents addRows(final Object[][] $values) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JTable) {
@@ -383,7 +383,7 @@ public class Components {
 		return this;
 	}
 
-	public Components add(final Object[] $values) {
+	public MagicComponents add(final Object[] $values) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
@@ -405,7 +405,7 @@ public class Components {
 		return this;
 	}
 
-	public Components add(final Object $value) {
+	public MagicComponents add(final Object $value) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
@@ -423,7 +423,7 @@ public class Components {
 		return this;
 	}
 
-	public Components setSelectedItem(final Object $item) {
+	public MagicComponents setSelectedItem(final Object $item) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
@@ -458,7 +458,7 @@ public class Components {
 		return null;
 	}
 
-	public Components setValue(final int $value) {
+	public MagicComponents setValue(final int $value) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -482,7 +482,7 @@ public class Components {
 		return this;
 	}
 
-	public Components setMax(final int $value) {
+	public MagicComponents setMax(final int $value) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {

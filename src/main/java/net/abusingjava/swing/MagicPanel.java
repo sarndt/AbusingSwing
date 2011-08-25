@@ -124,15 +124,15 @@ public class MagicPanel extends JPanel {
 		$componentsByName.put($name, $component);
 	}
 	
-	public Components $(final String $selector) {
+	public MagicComponents $(final String $selector) {
 		if ($selector.equals("*")) {
-			return new Components($componentsByName.values());
+			return new MagicComponents($componentsByName.values());
 		} else if ($selector.startsWith("#")) {
 			Component $c = $componentsByName.get($selector.substring(1));
 			if ($c != null) {
-				return new Components($c);
+				return new MagicComponents($c);
 			}
-			return new Components();
+			return new MagicComponents();
 		} else if ($selector.startsWith(".")) {
 			String $className = $selector.substring(1);
 			List<Component> $list = new LinkedList<Component>();
@@ -141,7 +141,7 @@ public class MagicPanel extends JPanel {
 					$list.add($c);
 				}
 			}
-			return new Components($list);
+			return new MagicComponents($list);
 		} else {
 			List<Component> $list = new LinkedList<Component>();
 			for (Component $c : $componentsByName.values()) {
@@ -149,11 +149,11 @@ public class MagicPanel extends JPanel {
 					$list.add($c);
 				}
 			}
-			return new Components($list);
+			return new MagicComponents($list);
 		}
 	}
 	
-	public Components $(final Class<?> $componentClass) {
+	public MagicComponents $(final Class<?> $componentClass) {
 		List<Component> $components = new LinkedList<Component>();
 		for (Component $c : $componentsByName.values()) {
 			if (($componentClass.isAssignableFrom($c.getJComponent().getClass()))
@@ -162,7 +162,7 @@ public class MagicPanel extends JPanel {
 				$components.add($c);
 			}
 		}
-		return new Components($components);
+		return new MagicComponents($components);
 	}
 	
 	public Orientation getOrientation() {

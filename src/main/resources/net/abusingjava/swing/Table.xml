@@ -3,8 +3,8 @@
 		
 		<vbox>
 			<hbox height="intrinsic">
-				<textfield name="field1" filters="#table(Crame)" />
-				<textfield name="field2" filters="#table()" />
+				<textfield name="field1" filters="#table(Name1)" />
+				<textfield name="field2" filters="#table(Name2)" />
 				<checkbox name="checkmate" />
 			</hbox>
 			<table editable="true" name="table">
