@@ -3,12 +3,12 @@
 		
 		<vbox>
 			<hbox height="intrinsic">
-				<textfield name="field1" filters="#table(Name1)" />
-				<textfield name="field2" filters="#table(Name2)" />
+				<textfield name="field1" filters="#table(Name1,Name2)" />
+				<!-- <textfield name="field2" filters="#table(Name2)" /> -->
 				<checkbox name="checkmate" />
 			</hbox>
 			<hbox>
-				<table editable="true" name="table">
+				<table editable="true" name="table" filter-mode="or">
 					<col type="string" min-width="50px" max-width="50px">Kürzel</col>
 					<col type="string">Name1</col>
 					<col type="string">Name2</col>

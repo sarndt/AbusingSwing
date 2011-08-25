@@ -59,7 +59,7 @@ public class Table extends Component implements Iterable<Column> {
 	
 	@XmlAttribute("filter-mode")
 	FilterMode $filterMode = new FilterMode("and");
-
+	
 	
 	public class Filter {
 		
@@ -110,7 +110,9 @@ public class Table extends Component implements Iterable<Column> {
 			});
 		}
 		
-		RowFilter<Object,Object> $filter = RowFilter.andFilter($filters);
+		RowFilter<Object,Object> $filter = $filterMode.isAnd()
+				? RowFilter.andFilter($filters)
+				: RowFilter.orFilter($filters);
 		
 		((JXTable)$realComponent).setRowFilter($filter);
 	}

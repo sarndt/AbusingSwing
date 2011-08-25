@@ -16,7 +16,7 @@ public class FilterMode {
 	final Mode $mode;
 	
 	public FilterMode(final String $filter) {
-		$mode = ("or".equalsIgnoreCase($filter)) ? Mode.AND : Mode.OR;
+		$mode = ("or".equalsIgnoreCase($filter)) ? Mode.OR : Mode.AND;
 	}
 	
 	public boolean isAnd() {

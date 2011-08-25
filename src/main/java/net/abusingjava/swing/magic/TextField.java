@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import javax.swing.JTextField;
 
 import net.abusingjava.swing.MagicPanel;
+import net.abusingjava.swing.types.FilterMode;
 import net.abusingjava.swing.types.Value;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlElement;
@@ -18,9 +19,15 @@ public class TextField extends TextComponent {
 	@XmlAttribute("default-text")
 	String $defaultText = "";
 
+	@XmlAttribute("filter-mode")
+	FilterMode $filterMode;
+	
 	@XmlAttribute
 	Filter $filters;
-	
+
+	@XmlAttribute("filter-each-word")
+	boolean $filterEachWord = false;
+
 	@XmlAttribute("select-on-focus")
 	boolean $selectOnFocus = true;
 	
@@ -45,6 +52,10 @@ public class TextField extends TextComponent {
 	
 	public boolean hasFilter() {
 		return $filters != null;
+	}
+	
+	public boolean getFilterEachWord() {
+		return $filterEachWord;
 	}
 	
 	public String[] getFilterColumns() {
