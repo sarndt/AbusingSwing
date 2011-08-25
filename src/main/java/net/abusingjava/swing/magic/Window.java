@@ -65,6 +65,12 @@ public class Window {
 	}
 	
 	public Panel getPanel() {
+		if ($contentPane == null) {
+			$contentPane = new Panel();
+			$contentPane.$containers = new Container[] {
+				new FixedBox()
+			};
+		}
 		return $contentPane;
 	}
 	

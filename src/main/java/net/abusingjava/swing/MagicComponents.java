@@ -5,7 +5,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,6 +20,7 @@ import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
 import net.abusingjava.swing.magic.Component;
+import net.abusingjava.swing.magic.MultiList;
 
 /**
  * A Collection of Components on which you may apply a function as you want.
@@ -417,6 +421,24 @@ public class MagicComponents {
 				ListModel $m = ((JList)$c).getModel();
 				if ($m instanceof DefaultListModel) {
 					((DefaultListModel)$m).addElement($value);
+				}
+			} else if ($comp instanceof MultiList) {
+				TableModel $m = ((JTable)$c).getModel();
+				if ($m instanceof DefaultTableModel) {
+					((DefaultTableModel)$m).addRow(new Object[] { false, $value });
+				}
+			}
+		}
+		return this;
+	}
+
+	public MagicComponents add(final Object $value, final boolean $selected) {
+		for (Component $comp : $components) {
+			if ($comp instanceof MultiList) {
+				JComponent $c = $comp.getRealComponent();
+				TableModel $m = ((JTable)$c).getModel();
+				if ($m instanceof DefaultTableModel) {
+					((DefaultTableModel)$m).addRow(new Object[] { $selected, $value });
 				}
 			}
 		}

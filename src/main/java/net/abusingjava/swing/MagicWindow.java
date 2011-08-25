@@ -6,17 +6,26 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 import net.abusingjava.Author;
 import net.abusingjava.swing.magic.Window;
 
+/**
+ * A JFrame-component that is built by an XML-definition and offers certain extra functionality
+ * such as easy fullscreen, minimum-, and maximum-size. A MagicWindow contains a {@link MagicPanel}.
+ * <p>
+ * To create a MagicWindow, use {@link AbusingSwing#makeWindow(java.io.InputStream) AbusingSwing.makeWindow}.
+ * <p>
+ * A MagicWindow is by default created at the center of the screen.
+ */
 @Author("Julian Fleischer")
 public class MagicWindow extends JFrame {
 
 	private static final long serialVersionUID = 8856951705627589850L;
 
-	JFrame $fullscreenFrame = null;
-	Dimension $savedSize = null;
+	private JFrame $fullscreenFrame = null;
+	private Dimension $savedSize = null;
 
 	final MagicPanel $magicPanel;
 
@@ -29,44 +38,28 @@ public class MagicWindow extends JFrame {
 			setSize($window.getSize());
 			setPreferredSize($window.getSize());
 		}
+		
 		$magicPanel = new MagicPanel($window.getPanel());
+
 		setLocationRelativeTo(null);
-		setContentPane($magicPanel);
+		setContentPane(new JScrollPane($magicPanel));
 		setResizable($window.getResizable());
 
 		pack();
 	}
 
+	/**
+	 * Returns the MagicPanel that is the contentPane of this MagicWindow.
+	 * 
+	 * @return The MagicPanel (never null).
+	 */
 	public MagicPanel getMagicPanel() {
 		return $magicPanel;
 	}
 
-	public static class Toggle {
-		final MagicPanel $panel;
-		final MagicWindow $window;
-		
-		Toggle(final MagicWindow $window) {
-			this.$panel = $window.getMagicPanel();
-			this.$window = $window;
-		}
-
-		public void toggle() {
-			$panel.$("#top").showNext();
-		}
-		
-		public void fullscreen() {
-			$window.toggleFullscreen();
-		}
-		
-		public void mouseover() {
-			System.out.println("mouseover");
-		}
-		
-		public void mouseout() {
-			System.out.println("mouseout");
-		}
-	}
-
+	/**
+	 * Enters- or exits fullscreen.
+	 */
 	public void toggleFullscreen() {
 		final GraphicsDevice $dev = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		if ($dev.isFullScreenSupported()) {
@@ -114,35 +107,11 @@ public class MagicWindow extends JFrame {
 		return $magicPanel.$($selector);
 	}
 	
+	/**
+	 * Sets the invocation handler on the underlying magic Panel.
+	 */
 	public MagicWindow setInvocationHandler(final Object $object) {
 		$magicPanel.setInvocationHandler($object);
 		return this;
 	}
-	
-	public static void main(final String... $args) {
-		AbusingSwing.setNimbusLookAndFeel();
-
-		MagicWindow $win = AbusingSwing.showWindow("MagicTable.xml");
-		$win.getMagicPanel().setInvocationHandler(new Toggle($win));
-		
-		$win.getMagicPanel().$("#table").addRows(new Object[][] {
-				{"Julian", "Meier", 27},
-				{"Georg", "Meyer", 32},
-				{"Christian", "Müller", 35},
-				{"Stephan", "From", 23},
-				{"Michael", "Meister", 23},
-				{"Michal", "Youth", 100},
-		});
-		
-		for (int $i = 0; $i < 100; $i++) {
-			$win.$("#list").add($i);
-		}
-		System.out.println($win.$("#list").getSelectedItem());
-		$win.$("#list").setSelectedItem(27);
-		
-		$win.$("#combobox").add(new String[] {
-				"Huhu", "Hula", "Hulalala", "Hullalalaalla"
-		}).setSelectedItem("Hula");
-	}
-
 }

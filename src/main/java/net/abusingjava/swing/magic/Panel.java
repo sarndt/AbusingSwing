@@ -10,7 +10,11 @@ public class Panel {
 	Container[] $containers = new Container[] {};
 	
 	@XmlChildElements
-	Binding[] $bindings = new Binding[]{};
+	Binding[] $bindings = new Binding[] {};
+	
+	@XmlChildElements
+	Style[] $style = new Style[] {};
+	
 	
 	public Container getContainer() {
 		return $containers[0];

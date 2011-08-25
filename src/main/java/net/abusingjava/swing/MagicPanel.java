@@ -1,13 +1,12 @@
 package net.abusingjava.swing;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.InputStream;
 import java.util.*;
 import java.util.List;
 
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
 import org.jdesktop.beansbinding.*;
@@ -16,13 +15,20 @@ import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.JTableBinding.ColumnBinding;
 import org.jdesktop.swingbinding.SwingBindings;
 
+import net.abusingjava.Author;
+import net.abusingjava.Since;
+import net.abusingjava.Version;
+import net.abusingjava.strings.AbusingStrings;
 import net.abusingjava.swing.magic.*;
 import net.abusingjava.swing.magic.Binding.Property;
+import net.abusingjava.swing.magic.Table.Filter;
 import net.abusingjava.swing.magic.Binding;
 import net.abusingjava.xml.AbusingXML;
 import net.abusingjava.xml.XmlElement;
 
-
+@Author("Julian Fleischer")
+@Since(value = "2011-08-15", version = "1.0")
+@Version("2011-08-25")
 public class MagicPanel extends JPanel {
 	
 	public static enum Orientation {
@@ -73,6 +79,7 @@ public class MagicPanel extends JPanel {
 		setLayout(new MagicLayoutManager(this, this, $panel.getContainer()));
 		
 		buildPanel();
+		bind();
 	}
 	
 	public MagicPanel(final MagicPanel $main, final Container $container) {
@@ -90,6 +97,30 @@ public class MagicPanel extends JPanel {
 		buildPanel();
 	}
 	
+	private void bind() {
+		for (Component $c : $componentsByName.values()) {
+			if ($c instanceof TextField) {
+				TextField $f = (TextField) $c;
+				if ($f.hasFilter()) {
+					final Component $t = $componentsByName.get($f.getFilterTableName());
+					if ($t instanceof Table) {
+						final Filter $filter = ((Table)$t).newFilter($f.getFilterColumns());
+						final JTextField $tf = (JTextField) $f.getRealComponent();
+						$tf.addKeyListener(new KeyAdapter() {
+							@Override
+							public void keyReleased(final KeyEvent $ev) {
+								$filter.setFilterString($tf.getText());
+								((Table)$t).updateFilters();
+								System.out.println($tf.getText());
+							}
+						});
+						System.out.println($c.getName() + " filters " + $t.getName() + " - "
+								+ AbusingStrings.implode(", ", $f.getFilterColumns()));
+					}
+				}
+			}
+		}
+	}
 	
 	private static Orientation determineOrientation(final Container $container) {
 		if ($container instanceof HBox) {
@@ -282,17 +313,6 @@ public class MagicPanel extends JPanel {
 	public static void main(final String... $args) {
 		AbusingSwing.setNimbusLookAndFeel();
 		AbusingSwing.showWindow("MagicPanel.xml");
-		/*
-		JFrame $f = new JFrame();
-		$f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		MagicPanel $m = MagicFactory.makePanel(MagicPanel.class.getResourceAsStream("MagicPanel.xml"));
-		$f.setContentPane($m);
-		
-		$f.setMinimumSize(new Dimension(300, 200));
-		$f.setSize(600, 400);
-		$f.setVisible(true);
-		*/
 	}
 
 }

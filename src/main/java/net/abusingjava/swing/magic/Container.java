@@ -2,6 +2,8 @@ package net.abusingjava.swing.magic;
 
 import java.util.Iterator;
 
+import javax.swing.JScrollPane;
+
 import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
@@ -20,7 +22,8 @@ abstract public class Container extends Component implements Iterable<Component>
 		Cards.class, CheckBox.class, ComboBox.class, DatePicker.class, List.class,
 		Numeric.class, Panel.class, Panes.class, Password.class, ProgressBar.class,
 		Slider.class, Table.class, Tabs.class, TextArea.class, TextField.class,
-		ToggleButton.class, Tree.class, Label.class, HSplit.class, VSplit.class})
+		ToggleButton.class, Tree.class, Label.class, HSplit.class, VSplit.class,
+		MultiList.class})
 	Component[] $components = new Component[] {};
 
 	@XmlAttribute
@@ -44,6 +47,9 @@ abstract public class Container extends Component implements Iterable<Component>
 	@XmlAttribute("padding-bottom")
 	Value $paddingBottom;
 
+	@XmlAttribute("scrollable")
+	boolean $scrollable = false;
+	
 	
 	@Override
 	public Iterator<Component> iterator() {
@@ -73,7 +79,8 @@ abstract public class Container extends Component implements Iterable<Component>
 
 		if ($parent != null) {
 			MagicPanel $c = new MagicPanel($main, this);
-			$component = $c;
+			$realComponent = $c;
+			$component = $scrollable ? new JScrollPane($c) : $c;
 			
 			super.create($main, $parent);
 		} else {

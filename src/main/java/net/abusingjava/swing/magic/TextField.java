@@ -3,6 +3,8 @@ package net.abusingjava.swing.magic;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.regex.Pattern;
+
 import javax.swing.JTextField;
 
 import net.abusingjava.swing.MagicPanel;
@@ -17,16 +19,40 @@ public class TextField extends TextComponent {
 	String $defaultText = "";
 
 	@XmlAttribute
-	Filters $filter;
+	Filter $filters;
 	
 	@XmlAttribute("select-on-focus")
 	boolean $selectOnFocus = true;
 	
-	public static class Filters {
+	public static class Filter {
 		
-		public Filters(final String $filters) {
-			
+		String $tableId;
+		
+		String[] $columns;
+		
+		public Filter(final String $filters) {
+			if (Pattern.matches("#([a-zA-Z][a-zA-Z0-9]*)\\([^\\(\\),]+(,[^\\(\\),]+)*\\)", $filters)) {
+				$tableId = $filters.substring(1, $filters.indexOf('('));
+				$columns = $filters.substring($filters.indexOf('(')+1, $filters.indexOf(')')).split(", *");
+			} else if (Pattern.matches("#([a-zA-Z][a-zA-Z0-9]*)", $filters)) {
+				$tableId = $filters.substring(1);
+				$columns = new String[] {};
+			} else {
+				throw new RuntimeException("Illegal filters-Attribute");
+			}
 		}
+	}
+	
+	public boolean hasFilter() {
+		return $filters != null;
+	}
+	
+	public String[] getFilterColumns() {
+		return $filters.$columns;
+	}
+	
+	public String getFilterTableName() {
+		return $filters.$tableId;
 	}
 	
 	private boolean $textEntered = false;

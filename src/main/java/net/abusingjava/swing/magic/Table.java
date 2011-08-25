@@ -1,8 +1,12 @@
 package net.abusingjava.swing.magic;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JScrollPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -56,6 +60,62 @@ public class Table extends Component implements Iterable<Column> {
 	@XmlAttribute("filter-mode")
 	FilterMode $filterMode = new FilterMode("and");
 
+	
+	public class Filter {
+		
+		final int[] $columnIndizes;
+		String $filterString = "";
+		
+		Filter(final String[] $columns) {
+			this.$columnIndizes = new int[$columns.length];
+			
+			for (int $i = 0; $i < $columns.length; $i++) {
+				$columnIndizes[$i] = ((JXTable)$realComponent).getColumn($columns[$i]).getModelIndex();
+			}
+		}
+		
+		public void setFilterString(final String $filterString) {
+			this.$filterString = $filterString.toLowerCase();
+		}
+		
+		public boolean apply(final javax.swing.RowFilter.Entry<? extends Object, ? extends Object> $entry) {
+			if ($filterString.isEmpty()) {
+				return true;
+			}
+			boolean $result = false;
+			for (int $index : $columnIndizes) {
+				$result = $result || $entry.getStringValue($index).toLowerCase().contains($filterString);
+			}
+			return $result;
+		}
+	}
+	
+	List<Filter> $filterList = new ArrayList<Filter>();
+	
+	public Filter newFilter(final String[] $columns) {
+		Filter $filter = new Filter($columns);
+		$filterList.add($filter);
+		return $filter;
+	}
+	
+	public void updateFilters() {
+		List<RowFilter<Object,Object>> $filters = new LinkedList<RowFilter<Object,Object>>();
+		
+		for (final Filter $f : $filterList) {
+			$filters.add(new RowFilter<Object,Object>() {
+				@Override
+				public boolean include(final javax.swing.RowFilter.Entry<? extends Object, ? extends Object> $entry) {
+					return $f.apply($entry);
+				}
+			});
+		}
+		
+		RowFilter<Object,Object> $filter = RowFilter.andFilter($filters);
+		
+		((JXTable)$realComponent).setRowFilter($filter);
+	}
+	
+	
 	
 	@SuppressWarnings("rawtypes")
 	private JTableBinding $binding = null;
