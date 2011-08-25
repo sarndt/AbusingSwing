@@ -9,6 +9,9 @@ public class Test {
 		for (Staat $s : Staat.values()) {
 			$panel.$("#table").addRow(new Object[] {$s.name(), $s.toString(), $s.getLangform()});
 		}
+		for (Sprache $s : Sprache.values()) {
+			$panel.$("#sluggy").add($s.toString());
+		}
 		/*
 		for (Sprache $s : Sprache.values()) {
 			$panel.$("#sluggy").add($s);

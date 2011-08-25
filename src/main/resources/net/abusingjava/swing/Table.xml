@@ -1,23 +1,24 @@
-<window width="600" height="400" title="Title of this window">
+<window width="800" height="400" title="Title of this window">
 	<panel>
-		
-		<vbox>
-			<hbox height="intrinsic">
+
+		<hbox>
+			<vbox>
 				<textfield name="field1" filters="#table(Name1,Name2)" />
-				<!-- <textfield name="field2" filters="#table(Name2)" /> -->
-				<checkbox name="checkmate" />
-			</hbox>
-			<hbox>
 				<table editable="true" name="table" filter-mode="or">
 					<col type="string" min-width="50px" max-width="50px">Kürzel</col>
 					<col type="string">Name1</col>
 					<col type="string">Name2</col>
 				</table>
-				<vbox width="150px">
+			</vbox>
+			<vbox width="180px">
+				<hbox height="27px">
+					<togglebutton width="25px" filters="#sluggy" />
+					<checkbox width="25px" filters="" />
 					<textfield filters="#sluggy" name="textfield" />
-					<multilist name="sluggy" />
-				</vbox>
-			</hbox>
-		</vbox>
+				</hbox>
+				<multilist name="sluggy" />
+			</vbox>
+		</hbox>
+
 	</panel>
 </window>

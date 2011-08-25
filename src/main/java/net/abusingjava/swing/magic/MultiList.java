@@ -11,13 +11,16 @@ import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlElement;
 
 @XmlElement("multilist")
-public class MultiList extends Component {
+public class MultiList extends Table {
 
 	@XmlAttribute("column-head")
 	String $columnHead;
+
 	
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
+
+		super.create($main, $parent);
 		
 		String[] $columnHeaders = new String[] { "", $columnHead };
 		
@@ -71,7 +74,5 @@ public class MultiList extends Component {
 			$c.setTableHeader(null);
 			((JScrollPane)$component).setColumnHeader(null);
 		}
-		
-		super.create($main, $parent);
 	}
 }

@@ -3,11 +3,11 @@ package net.abusingjava.swing.magic;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.util.regex.Pattern;
 
 import javax.swing.JTextField;
 
 import net.abusingjava.swing.MagicPanel;
+import net.abusingjava.swing.types.Filter;
 import net.abusingjava.swing.types.FilterMode;
 import net.abusingjava.swing.types.Value;
 import net.abusingjava.xml.XmlAttribute;
@@ -31,24 +31,6 @@ public class TextField extends TextComponent {
 	@XmlAttribute("select-on-focus")
 	boolean $selectOnFocus = true;
 	
-	public static class Filter {
-		
-		String $tableId;
-		
-		String[] $columns;
-		
-		public Filter(final String $filters) {
-			if (Pattern.matches("#([a-zA-Z][a-zA-Z0-9]*)\\([^\\(\\),]+(,[^\\(\\),]+)*\\)", $filters)) {
-				$tableId = $filters.substring(1, $filters.indexOf('('));
-				$columns = $filters.substring($filters.indexOf('(')+1, $filters.indexOf(')')).split(", *");
-			} else if (Pattern.matches("#([a-zA-Z][a-zA-Z0-9]*)", $filters)) {
-				$tableId = $filters.substring(1);
-				$columns = new String[] {};
-			} else {
-				throw new RuntimeException("Illegal filters-Attribute");
-			}
-		}
-	}
 	
 	public boolean hasFilter() {
 		return $filters != null;
@@ -59,11 +41,11 @@ public class TextField extends TextComponent {
 	}
 	
 	public String[] getFilterColumns() {
-		return $filters.$columns;
+		return $filters.getColumns();
 	}
 	
 	public String getFilterTableName() {
-		return $filters.$tableId;
+		return $filters.getTableName();
 	}
 	
 	private boolean $textEntered = false;

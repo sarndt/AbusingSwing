@@ -67,10 +67,14 @@ public class Table extends Component implements Iterable<Column> {
 		String $filterString = "";
 		
 		Filter(final String[] $columns) {
-			this.$columnIndizes = new int[$columns.length];
 			
-			for (int $i = 0; $i < $columns.length; $i++) {
-				$columnIndizes[$i] = ((JXTable)$realComponent).getColumn($columns[$i]).getModelIndex();
+			if (Table.this instanceof MultiList) {
+				this.$columnIndizes = new int[] { 1 };
+			} else {
+				this.$columnIndizes = new int[$columns.length];
+				for (int $i = 0; $i < $columns.length; $i++) {
+					$columnIndizes[$i] = ((JXTable)$realComponent).getColumn($columns[$i]).getModelIndex();
+				}
 			}
 		}
 		

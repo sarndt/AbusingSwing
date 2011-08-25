@@ -18,7 +18,6 @@ import org.jdesktop.swingbinding.SwingBindings;
 import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
-import net.abusingjava.strings.AbusingStrings;
 import net.abusingjava.swing.magic.*;
 import net.abusingjava.swing.magic.Binding.Property;
 import net.abusingjava.swing.magic.Table.Filter;
@@ -111,11 +110,8 @@ public class MagicPanel extends JPanel {
 							public void keyReleased(final KeyEvent $ev) {
 								$filter.setFilterString($tf.getText());
 								((Table)$t).updateFilters();
-								System.out.println($tf.getText());
 							}
 						});
-						System.out.println($c.getName() + " filters " + $t.getName() + " - "
-								+ AbusingStrings.implode(", ", $f.getFilterColumns()));
 					}
 				}
 			}
