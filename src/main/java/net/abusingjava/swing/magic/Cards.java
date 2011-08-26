@@ -25,17 +25,26 @@ public class Cards extends Component {
 	@XmlChildElements
 	Card[] $cards = new Card[] {};
 	
+	@XmlAttribute
+	boolean $border = false;
+	
+	
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		JPanel $c = new JPanel(new CardLayout());
-
+		
 		int $i = 0;
 		for (Card $card : $cards) {
 			Container $con = $card.getContainer();
 			$con.create($main, $parent);
 
+			JScrollPane $p = new JScrollPane($con.getJComponent());
+			if (!$border) {
+				$p.setBorder(null);
+			}
+			
 			String $name = "card" + $i++;
-			$c.add(new JScrollPane($con.getJComponent()), $name);
+			$c.add($p, $name);
 		}
 
 		$component = $c;

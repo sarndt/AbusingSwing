@@ -90,7 +90,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$starsHeight++;
 						break;
 					case INTRINSIC:
-						$remainingHeight -= minimumLayoutSize($container).height;
+						$remainingHeight -= $c.getJComponent().getMinimumSize().height;
 						break;
 					}
 					switch ($c.getWidth().getUnit()) {
@@ -121,7 +121,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$starsWidth++;
 						break;
 					case INTRINSIC:
-						$remainingHeight -= minimumLayoutSize($container).width;
+						$remainingWidth -= $c.getJComponent().getMinimumSize().width;
 						break;
 					}
 					switch ($c.getHeight().getUnit()) {
@@ -161,7 +161,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$newHeight = (int) ((1 / (double) $starsHeight) * $remainingHeight);
 						break;
 					case INTRINSIC:
-						// TODO: $newHeight = minimumLayoutSize($container).height;
+						$newHeight = $c.getJComponent().getMinimumSize().height;
 						break;
 					}
 					switch ($c.getWidth().getUnit()) {
@@ -200,7 +200,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$newWidth = (int) ((1 / (double) $starsWidth) * $remainingWidth);
 						break;
 					case INTRINSIC:
-						// TODO: $newWidth = minimumLayoutSize($container).width;
+						$newWidth = $c.getJComponent().getMinimumSize().width;
 						break;
 					}
 					switch ($c.getHeight().getUnit()) {
@@ -235,7 +235,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case INTRINSIC:
 					case AUTO:
 						// TODO: Better debugging
-						System.err.println("STAR, COMPUTE & AUTO are not allowed for positions in a fixed box");
+						// System.err.println("STAR, COMPUTE & AUTO are not allowed for positions in a fixed box");
 						break;
 					}
 					switch ($c.getHeight().getUnit()) {
@@ -249,7 +249,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case INTRINSIC:
 					case AUTO:
 						// TODO: Better debugging
-						System.err.println("STAR, COMPUTE & AUTO are not allowed for dimensions in a fixed box");
+						// System.err.println("STAR, COMPUTE & AUTO are not allowed for dimensions in a fixed box");
 						break;
 					}
 					
@@ -264,7 +264,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case INTRINSIC:
 					case AUTO:
 						// TODO: Better debugging
-						System.err.println("STAR, COMPUTE & AUTO are not allowed for positions in a fixed box");
+						// System.err.println("STAR, COMPUTE & AUTO are not allowed for positions in a fixed box");
 						break;
 					}
 					switch ($c.getPosY().getUnit()) {
@@ -278,7 +278,7 @@ public class MagicLayoutManager implements LayoutManager {
 					case INTRINSIC:
 					case AUTO:
 						// TODO: Better debugging
-						System.err.println("STAR, COMPUTE & AUTO are not allowed for dimensions in a fixed box");
+						// System.err.println("STAR, COMPUTE & AUTO are not allowed for dimensions in a fixed box");
 						break;
 					}
 					break;

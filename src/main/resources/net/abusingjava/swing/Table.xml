@@ -11,7 +11,7 @@
 				</table>
 			</vbox>
 			<vbox width="180px">
-				<hbox height="27px">
+				<hbox height="intrinsic">
 					<togglebutton width="25px" filters="#sluggy" />
 					<checkbox width="25px" filters="" />
 					<textfield filters="#sluggy" name="textfield" />
