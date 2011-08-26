@@ -34,11 +34,11 @@ public class Window {
 	boolean $resizable = true;
 	
 	@XmlChildElement
-	Menu $menu;
-	
-	@XmlChildElement
 	Panel $contentPane;
 
+	@XmlChildElement
+	MenuBar $menuBar;
+	
 	
 	public boolean hasMinSize() {
 		return ($minWidth != null) && ($minHeight != null);
@@ -74,7 +74,11 @@ public class Window {
 		return $contentPane;
 	}
 	
-	public Menu getMenu() {
-		return $menu;
+	public boolean hasMenuBar() {
+		return $menuBar != null;
+	}
+	
+	public MenuBar getMenuBar() {
+		return $menuBar;
 	}
 }

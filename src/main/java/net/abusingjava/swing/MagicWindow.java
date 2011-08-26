@@ -5,10 +5,12 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 
 import net.abusingjava.Author;
+import net.abusingjava.swing.magic.Menu;
+import net.abusingjava.swing.magic.MenuBar;
+import net.abusingjava.swing.magic.MenuItem;
 import net.abusingjava.swing.magic.Window;
 
 /**
@@ -39,6 +41,18 @@ public class MagicWindow extends JFrame {
 			setPreferredSize($window.getSize());
 		}
 		
+		if ($window.hasMenuBar()) {
+			MenuBar $menuBar = $window.getMenuBar();
+			
+			JMenuBar $jMenuBar = new JMenuBar();
+			
+			for (Menu $menu : $menuBar.getMenus()) {
+				$jMenuBar.add(buildMenu($menu));
+			}
+			
+			setJMenuBar($jMenuBar);
+		}
+		
 		$magicPanel = new MagicPanel($window.getPanel());
 
 		setLocationRelativeTo(null);
@@ -48,6 +62,20 @@ public class MagicWindow extends JFrame {
 		pack();
 	}
 
+	private JMenu buildMenu(final Menu $menuDef) {
+		JMenu $menu = new JMenu($menuDef.getTitle());
+		
+		for (MenuItem $item : $menuDef.getMenuItems()) {
+			if ($item instanceof Menu) {
+				$menu.add(buildMenu((Menu) $item));
+			} else {
+				$menu.add(new JMenuItem($item.getTitle()));
+			}
+		}
+		
+		return $menu;
+	}
+	
 	/**
 	 * Returns the MagicPanel that is the contentPane of this MagicWindow.
 	 * 

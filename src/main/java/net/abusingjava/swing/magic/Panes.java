@@ -1,7 +1,5 @@
 package net.abusingjava.swing.magic;
 
-import java.awt.Dimension;
-
 import javax.swing.JScrollPane;
 
 import org.jdesktop.swingx.JXTaskPane;
@@ -47,32 +45,37 @@ public class Panes extends Component {
 		}
 	}
 
+	@XmlAttribute
+	boolean $border = false;
+	
 	@XmlChildElements
 	Pane[] $panes = new Pane[] {};
 
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
 
-		JXTaskPaneContainer $c = new JXTaskPaneContainer();
+		final JXTaskPaneContainer $c = new JXTaskPaneContainer();
 
 		for (Pane $p : $panes) {
 			JXTaskPane $jxp = new JXTaskPane();
 			Container $con = $p.getContainer();
 			$con.create($main, $parent);
-			MagicPanel $mp = new MagicPanel($main, $con);
 			
-			$jxp.add($mp);
+			$jxp.add($con.getRealComponent());
 			$jxp.setTitle($p.getTitle());
 			$jxp.setAnimated($p.getAnimated());
 			$jxp.setCollapsed(!$p.getExpanded());
-			$mp.setSize(200, $p.getHeight());
-			$mp.setPreferredSize(new Dimension(200, $p.getHeight()));
+			
 			$c.add($jxp);
 		}
 
 		$realComponent = $c;
 		$component = new JScrollPane($c);
 
+		if (!$border) {
+			$component.setBorder(null);
+		}
+		
 		super.create($main, $parent);
 	}
 
