@@ -104,7 +104,6 @@ public class MagicComponents {
 	public String getText() {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
-			System.out.println($c.getClass());
 			if ($c instanceof JPasswordField) {
 				return new String(((JPasswordField) $c).getPassword());
 			} else if ($c instanceof JTextComponent) {

@@ -25,19 +25,12 @@ public class TextField extends TextComponent {
 	@XmlAttribute
 	Filter $filters;
 
-	@XmlAttribute("filter-each-word")
-	boolean $filterEachWord = false;
-
 	@XmlAttribute("select-on-focus")
-	boolean $selectOnFocus = true;
+	Boolean $selectOnFocus = true;
 	
 	
 	public boolean hasFilter() {
 		return $filters != null;
-	}
-	
-	public boolean getFilterEachWord() {
-		return $filterEachWord;
 	}
 	
 	public String[] getFilterColumns() {
@@ -67,7 +60,7 @@ public class TextField extends TextComponent {
 		
 		final Color $foreground = $c.getForeground();
 		
-		if ($selectOnFocus) {
+		if (($selectOnFocus != null) && $selectOnFocus) {
 			$component.addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusGained(final FocusEvent $ev) {

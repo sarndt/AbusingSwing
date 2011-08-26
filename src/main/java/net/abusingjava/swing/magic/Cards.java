@@ -1,17 +1,20 @@
 package net.abusingjava.swing.magic;
 
 import java.awt.CardLayout;
+import java.util.Iterator;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import net.abusingjava.arrays.AbusingArrays;
 import net.abusingjava.swing.MagicPanel;
+import net.abusingjava.swing.magic.Cards.Card;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlChildElements;
 import net.abusingjava.xml.XmlElement;
 
 @XmlElement("cards")
-public class Cards extends Component {
+public class Cards extends Component implements Iterable<Card> {
 
 
 	@XmlElement("card")
@@ -26,11 +29,14 @@ public class Cards extends Component {
 	Card[] $cards = new Card[] {};
 	
 	@XmlAttribute
-	boolean $border = false;
+	Boolean $border;
 	
 	
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
+		if ($border == null) {
+			$border = false;
+		}
 		JPanel $c = new JPanel(new CardLayout());
 		
 		int $i = 0;
@@ -50,5 +56,11 @@ public class Cards extends Component {
 		$component = $c;
 
 		super.create($main, $parent);
+	}
+
+
+	@Override
+	public Iterator<Card> iterator() {
+		return AbusingArrays.array($cards).iterator();
 	}
 }

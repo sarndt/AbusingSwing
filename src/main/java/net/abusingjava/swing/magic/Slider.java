@@ -12,22 +12,50 @@ public class Slider extends Component {
 
 
 	@XmlAttribute
-	int $min = 0;
+	Integer $min;
 	
 	@XmlAttribute
-	int $max = 100;
+	Integer $max;
 	
 	@XmlAttribute
 	Integer $value;
 	
+	@XmlAttribute
+	Integer $extent;
 	
+	@XmlAttribute("minor-tick-spacing")
+	Integer $minorTickSpacing;
+	
+	@XmlAttribute("major-tick-spacing")
+	Integer $majorTickSpacing;
+	
+	@XmlAttribute("paint-labels")
+	Boolean $paintLabels;
+	
+	@XmlAttribute("paint-ticks")
+	Boolean $paintTicks;
+	
+	@XmlAttribute("paint-track")
+	Boolean $paintTrack;
+	
+	@XmlAttribute("snap-to-tick")
+	Boolean $snapToTick;
+	
+
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
+		if ($min == null) {
+			$min = 0;
+		}
+		if ($max == null) {
+			$max = 100;
+		}
 		if ($value == null) {
 			$value = ($min + $max) / 2;
 		}
 
-		JSlider $c = new JSlider($min, $max, $value);
+		final JSlider $c = new JSlider($min, $max, $value);
+		
 		switch ($parent.getOrientation()) {
 		case HORIZONTAL:
 			if ($width == null) {

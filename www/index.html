@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head>
-	<title>AbusingSwing (1.0-SNAPSHOT, 2011-08-24)</title>
+	<title>AbusingSwing (1.0-SNAPSHOT, 2011-08-26)</title>
 	<script type="text/javascript" src="shCore.js"></script>
 	<script type="text/javascript" src="shBrushJava.js"></script>
 	<script type="text/javascript" src="shBrushBash.js"></script>
@@ -14,7 +14,7 @@
 
 <body style="background: white; font-family: Helvetica, Arial" id="spec">
 
-<h1>AbusingSwing <small>(1.0-SNAPSHOT, 2011-08-25)</small></h1>
+<h1>AbusingSwing <small>(1.0-SNAPSHOT, 2011-08-26)</small></h1>
 
 <h2>About</h2>
 
@@ -128,13 +128,42 @@ public class MyMagicPanel extends MagicPanel {
 &lt;/panel&gt;
 </pre>
 
+
+<h3>Stylesheets</h3>
+
+<p>A similar mechanism like CSS Stylesheets in HTML can be used in the XML definition of MagicPanel:</p>
+
+<pre class="brush: xml;">
+&lt;panel&gt;
+	&lt;style&gt;
+		&lt;rule match="textfield, button" background="black" foreground="white" /&gt;
+	&lt;/style&gt;
+	&lt;vbox&gt;
+		&lt;textfield /&gt;
+		&lt;button /&gt;
+		&lt;button /&gt;
+	&lt;/vbox&gt;
+&lt;/panel&gt;
+</pre>
+
+<p>The above definition will cause the textfield and the two buttons in the panel to get a black background and a white foreground.</p>
+
+
 <h3>The $-selector</h3>
+
+<p>Similar to the selector (match) in Style-Rules, you can programmatically select multiple components from a MagicPanel.
+One handy feature of this mechanism is, that you can apply a method on a collection of itmes:</p>
+
+<pre class="brush: java;">
+myMagicPanel.$("*").disable();
+</pre>
+
 
 <h3>Actions &amp; Events</h3>
 
 <p>The following Event can be connected with any component: <code>onaction</code>, <code>onmouseover</code>, <code>onmouseout</code>,
 <code>onmousemove</code>, <code>onclick</code>, <code>onkeypress</code>, <code>onkeydown</code>, <code>onkeyup</code>, <code>onfocus</code>,
-<code>onblur</code>.</p>
+<code>onblur</code>, <code>onmousewheel</code>. Tabs additionally offer <code>onclose</code> (if they are closeable).</p>
 
 
 <h2>API Reference</h2>
@@ -211,6 +240,14 @@ public class MyMagicPanel extends MagicPanel {
 		<td>The minimum width to be always kept.</td>
 	</tr>
 </table>
+
+<h3>Window elements</h3>
+
+<h4>&lt;menu-bar></h4>
+
+<h4>&lt;item></h4>
+
+<h4>&lt;menu></h4>
 
 
 <h3>Container</h3>

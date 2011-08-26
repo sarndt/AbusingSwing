@@ -31,7 +31,7 @@ public class Window {
 	String $title = "";
 	
 	@XmlAttribute
-	boolean $resizable = true;
+	Boolean $resizable;
 	
 	@XmlChildElement
 	Panel $contentPane;
@@ -57,7 +57,7 @@ public class Window {
 	}
 	
 	public boolean getResizable() {
-		return $resizable;
+		return $resizable == null ? true : $resizable;
 	}
 	
 	public String getTitle() {

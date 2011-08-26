@@ -11,7 +11,7 @@ import net.abusingjava.xml.XmlElement;
 public class ToggleButton extends TextComponent {
 
 	@XmlAttribute
-	boolean $selected;
+	Boolean $selected;
 	
 	@XmlAttribute
 	String $filters;
@@ -20,6 +20,9 @@ public class ToggleButton extends TextComponent {
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		if ($height == null) {
 			$height = new Value("27px");
+		}
+		if ($selected == null) {
+			$selected = false;
 		}
 		
 		final JToggleButton $c = new JToggleButton($text, $selected);

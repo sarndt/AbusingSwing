@@ -9,34 +9,43 @@ import net.abusingjava.xml.XmlElement;
 
 @XmlElement("textarea")
 public class TextArea extends TextComponent {
-	
-	@XmlAttribute("linewrap")
-	boolean $lineWrap = true;
-	
-	@XmlAttribute("wrapstyleword")
-	boolean $wrapStyleWord = true;
-	
-	@XmlAttribute("tabsize")
-	Integer $tabSize = 4;
-	
+
+	@XmlAttribute("line-wrap")
+	Boolean $lineWrap;
+
+	@XmlAttribute("wrap-style-word")
+	Boolean $wrapStyleWord;
+
+	@XmlAttribute("tab-size")
+	Integer $tabSize;
+
 	@XmlAttribute("editable")
-	boolean $editable = true;
+	Boolean $editable;
 
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
+		if ($lineWrap == null) {
+			$lineWrap = true;
+		}
+		if ($wrapStyleWord == null) {
+			$wrapStyleWord = true;
+		}
+		if ($editable == null) {
+			$editable = true;
+		}
 		JTextArea $c = new JTextArea($text);
-		
+
 		$c.setEditable($editable);
 		$c.setLineWrap($lineWrap);
 		$c.setWrapStyleWord($wrapStyleWord);
 		if ($tabSize != null) {
 			$c.setTabSize($tabSize);
 		}
-		
+
 		$realComponent = $c;
 		$component = new JScrollPane($c);
-		
+
 		super.create($main, $parent);
 	}
-	
+
 }

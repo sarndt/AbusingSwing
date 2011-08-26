@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.util.Locale;
 
 import javax.swing.JComponent;
+import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
 import net.abusingjava.Author;
@@ -45,10 +46,10 @@ abstract public class Component {
 	Color $background;
 	
 	@XmlAttribute
-	boolean $enabled = true;
+	Boolean $enabled; // true
 	
 	@XmlAttribute
-	boolean $visible = true;
+	Boolean $visible; // true
 	
 	@XmlAttribute
 	MethodType $onaction;
@@ -110,6 +111,9 @@ abstract public class Component {
 	@XmlAttribute
 	String $name;
 	
+	@XmlAttribute("popup-menu")
+	String $popupMenu;
+	
 	
 	protected JComponent $component;
 	
@@ -157,7 +161,12 @@ abstract public class Component {
 
 	public void create(final MagicPanel $main,
 			@SuppressWarnings("unused") final MagicPanel $parent) {
-
+		if ($enabled == null) {
+			$enabled = true;
+		}
+		if ($visible == null) {
+			$visible = true;
+		}
 		if ($realComponent == null) {
 			$realComponent = $component;
 		}
@@ -192,6 +201,31 @@ abstract public class Component {
 		}
 		if (($fontSize != null) && ($fontSize.getUnit() == Unit.PIXEL)) {
 			$realComponent.setFont($realComponent.getFont().deriveFont((float)$fontSize.getValue()));
+		}
+		
+		if ($popupMenu != null) {
+			final JPopupMenu $menu = $main.getPopupMenu($popupMenu);
+			if ($menu != null) {
+				$realComponent.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mousePressed(final MouseEvent $ev) {
+						if ($ev.isPopupTrigger()) {
+							doPop($ev);
+						}
+					}
+					
+					@Override
+					public void mouseReleased(final MouseEvent $ev) {
+						if ($ev.isPopupTrigger()) {
+							doPop($ev);
+						}
+					}
+					
+					private void doPop(final MouseEvent $ev) {
+						$menu.show($realComponent, $ev.getX(), $ev.getY());
+					}
+				});
+			}
 		}
 		
 		if ($onaction != null) {

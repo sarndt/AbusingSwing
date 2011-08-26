@@ -48,7 +48,7 @@ abstract public class Container extends Component implements Iterable<Component>
 	Value $paddingBottom;
 
 	@XmlAttribute("scrollable")
-	boolean $scrollable = false;
+	Boolean $scrollable;
 	
 	
 	@Override
@@ -58,6 +58,9 @@ abstract public class Container extends Component implements Iterable<Component>
 	
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
+		if ($scrollable == null) {
+			$scrollable = false;
+		}
 		if ($paddingX == null) {
 			$paddingX = $padding;
 		}

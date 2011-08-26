@@ -15,12 +15,27 @@
 	</menu-bar>
 
 	<panel>
+		<style>
+			<rule match="hbox" height="intrinsic" />
+			<rule match="textfield" />
+		</style>
+	
+		<menu name="x">
+			<item title="Item" />
+			<menu title="A Title">
+				<item title="TITLE" />
+				<item title="Art of the TITLE" />
+			</menu>
+		</menu>
+	
 		<hbox>
 			<tabs>
 				<tab title="First Tab">
-					<hbox>
+					<hbox name="main">
 						<vbox>
-							<textfield name="field1" filters="#table(Name1,Name2)" />
+							<hbox>
+								<textfield name="field1" filters="#table(Name1,Name2)" popup-menu="x" />
+							</hbox>
 							<table editable="true" name="table" filter-mode="or">
 								<col type="string" min-width="50px" max-width="50px">Kürzel</col>
 								<col type="string">Name1</col>
@@ -28,16 +43,12 @@
 							</table>
 						</vbox>
 						<vbox width="180px">
-							<hbox height="intrinsic">
-								<togglebutton width="25px" filters="#sluggy" />
-								<checkbox width="25px" filters="" />
-								<textfield filters="#sluggy" name="textfield" />
-							</hbox>
+							<textfield filters="#sluggy" name="textfield" />
 							<multilist name="sluggy" />
 						</vbox>
 					</hbox>
 				</tab>
-				<tab title="Another Tab" closeable="true">
+				<tab title="Another Tab" closeable="true" onclose="close">
 					<hbox>
 						
 					</hbox>

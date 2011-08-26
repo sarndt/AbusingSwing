@@ -7,17 +7,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Iterator;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
 
+import net.abusingjava.arrays.AbusingArrays;
 import net.abusingjava.swing.MagicPanel;
+import net.abusingjava.swing.TabCloseEvent;
+import net.abusingjava.swing.magic.Tabs.Tab;
+import net.abusingjava.swing.types.MethodType;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlChildElements;
 import net.abusingjava.xml.XmlElement;
 
 @XmlElement("tabs")
-public class Tabs extends Component {
+public class Tabs extends Component implements Iterable<Tab> {
 
 	@XmlElement("tab")
 	public static class Tab extends Panel {
@@ -26,21 +31,18 @@ public class Tabs extends Component {
 		String $title = "";
 
 		@XmlAttribute
-		boolean $closeable = false;
+		Boolean $closeable = false;
 		
 		@XmlAttribute
-		int $height;
-
+		MethodType $onclose;
+		
+		
 		public String getTitle() {
 			return $title;
 		}
 
 		public boolean getCloseable() {
-			return $closeable;
-		}
-
-		public int getHeight() {
-			return $height;
+			return $closeable == null ? false : $closeable;
 		}
 	}
 
@@ -52,12 +54,10 @@ public class Tabs extends Component {
 
 		final JTabbedPane $c = new JTabbedPane();
 
-		int $i = 0;
 		for (final Tab $t : $tabs) {
 			Container $con = $t.getContainer();
 			$con.create($main, $parent);
 			
-
 	        final JScrollPane $scrollPane = new JScrollPane($con.getRealComponent());
 	        $c.add($scrollPane, $t.getTitle());
 
@@ -98,8 +98,15 @@ public class Tabs extends Component {
 	                $closeButton.addActionListener(new ActionListener() {
 	                        @Override
 	                        public void actionPerformed(final ActionEvent $ev) {
-	                            // remove Tab
-	                        	$c.remove($scrollPane);
+	                            if ($t.$onclose != null) {
+	                            	TabCloseEvent $e = new TabCloseEvent();
+	                            	$t.$onclose.call($main.getInvocationHandler(), $e);
+	                            	if (!$e.isCanceled()) {
+	                            		$c.remove($scrollPane);
+	                            	}
+	                            } else {
+	                            	$c.remove($scrollPane);
+	                            }
 	                        }
 	                });
 	            }};
@@ -112,6 +119,11 @@ public class Tabs extends Component {
 		$component = $c;
 
 		super.create($main, $parent);
+	}
+
+	@Override
+	public Iterator<Tab> iterator() {
+		return AbusingArrays.array($tabs).iterator();
 	}
 
 }

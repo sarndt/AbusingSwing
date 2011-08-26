@@ -31,28 +31,28 @@ public class Table extends Component implements Iterable<Column> {
 	
 	
 	@XmlAttribute
-	boolean $sortable = true;
+	Boolean $sortable;
+
+	@XmlAttribute
+	Boolean $editable;
 	
 	@XmlAttribute("grid-color")
 	Color $gridColor;
-
-	@XmlAttribute
-	boolean $editable = false;
 		
 	@XmlAttribute("column-control-visible")
-	boolean $columnControlVisible = true;
+	Boolean $columnControlVisible;
 	
 	@XmlAttribute("horizontal-scroll-enabled")
-	boolean $horizontalScrollEnabled = false;
+	Boolean $horizontalScrollEnabled;
 
 	@XmlAttribute("column-margin")
 	Integer $columnMargin;
 	
 	@XmlAttribute("terminate-edit-on-focus-lost")
-	boolean $terminateEditOnFocusLost = true;
+	Boolean $terminateEditOnFocusLost;
 	
 	@XmlAttribute("sorts-on-update")
-	boolean $sortsOnUpdate = true;
+	Boolean $sortsOnUpdate;
 	
 	@XmlAttribute("row-height")
 	Value $rowHeight;
@@ -173,6 +173,16 @@ public class Table extends Component implements Iterable<Column> {
 	
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
+		if ($editable == null) {
+			$editable = false;
+		}
+		if ($sortable == null) {
+			$sortable = true;
+		}
+		if ($columnControlVisible == null) {
+			$columnControlVisible = true;
+		}
+		
 		
 		String[] $columnHeaders = new String[$columns.length];
 		for (int $i = 0; $i < $columns.length; $i++) {
@@ -196,9 +206,15 @@ public class Table extends Component implements Iterable<Column> {
 		$c.setEditable($editable);
 		$c.setSortable($sortable);
 		$c.setColumnControlVisible($columnControlVisible);
-		$c.setHorizontalScrollEnabled($horizontalScrollEnabled);
-		$c.setSortsOnUpdates($sortsOnUpdate);
-		$c.setTerminateEditOnFocusLost($terminateEditOnFocusLost);
+		if ($horizontalScrollEnabled != null) {
+			$c.setHorizontalScrollEnabled($horizontalScrollEnabled);
+		}
+		if ($sortsOnUpdate != null) {
+			$c.setSortsOnUpdates($sortsOnUpdate);
+		}
+		if ($terminateEditOnFocusLost != null) {
+			$c.setTerminateEditOnFocusLost($terminateEditOnFocusLost);
+		}
 		if (($rowHeight != null) && ($rowHeight.getUnit() == Unit.PIXEL) && ($rowHeight.getValue() >= 0)) {
 			$c.setRowHeight($rowHeight.getValue());
 		}

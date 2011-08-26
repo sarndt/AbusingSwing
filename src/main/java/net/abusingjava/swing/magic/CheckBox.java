@@ -11,13 +11,16 @@ import net.abusingjava.xml.XmlElement;
 public class CheckBox extends TextComponent {
 	
 	@XmlAttribute
-	boolean $selected = false;
+	Boolean $selected;
 
 	@XmlAttribute
 	String $filters;
 	
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
+		if ($selected == null) {
+			$selected = false;
+		}
 		if ($height == null) {
 			$height = new Value("27px");
 		}

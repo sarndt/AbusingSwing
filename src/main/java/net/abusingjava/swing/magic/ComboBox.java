@@ -19,7 +19,7 @@ import net.abusingjava.xml.XmlTextContent;
 public class ComboBox extends Component {
 
 	@XmlAttribute("auto-complete")
-	boolean $autoComplete;
+	Boolean $autoComplete;
 	
 	@XmlAttribute("from")
 	JavaType $from;
@@ -55,6 +55,9 @@ public class ComboBox extends Component {
 	
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
+		if ($autoComplete == null) {
+			$autoComplete = false;
+		}
 		if ($height == null) {
 			$height = new Value("27px");
 		}

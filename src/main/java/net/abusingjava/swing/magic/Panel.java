@@ -1,5 +1,6 @@
 package net.abusingjava.swing.magic;
 
+import net.abusingjava.swing.magic.Style.Rule;
 import net.abusingjava.xml.XmlChildElements;
 import net.abusingjava.xml.XmlElement;
 
@@ -15,9 +16,15 @@ public class Panel {
 	@XmlChildElements
 	Style[] $style = new Style[] {};
 	
+	@XmlChildElements
+	Menu[] $menus = new Menu[] {};
 	
 	public Container getContainer() {
 		return $containers[0];
+	}
+	
+	public Menu[] getMenus() {
+		return $menus;
 	}
 	
 	public Binding getBinding(final String $name) {
@@ -29,4 +36,10 @@ public class Panel {
 		return null;
 	}
 	
+	public Rule[] getStyleRules() {
+		if ($style.length > 0) {
+			return $style[0].$rules;
+		}
+		return new Rule[0];
+	}
 }

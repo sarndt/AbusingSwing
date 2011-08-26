@@ -16,27 +16,36 @@ import net.abusingjava.xml.XmlTextContent;
 public class Numeric extends Component {
 	
 	@XmlAttribute
-	double $min = 0;
+	Double $min;
 	
 	@XmlAttribute
-	double $max;
+	Double $max;
 	
 	@XmlAttribute
-	double $step = 1;
+	Double $step;
 	
 	@XmlTextContent
 	Double $value;
 
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
+		if ($min == null) {
+			$min = 0.0;
+		}
+		if ($max == null) {
+			$max = 100.0;
+		}
+		if ($step == null) {
+			$value = 1.0;
+		}
+		if ($value == null) {
+			$value = $min;
+		}
 		if ($height == null) {
 			$height = new Value("27px");
 		}
 
-		if ($value == null) {
-			$value = $min;
-		}
-		final SpinnerNumberModel $m = new SpinnerNumberModel((double) $value, $min, $max, $step);
+		final SpinnerNumberModel $m = new SpinnerNumberModel($value, $min, $max, $step);
 		final JSpinner $c = new JSpinner($m);
 		
 		$c.addMouseWheelListener(new MouseWheelListener() {

@@ -4,13 +4,13 @@ import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
 import net.abusingjava.Author;
 import net.abusingjava.swing.magic.Menu;
 import net.abusingjava.swing.magic.MenuBar;
-import net.abusingjava.swing.magic.MenuItem;
 import net.abusingjava.swing.magic.Window;
 
 /**
@@ -31,8 +31,24 @@ public class MagicWindow extends JFrame {
 
 	final MagicPanel $magicPanel;
 
+	public class ToggleFullscreenAction extends AbstractAction {
+
+		public ToggleFullscreenAction() {
+			super("Fullscreen");
+			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("F11"));
+		}
+		
+		private static final long serialVersionUID = 1890428096218498993L;
+
+		@Override
+		public void actionPerformed(final ActionEvent $ev) {
+			toggleFullscreen();
+		}
+	}
+	
 	MagicWindow(final Window $window) {
 		super($window.getTitle());
+		
 		if ($window.hasMinSize()) {
 			setMinimumSize($window.getMinSize());
 		}
@@ -47,7 +63,7 @@ public class MagicWindow extends JFrame {
 			JMenuBar $jMenuBar = new JMenuBar();
 			
 			for (Menu $menu : $menuBar.getMenus()) {
-				$jMenuBar.add(buildMenu($menu));
+				$jMenuBar.add(MagicPanel.buildMenu($menu));
 			}
 			
 			setJMenuBar($jMenuBar);
@@ -59,22 +75,11 @@ public class MagicWindow extends JFrame {
 		setContentPane(new JScrollPane($magicPanel));
 		setResizable($window.getResizable());
 
+		new JPopupMenu().add(new JMenuItem(new ToggleFullscreenAction()));
+		
 		pack();
 	}
 
-	private JMenu buildMenu(final Menu $menuDef) {
-		JMenu $menu = new JMenu($menuDef.getTitle());
-		
-		for (MenuItem $item : $menuDef.getMenuItems()) {
-			if ($item instanceof Menu) {
-				$menu.add(buildMenu((Menu) $item));
-			} else {
-				$menu.add(new JMenuItem($item.getTitle()));
-			}
-		}
-		
-		return $menu;
-	}
 	
 	/**
 	 * Returns the MagicPanel that is the contentPane of this MagicWindow.

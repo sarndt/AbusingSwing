@@ -13,25 +13,41 @@ import net.abusingjava.xml.XmlElement;
 public class ProgressBar extends Component {
 
 	@XmlAttribute
-	int $min;
+	Integer $min;
 	
 	@XmlAttribute
-	int $max;
+	Integer $max;
 	
 	@XmlAttribute
-	int $value;
+	Integer $value;
 	
 	@XmlAttribute
-	boolean $indeterminate;
+	Boolean $indeterminate;
 	
 	@XmlAttribute("string-painted")
-	boolean $stringPainted;
+	Boolean $stringPainted;
 	
 	@XmlAttribute
-	String $string = "%s / %s"; 
+	String $string = "%s / %s";
 	
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
+		if ($min == null) {
+			$min = 0;
+		}
+		if ($max == null) {
+			$max = 100;
+		}
+		if ($value == null) {
+			$value = $min;
+		}
+		if ($indeterminate == null) {
+			$indeterminate = false;
+		}
+		if ($stringPainted == null) {
+			$stringPainted = false;
+		}
+		
 		final JProgressBar $c = new JProgressBar($min, $max);
 		
 		$c.setIndeterminate($indeterminate);
