@@ -8,6 +8,7 @@ public class ClassNames implements Iterable<String> {
 	final ArrayList<String> $names;
 	
 	public ClassNames(final String $value) {
+		System.out.println($value);
 		String[] $names = $value.trim().split("[,; ]+");
 		this.$names = new ArrayList<String>($names.length);
 		for (String $name : $names) {

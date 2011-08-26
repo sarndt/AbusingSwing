@@ -13,7 +13,6 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import javax.swing.text.JTextComponent;
 import javax.swing.tree.TreeModel;
 
 import net.abusingjava.Author;
@@ -21,6 +20,7 @@ import net.abusingjava.Since;
 import net.abusingjava.Version;
 import net.abusingjava.swing.magic.Component;
 import net.abusingjava.swing.magic.MultiList;
+import net.abusingjava.swing.magic.TextComponent;
 
 /**
  * A Collection of Components on which you may apply a function as you want.
@@ -54,15 +54,8 @@ public class MagicComponents {
 	
 	public MagicComponents setText(final String $text) {
 		for (Component $comp : $components) {
-			JComponent $c = $comp.getRealComponent();
-			if ($c instanceof JTextComponent) {
-				((JTextComponent) $c).setText($text);
-			} else if ($c instanceof JButton) {
-				((JButton) $c).setText($text);
-			} else if ($c instanceof JLabel) {
-				((JLabel) $c).setText($text);
-			} else if ($c instanceof JCheckBox) {
-				((JCheckBox) $c).setText($text);
+			if ($comp instanceof TextComponent) {
+				((TextComponent) $comp).setText($text);
 			}
 		}
 		return this;
@@ -103,11 +96,8 @@ public class MagicComponents {
 
 	public String getText() {
 		for (Component $comp : $components) {
-			JComponent $c = $comp.getRealComponent();
-			if ($c instanceof JPasswordField) {
-				return new String(((JPasswordField) $c).getPassword());
-			} else if ($c instanceof JTextComponent) {
-				return ((JTextComponent) $c).getText();
+			if ($comp instanceof TextComponent) {
+				return ((TextComponent)$comp).getText();
 			}
 		}
 		return "";

@@ -106,7 +106,7 @@ abstract public class Component {
 	Boolean $opaque;
 	
 	@XmlAttribute
-	ClassNames $classes;
+	ClassNames $class;
 	
 	@XmlAttribute
 	String $name;
@@ -136,11 +136,14 @@ abstract public class Component {
 	}
 	
 	public ClassNames getClasses() {
-		return $classes;
+		return $class;
 	}
 	
 	public boolean hasClass(final String $className) {
-		return $classes.contains($className);
+		if (($class == null) || ($className == null)) {
+			return false;
+		}
+		return $class.contains($className);
 	}
 	
 	public Value getWidth() {

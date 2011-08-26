@@ -183,24 +183,28 @@ public class Style {
 		Boolean $wrapStyleWord;
 
 		public boolean matches(final Object $o) {
-			String[] $selectors = $match.split(", +");
-			for (String $selector : $selectors) {
-				if ($o.getClass().isAnnotationPresent(XmlElement.class)) {
-					if ($o.getClass().getAnnotation(XmlElement.class).value().equals($selector)) {
-						return true;
-					}
-				}
-				if ($o instanceof Component) {
-					if (($selector.charAt(0) == '#')) {
-						if ($selector.substring(1).equals(((Component)$o).getName())) {
-							return true;
-						}
-					} else if (($selector.charAt(0) == '.')) {
-						if (((Component)$o).hasClass($selector.substring(1))) {
+			try {
+				String[] $selectors = $match.split(", +");
+				for (String $selector : $selectors) {
+					if ($o.getClass().isAnnotationPresent(XmlElement.class)) {
+						if ($o.getClass().getAnnotation(XmlElement.class).value().equals($selector)) {
 							return true;
 						}
 					}
+					if ($o instanceof Component) {
+						if (($selector.charAt(0) == '#')) {
+							if ($selector.substring(1).equals(((Component)$o).getName())) {
+								return true;
+							}
+						} else if (($selector.charAt(0) == '.')) {
+							if (((Component)$o).hasClass($selector.substring(1))) {
+								return true;
+							}
+						}
+					}
 				}
+			} catch (Exception $exc) {
+				$exc.printStackTrace(System.err);
 			}
 			return false;
 		}
