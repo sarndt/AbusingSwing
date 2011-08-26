@@ -2,22 +2,33 @@
 	<panel>
 
 		<hbox>
-			<vbox>
-				<textfield name="field1" filters="#table(Name1,Name2)" />
-				<table editable="true" name="table" filter-mode="or">
-					<col type="string" min-width="50px" max-width="50px">Kürzel</col>
-					<col type="string">Name1</col>
-					<col type="string">Name2</col>
-				</table>
-			</vbox>
-			<vbox width="180px">
-				<hbox height="intrinsic">
-					<togglebutton width="25px" filters="#sluggy" />
-					<checkbox width="25px" filters="" />
-					<textfield filters="#sluggy" name="textfield" />
-				</hbox>
-				<multilist name="sluggy" />
-			</vbox>
+			<tabs>
+				<tab title="First Tab">
+					<hbox>
+						<vbox>
+							<textfield name="field1" filters="#table(Name1,Name2)" />
+							<table editable="true" name="table" filter-mode="or">
+								<col type="string" min-width="50px" max-width="50px">Kürzel</col>
+								<col type="string">Name1</col>
+								<col type="string">Name2</col>
+							</table>
+						</vbox>
+						<vbox width="180px">
+							<hbox height="intrinsic">
+								<togglebutton width="25px" filters="#sluggy" />
+								<checkbox width="25px" filters="" />
+								<textfield filters="#sluggy" name="textfield" />
+							</hbox>
+							<multilist name="sluggy" />
+						</vbox>
+					</hbox>
+				</tab>
+				<tab title="Another Tab" closeable="true">
+					<hbox>
+						
+					</hbox>
+				</tab>
+			</tabs>
 		</hbox>
 
 	</panel>

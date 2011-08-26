@@ -54,6 +54,9 @@ public class Binding implements Iterable<Property> {
 	}
 	
 	public String getName() {
+		if ($name.charAt(0) == '#') {
+			return $name.substring(1);
+		}
 		return $name;
 	}
 	
