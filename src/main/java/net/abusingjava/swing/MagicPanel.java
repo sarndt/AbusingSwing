@@ -304,22 +304,6 @@ public class MagicPanel extends JPanel {
 				}
 			}
 		}
-		/*
-		
-		
-		
-		System.out.println($o.getClass().getSimpleName());
-		for (Field $f : $fields) {
-			$f.setAccessible(true);
-			if ($f.isAnnotationPresent(XmlAttribute.class)) {
-				try {
-					System.out.printf("-> %s %s\n", $f.getName(), $f.get($o));
-				} catch (IllegalAccessException $exc) {
-					throw new NotGonnaHappenException($exc);
-				}
-			}
-		}
-		*/
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
