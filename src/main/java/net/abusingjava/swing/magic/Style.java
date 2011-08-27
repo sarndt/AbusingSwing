@@ -1,12 +1,8 @@
 package net.abusingjava.swing.magic;
 
-import java.awt.Font;
-
 import net.abusingjava.NotGonnaHappenException;
 import net.abusingjava.swing.magic.Password.EchoChar;
-import net.abusingjava.swing.types.Color;
-import net.abusingjava.swing.types.FilterMode;
-import net.abusingjava.swing.types.Value;
+import net.abusingjava.swing.types.*;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlChildElements;
 import net.abusingjava.xml.XmlElement;
@@ -69,10 +65,10 @@ public class Style {
 		Value $fontSize;
 
 		@XmlAttribute("font-style")
-		Font $fontStyle;
+		FontStyle $fontStyle;
 
 		@XmlAttribute("font-weight")
-		Font $fontWeight;
+		FontWeight $fontWeight;
 
 		@XmlAttribute
 		Color $foreground;
@@ -210,6 +206,7 @@ public class Style {
 		}
 		
 		public Object get(final String $field) {
+			
 			try {
 				return Rule.class.getDeclaredField($field).get(this);
 			} catch (NoSuchFieldException $exc) {
