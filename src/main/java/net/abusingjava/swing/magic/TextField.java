@@ -44,10 +44,13 @@ public class TextField extends TextComponent {
 
 	@Override
 	public String getText() {
-		if ($textEntered) {
-			return super.getText();
+		if (!$defaultText.isEmpty()) {
+			if ($textEntered) {
+				return super.getText();
+			}
+			return "";
 		}
-		return "";
+		return super.getText();
 	}
 	
 	@Override
