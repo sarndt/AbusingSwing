@@ -26,6 +26,9 @@ public class ComboBox extends Component {
 
 	@XmlChildElements
 	Val[] $values;
+	
+	@XmlAttribute
+	String $selected;
 
 	@XmlElement("val")
 	public static class Val implements Comparable<Val> {
@@ -72,16 +75,25 @@ public class ComboBox extends Component {
 				} catch (Exception $exc) {
 				}
 			}
-			$values = new Val[$v.length];
+			Val[] $values = new Val[$v.length];
 			for (int $i = 0; $i < $v.length; $i++) {
 				$values[$i] = new Val($v[$i].toString());
 			}
+			this.$values = AbusingArrays.concat(this.$values, $values);
 		}
 		DefaultComboBoxModel $model;
 		if ($values != null) {
 			$model = new DefaultComboBoxModel($values);
 		} else {
 			$model = new DefaultComboBoxModel();
+		}
+		if ($selected != null) {
+			for (int $i = 0; $i < $model.getSize(); $i++) {
+				if ($model.getElementAt($i).toString().equals($selected)) {
+					$model.setSelectedItem($model.getElementAt($i));
+					break;
+				}
+			}
 		}
 
 		JComboBox $c = new JComboBox($model);
