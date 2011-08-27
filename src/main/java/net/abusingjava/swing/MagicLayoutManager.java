@@ -17,7 +17,7 @@ public class MagicLayoutManager implements LayoutManager {
 
 	private final MagicPanel $parent;
 	private final MagicPanel $panel;
-	private final net.abusingjava.swing.magic.Container $container; 
+	private final net.abusingjava.swing.magic.Container $container;
 	
 	MagicLayoutManager(final MagicPanel $parent, final MagicPanel $panel, final net.abusingjava.swing.magic.Container $container) {
 		this.$parent = $parent;
@@ -34,7 +34,7 @@ public class MagicLayoutManager implements LayoutManager {
 	public void removeLayoutComponent(final Component $c) {
 		
 	}
-
+	
 	@Override
 	public void layoutContainer(final Container $container) {
 		if ($panel == $container) {
@@ -84,7 +84,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$starsHeight += $c.getHeight().getValue();
 						break;
 					case PERCENT:
-						$remainingHeight -= (int) (($c.getHeight().getValue() / 100.0) * $height);
+						$remainingHeight -= Math.round(($c.getHeight().getValue() / 100.0) * $height);
 						break;
 					case AUTO:
 						$starsHeight++;
@@ -115,7 +115,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$starsWidth += $c.getWidth().getValue();
 						break;
 					case PERCENT:
-						$remainingWidth -= (int) (($c.getWidth().getValue() / 100.0) * $width);
+						$remainingWidth -= Math.round(($c.getWidth().getValue() / 100.0) * $width);
 						break;
 					case AUTO:
 						$starsWidth++;
@@ -152,13 +152,13 @@ public class MagicLayoutManager implements LayoutManager {
 						$newHeight = $c.getHeight().getValue();
 						break;
 					case STAR:
-						$newHeight = (int) (($c.getHeight().getValue() / (double) $starsHeight) * $remainingHeight);
+						$newHeight = (int) Math.round(($c.getHeight().getValue() / (double) $starsHeight) * $remainingHeight);
 						break;
 					case PERCENT:
-						$newHeight = (int) (($c.getHeight().getValue() / 100.0) * $height);
+						$newHeight = (int) Math.round(($c.getHeight().getValue() / 100.0) * $height);
 						break;
 					case AUTO:
-						$newHeight = (int) ((1 / (double) $starsHeight) * $remainingHeight);
+						$newHeight = (int) Math.round((1 / (double) $starsHeight) * $remainingHeight);
 						break;
 					case INTRINSIC:
 						$newHeight = $c.getJComponent().getMinimumSize().height;
@@ -169,18 +169,18 @@ public class MagicLayoutManager implements LayoutManager {
 						$newWidth = $c.getWidth().getValue();
 						break;
 					case STAR:
-						$newWidth = (int) (($c.getWidth().getValue() / (double) $starsWidth) * $width);
+						$newWidth = (int) Math.round(($c.getWidth().getValue() / (double) $starsWidth) * $width);
 						break;
 					case PERCENT:
-						$newWidth = (int) (($c.getWidth().getValue() / 100.0) * $width);
+						$newWidth = (int) Math.round(($c.getWidth().getValue() / 100.0) * $width);
 						break;
 					case AUTO:
 					case INTRINSIC:
-						$newWidth = (int) $width;
+						$newWidth = (int) Math.round($width);
 						break;
 					}
-					$newX = (int) $posX;
-					$newY = (int) $posY;
+					$newX = (int) Math.round($posX);
+					$newY = (int) Math.round($posY);
 					$posY += $newHeight;
 					break;
 					
@@ -191,13 +191,13 @@ public class MagicLayoutManager implements LayoutManager {
 						$newWidth = $c.getWidth().getValue();
 						break;
 					case STAR:
-						$newWidth = (int) (($c.getWidth().getValue() / (double) $starsWidth) * $remainingWidth);
+						$newWidth = (int) Math.round(($c.getWidth().getValue() / (double) $starsWidth) * $remainingWidth);
 						break;
 					case PERCENT:
-						$newWidth = (int) (($c.getWidth().getValue() / 100.0) * $width);
+						$newWidth = (int) Math.round(($c.getWidth().getValue() / 100.0) * $width);
 						break;
 					case AUTO:
-						$newWidth = (int) ((1 / (double) $starsWidth) * $remainingWidth);
+						$newWidth = (int) Math.round((1 / (double) $starsWidth) * $remainingWidth);
 						break;
 					case INTRINSIC:
 						$newWidth = $c.getJComponent().getMinimumSize().width;
@@ -208,25 +208,25 @@ public class MagicLayoutManager implements LayoutManager {
 						$newHeight = $c.getHeight().getValue();
 						break;
 					case STAR:
-						$newHeight = (int) (($c.getHeight().getValue() / (double) $starsHeight) * $height);
+						$newHeight = (int) Math.round(($c.getHeight().getValue() / (double) $starsHeight) * $height);
 						break;
 					case PERCENT:
-						$newHeight = (int) (($c.getHeight().getValue() / 100.0) * $height);
+						$newHeight = (int) Math.round(($c.getHeight().getValue() / 100.0) * $height);
 						break;
 					case AUTO:
 					case INTRINSIC:
-						$newHeight = (int) $height;
+						$newHeight = (int) Math.round($height);
 						break;
 					}
-					$newX = (int) $posX;
-					$newY = (int) $posY;
+					$newX = (int) Math.round($posX);
+					$newY = (int) Math.round($posY);
 					$posX += $newWidth;
 					break;
 					
 				case FIXED:
 					switch ($c.getWidth().getUnit()) {
 					case PERCENT:
-						$newWidth = (int) (($c.getWidth().getValue() / 100.0) * $width);
+						$newWidth = (int) Math.round(($c.getWidth().getValue() / 100.0) * $width);
 						break;
 					case PIXEL:
 						$newWidth = $c.getWidth().getValue();
@@ -240,7 +240,7 @@ public class MagicLayoutManager implements LayoutManager {
 					}
 					switch ($c.getHeight().getUnit()) {
 					case PERCENT:
-						$newHeight = (int) (($c.getHeight().getValue() / 100.0) * $height);
+						$newHeight = (int) Math.round(($c.getHeight().getValue() / 100.0) * $height);
 						break;
 					case PIXEL:
 						$newHeight = $c.getHeight().getValue();
@@ -255,7 +255,7 @@ public class MagicLayoutManager implements LayoutManager {
 					
 					switch ($c.getPosX().getUnit()) {
 					case PERCENT:
-						$newX = (int) ((($c.getPosX().getValue() / 100.0) * $width) - (($c.getPosX().getValue() / 100.0) * $newWidth));
+						$newX = (int) Math.round((($c.getPosX().getValue() / 100.0) * $width) - (($c.getPosX().getValue() / 100.0) * $newWidth));
 						break;
 					case PIXEL:
 						$newX = $c.getPosX().getValue();
@@ -269,7 +269,7 @@ public class MagicLayoutManager implements LayoutManager {
 					}
 					switch ($c.getPosY().getUnit()) {
 					case PERCENT:
-						$newY = (int) ((($c.getPosY().getValue() / 100.0) * $height) - (($c.getPosY().getValue() / 100.0) * $newHeight));
+						$newY = (int) Math.round((($c.getPosY().getValue() / 100.0) * $height) - (($c.getPosY().getValue() / 100.0) * $newHeight));
 						break;
 					case PIXEL:
 						$newY = $c.getPosY().getValue();
@@ -394,7 +394,7 @@ public class MagicLayoutManager implements LayoutManager {
 	}
 
 	public MagicPanel getParent() {
-		// TODO: Is this needed? 
+		// TODO: Is this needed?
 		return $parent;
 	}
 }
