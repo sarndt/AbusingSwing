@@ -25,26 +25,6 @@ public class Test {
 		for (Sprache $s : Sprache.values()) {
 			$panel.$("#sluggy").add($s.toString());
 		}
-		/*
-		for (Sprache $s : Sprache.values()) {
-			$panel.$("#sluggy").add($s);
-		}
-		
-		JXTable $table = $panel.$("#table").as(JXTable.class);
-		System.out.println($table.getColumn("Name1").getModelIndex());
-		System.out.println($table.getColumn("Name2").getModelIndex());
-		System.out.println($table.getColumn("Brool").getModelIndex());
-		
-		final TableFiltering $tf = new TableFiltering($panel.$("#sluggy").as(JXTable.class), new String[]{});
-		final JTextField $jtf = $panel.$("#textfield").as(JTextField.class);
-		
-		$jtf.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(final KeyEvent $ev) {
-				$tf.updateFilters($jtf.getText());
-			}
-			
-		});*/
 	}
 	
 }

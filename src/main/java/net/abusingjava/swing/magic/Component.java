@@ -6,8 +6,6 @@ import java.util.Locale;
 
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
-import javax.swing.SwingUtilities;
-
 import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
@@ -235,12 +233,12 @@ abstract public class Component {
 			ActionListener $listener = new ActionListener() {
 				@Override
 				public void actionPerformed(final ActionEvent $ev) {
-					SwingUtilities.invokeLater(new Runnable() {
+					new Thread(new Runnable() {
 						@Override
 						public void run() {
 							$onaction.call($main.getInvocationHandler());
 						}
-					});
+					}).start();
 				}
 			};
 			if (AbusingReflection.hasMethod($realComponent, "addActionListener")) {
@@ -261,7 +259,7 @@ abstract public class Component {
 						public void run() {
 							$onclick.call($main.getInvocationHandler(), $ev);
 						}
-					}).run();
+					}).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -276,7 +274,7 @@ abstract public class Component {
 						public void run() {
 							$onmouseover.call($main.getInvocationHandler(), $ev);
 						}
-					}).run();
+					}).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -291,7 +289,7 @@ abstract public class Component {
 						public void run() {
 							$onmouseout.call($main.getInvocationHandler(), $ev);
 						}
-					}).run();
+					}).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -306,7 +304,7 @@ abstract public class Component {
 						public void run() {
 							$onmousemove.call($main.getInvocationHandler(), $ev);
 						}
-					}).run();
+					}).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -321,7 +319,7 @@ abstract public class Component {
 						public void run() {
 							$onmousedown.call($main.getInvocationHandler(), $ev);
 						}
-					}).run();
+					}).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -336,7 +334,7 @@ abstract public class Component {
 						public void run() {
 							$onmouseup.call($main.getInvocationHandler(), $ev);
 						}
-					}).run();
+					}).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -352,7 +350,7 @@ abstract public class Component {
 						public void run() {
 							$onmousewheel.call($main.getInvocationHandler(), $ev);
 						}
-					}).run();
+					}).start();
 				}
 			};
 			$realComponent.addMouseWheelListener($listener);
@@ -368,7 +366,7 @@ abstract public class Component {
 						public void run() {
 							$onkeydown.call($main.getInvocationHandler(), $ev);
 						}
-					}).run();
+					}).start();
 				}
 			};
 			$realComponent.addKeyListener($listener);
@@ -384,7 +382,7 @@ abstract public class Component {
 						public void run() {
 							$onkeyup.call($main.getInvocationHandler(), $ev);
 						}
-					}).run();
+					}).start();
 				}
 			};
 			$realComponent.addKeyListener($listener);
@@ -400,7 +398,7 @@ abstract public class Component {
 						public void run() {
 							$onkeypress.call($main.getInvocationHandler(), $ev);
 						}
-					}).run();
+					}).start();
 				}
 			};
 			$realComponent.addKeyListener($listener);
@@ -415,7 +413,7 @@ abstract public class Component {
 						public void run() {
 							$onfocus.call($main.getInvocationHandler(), $ev);
 						}
-					}).run();
+					}).start();
 				}
 			};
 			$realComponent.addFocusListener($listener);
@@ -430,7 +428,7 @@ abstract public class Component {
 						public void run() {
 							$onfocus.call($main.getInvocationHandler(), $ev);
 						}
-					}).run();
+					}).start();
 				}
 			};
 			$realComponent.addFocusListener($listener);

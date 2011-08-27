@@ -45,6 +45,8 @@ public class Label extends TextComponent {
 		
 		$component = $c;
 		
+		$realComponent = $c;
+		
 		super.create($main, $parent);
 	}
 	

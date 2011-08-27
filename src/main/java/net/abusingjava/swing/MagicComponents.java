@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -18,6 +21,7 @@ import javax.swing.tree.TreeModel;
 import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
+import net.abusingjava.swing.magic.CheckBox;
 import net.abusingjava.swing.magic.Component;
 import net.abusingjava.swing.magic.MultiList;
 import net.abusingjava.swing.magic.TextComponent;
@@ -53,9 +57,14 @@ public class MagicComponents {
 	}
 	
 	public MagicComponents setText(final String $text) {
-		for (Component $comp : $components) {
+		for (final Component $comp : $components) {
 			if ($comp instanceof TextComponent) {
-				((TextComponent) $comp).setText($text);
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						((TextComponent) $comp).setText($text);
+					}
+				});
 			}
 		}
 		return this;
@@ -94,15 +103,84 @@ public class MagicComponents {
 		return this;
 	}
 
+	public boolean isSelected() {
+		for (final Component $comp : $components) {
+			if ($comp instanceof CheckBox) {
+				FutureTask<Boolean> $task = new FutureTask<Boolean>(new Callable<Boolean>() {
+					@Override
+					public Boolean call() throws Exception {
+						return ((JCheckBox) $comp.getRealComponent()).isSelected();
+					}
+				});
+				SwingUtilities.invokeLater($task);
+				try {
+					return $task.get();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
+	}
+	
 	public String getText() {
-		for (Component $comp : $components) {
+		for (final Component $comp : $components) {
 			if ($comp instanceof TextComponent) {
-				return ((TextComponent)$comp).getText();
+				FutureTask<String> $task = new FutureTask<String>(new Callable<String>() {
+					@Override
+					public String call() {
+						return ((TextComponent)$comp).getText();
+					}
+				});
+				SwingUtilities.invokeLater($task);
+				try {
+					return $task.get();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		return "";
 	}
 
+	public MagicComponents clear() {
+		for (Component $comp : $components) {
+			JComponent $real = $comp.getRealComponent();
+			if ($real instanceof JTable) {
+				final TableModel $m = ((JTable) $real).getModel();
+				if ($m instanceof DefaultTableModel) {
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							while ($m.getRowCount() > 0) {
+								((DefaultTableModel)$m).removeRow(0);
+							}
+						}
+					});
+				}
+			} else if ($real instanceof JList) {
+				final ListModel $m = ((JList) $real).getModel();
+				if ($m instanceof DefaultListModel) {
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							((DefaultListModel) $m).setSize(0);
+						}
+					});
+				}
+			}
+		}
+		return this;
+	}
+	
 	public MagicComponents show(final int $index) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -216,39 +294,39 @@ public class MagicComponents {
 	}
 
 	public MagicComponents hide() {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				for (Component $comp : $components) {
-					$comp.getJComponent().setVisible(false);
+		for (final Component $comp : $components) {
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+						$comp.getJComponent().setVisible(false);
+					
 				}
-			}
-		});
+			});
+		}
 		return this;
 	}
 
 	public MagicComponents enable() {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-
-				for (Component $comp : $components) {
+		for (final Component $comp : $components) {
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
 					$comp.getJComponent().setEnabled(true);
 				}
-			}
-		});
+			});
+		}
 		return this;
 	}
 
 	public MagicComponents disable() {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				for (Component $comp : $components) {
+		for (final Component $comp : $components) {
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
 					$comp.getJComponent().setEnabled(false);
 				}
-			}
-		});
+			});
+		}
 		return this;
 	}
 
@@ -330,17 +408,27 @@ public class MagicComponents {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
-				ComboBoxModel $m = ((JComboBox)$c).getModel();
+				final ComboBoxModel $m = ((JComboBox)$c).getModel();
 				if ($m instanceof DefaultComboBoxModel) {
-					for (Object $value : $values) {
-						((DefaultComboBoxModel)$m).addElement($value);
+					for (final Object $value : $values) {
+						SwingUtilities.invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								((DefaultComboBoxModel)$m).addElement($value);
+							}
+						});
 					}
 				}
 			} else if ($c instanceof JList) {
-				ListModel $m = ((JList)$c).getModel();
+				final ListModel $m = ((JList)$c).getModel();
 				if ($m instanceof DefaultListModel) {
-					for (Object $value : $values) {
-						((DefaultListModel)$m).addElement($value);
+					for (final Object $value : $values) {
+						SwingUtilities.invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								((DefaultListModel)$m).addElement($value);
+							}
+						});
 					}
 				}
 			}
@@ -352,9 +440,14 @@ public class MagicComponents {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JTable) {
-				TableModel $m = ((JTable)$c).getModel();
+				final TableModel $m = ((JTable)$c).getModel();
 				if ($m instanceof DefaultTableModel) {
-					((DefaultTableModel)$m).addRow($values);
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							((DefaultTableModel)$m).addRow($values);
+						}
+					});
 				}
 			}
 		}
@@ -402,19 +495,34 @@ public class MagicComponents {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
-				ComboBoxModel $m = ((JComboBox)$c).getModel();
+				final ComboBoxModel $m = ((JComboBox)$c).getModel();
 				if ($m instanceof DefaultComboBoxModel) {
-					((DefaultComboBoxModel)$m).addElement($value);
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							((DefaultComboBoxModel)$m).addElement($value);
+						}
+					});
 				}
 			} else if ($c instanceof JList) {
-				ListModel $m = ((JList)$c).getModel();
+				final ListModel $m = ((JList)$c).getModel();
 				if ($m instanceof DefaultListModel) {
-					((DefaultListModel)$m).addElement($value);
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							((DefaultListModel)$m).addElement($value);
+						}
+					});
 				}
 			} else if ($comp instanceof MultiList) {
-				TableModel $m = ((JTable)$c).getModel();
+				final TableModel $m = ((JTable)$c).getModel();
 				if ($m instanceof DefaultTableModel) {
-					((DefaultTableModel)$m).addRow(new Object[] { false, $value });
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							((DefaultTableModel)$m).addRow(new Object[] { false, $value });
+						}
+					});
 				}
 			}
 		}
@@ -425,9 +533,14 @@ public class MagicComponents {
 		for (Component $comp : $components) {
 			if ($comp instanceof MultiList) {
 				JComponent $c = $comp.getRealComponent();
-				TableModel $m = ((JTable)$c).getModel();
+				final TableModel $m = ((JTable)$c).getModel();
 				if ($m instanceof DefaultTableModel) {
-					((DefaultTableModel)$m).addRow(new Object[] { $selected, $value });
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							((DefaultTableModel)$m).addRow(new Object[] { $selected, $value });
+						}
+					});
 				}
 			}
 		}

@@ -34,8 +34,7 @@ public class MagicWindow extends JFrame {
 	public class ToggleFullscreenAction extends AbstractAction {
 
 		public ToggleFullscreenAction() {
-			super("Fullscreen");
-			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("F11"));
+			super("Toggle Fullscreen");
 		}
 		
 		private static final long serialVersionUID = 1890428096218498993L;
@@ -70,12 +69,17 @@ public class MagicWindow extends JFrame {
 		}
 		
 		$magicPanel = new MagicPanel($window.getPanel());
-
+		JScrollPane $scrollPane = new JScrollPane($magicPanel);
+		
 		setLocationRelativeTo(null);
-		setContentPane(new JScrollPane($magicPanel));
+		setContentPane($scrollPane);
 		setResizable($window.getResizable());
 
-		new JPopupMenu().add(new JMenuItem(new ToggleFullscreenAction()));
+		KeyStroke $f11 = KeyStroke.getKeyStroke("F11");
+		InputMap $inputMap = $scrollPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		$inputMap.put($f11, "TOGGLE_FULLSCREEN");
+		
+		$scrollPane.getActionMap().put("TOGGLE_FULLSCREEN", new ToggleFullscreenAction());
 		
 		pack();
 	}

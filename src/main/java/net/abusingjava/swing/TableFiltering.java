@@ -18,7 +18,7 @@ public class TableFiltering extends AbstractBean {
 	
 	void updateFilters(final String $v) {
 		List<RowFilter<Object,Object>> $filters = new ArrayList<RowFilter<Object,Object>>(2);
-		final String $value = $v.toLowerCase(); 
+		final String $value = $v.toLowerCase();
 		if (!$value.isEmpty()) {
 			$filters.add(new RowFilter<Object,Object>() {
 				@Override
@@ -27,13 +27,7 @@ public class TableFiltering extends AbstractBean {
 				}
 			});
 		}
-		/*$filters.add(new RowFilter<Object,Object>() {
-			@Override
-			public boolean include(final javax.swing.RowFilter.Entry<? extends Object, ? extends Object> $entry) {
-				System.out.println($entry.getStringValue(1));
-				return false;
-			}
-		});*/
+
 		RowFilter<Object,Object> $filter = RowFilter.andFilter($filters);
 		
 		$table.setRowFilter($filter);
