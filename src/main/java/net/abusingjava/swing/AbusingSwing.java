@@ -71,8 +71,9 @@ final public class AbusingSwing {
 		final JFrame $frame = new JFrame() {
 			private static final long serialVersionUID = 4965692958830497098L;
 			{
-				if ($close)
+				if ($close) {
 					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				}
 				setContentPane($panel);
 				pack();
 				setMinimumSize($panel.getMinimumSize());
@@ -98,8 +99,9 @@ final public class AbusingSwing {
 		final JFrame $frame = new JFrame() {
 			private static final long serialVersionUID = -5067180055790051146L;
 			{
-				if ($close)
+				if ($close) {
 					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				}
 				setContentPane(new JScrollPane($panel));
 				pack();
 				setSize($width, $height);
@@ -138,7 +140,6 @@ final public class AbusingSwing {
 		do {
 			$className = new Exception().getStackTrace()[$i++].getClassName();
 		} while ($className.equals(AbusingSwing.class.getCanonicalName()));
-		System.out.println($className);
 		try {
 			InputStream $stream = Class.forName($className).getResourceAsStream($resource);
 			return makePanel($stream);
@@ -153,7 +154,6 @@ final public class AbusingSwing {
 		do {
 			$className = new Exception().getStackTrace()[$i++].getClassName();
 		} while ($className.equals(AbusingSwing.class.getCanonicalName()));
-		System.out.println($className);
 		try {
 			InputStream $stream = Class.forName($className).getResourceAsStream($resource);
 			return makeWindow($stream);
