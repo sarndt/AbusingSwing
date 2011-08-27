@@ -10,4 +10,9 @@ public class FontWeight {
 	public boolean isBold() {
 		return $bold;
 	}
+	
+	@Override
+	public String toString() {
+		return $bold ? "bold" : "normal";
+	}
 }
