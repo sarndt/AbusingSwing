@@ -1,5 +1,8 @@
 package net.abusingjava.swing.magic;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JToggleButton;
 
 import net.abusingjava.swing.MagicPanel;
@@ -26,6 +29,16 @@ public class ToggleButton extends TextComponent {
 		}
 		
 		final JToggleButton $c = new JToggleButton($text, $selected);
+		
+		if ($filters != null) {
+			final String $filter = $filters.charAt(0) == '#' ? $filters.substring(1) : $filters;
+			$c.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(final ActionEvent $ev) {
+					$main.$("#" + $filter).showSelectedOnly($c.isSelected());
+				}
+			});
+		}
 		
 		$component = $c;
 				

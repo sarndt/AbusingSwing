@@ -404,7 +404,7 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents add(final Iterable<Object> $values) {
+	public MagicComponents add(final Iterable<?> $values) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
@@ -468,7 +468,7 @@ public class MagicComponents {
 		}
 		return this;
 	}
-
+	
 	public MagicComponents add(final Object[] $values) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
@@ -561,6 +561,21 @@ public class MagicComponents {
 		}
 		return this;
 	}
+	
+	public MagicComponents setSelected(final boolean $selected) {
+		for (Component $comp : $components) {
+			if ($comp instanceof CheckBox) {
+				final JCheckBox $checkBox = (JCheckBox) $comp.getRealComponent();
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						$checkBox.setSelected($selected);
+					}
+				});
+			}
+		}
+		return this;
+	}
 
 	public Object getSelectedItem() {
 		for (Component $comp : $components) {
@@ -640,5 +655,18 @@ public class MagicComponents {
 
 	public int getValue() {
 		return 0;
+	}
+
+	public void showSelectedOnly(final boolean $selected) {
+		for (final Component $comp : $components) {
+			if ($comp instanceof MultiList) {
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						((MultiList) $comp).showSelectedOnly($selected);
+					}
+				});
+			}
+		}
 	}
 }

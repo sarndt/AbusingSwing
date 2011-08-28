@@ -8,6 +8,7 @@ import org.jdesktop.swingx.JXTable;
 
 import net.abusingjava.functions.AbusingFunctions;
 import net.abusingjava.swing.MagicPanel;
+import net.abusingjava.swing.types.FilterMode;
 import net.abusingjava.swing.types.JavaType;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlElement;
@@ -25,6 +26,8 @@ public class MultiList extends Table {
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
 
+		$filterMode = new FilterMode("or");
+		
 		super.create($main, $parent);
 		
 		String[] $columnHeaders = new String[] { "", $columnHead };
@@ -84,5 +87,11 @@ public class MultiList extends Table {
 			$c.setTableHeader(null);
 			((JScrollPane)$component).setColumnHeader(null);
 		}
+	}
+
+
+	public void showSelectedOnly(final boolean $selected) {
+		$selectedFilter = $selected;
+		updateFilters();
 	}
 }

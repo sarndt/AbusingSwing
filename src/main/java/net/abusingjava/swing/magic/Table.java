@@ -1,12 +1,13 @@
 package net.abusingjava.swing.magic;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.List;
 
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -60,6 +61,9 @@ public class Table extends Component implements Iterable<Column> {
 	@XmlAttribute("filter-mode")
 	FilterMode $filterMode = new FilterMode("and");
 	
+	// @XmlAttribute("")
+	
+	boolean $selectedFilter = false;
 	
 	public class Filter {
 		
@@ -84,6 +88,9 @@ public class Table extends Component implements Iterable<Column> {
 		
 		public boolean apply(final javax.swing.RowFilter.Entry<? extends Object, ? extends Object> $entry) {
 			if ($filterString.isEmpty()) {
+				if ($selectedFilter) {
+					return false;
+				}
 				return true;
 			}
 			boolean $result = false;
@@ -110,6 +117,15 @@ public class Table extends Component implements Iterable<Column> {
 				@Override
 				public boolean include(final javax.swing.RowFilter.Entry<? extends Object, ? extends Object> $entry) {
 					return $f.apply($entry);
+				}
+			});
+		}
+		
+		if ($selectedFilter) {
+			$filters.add(new RowFilter<Object,Object>() {
+				@Override
+				public boolean include(final javax.swing.RowFilter.Entry<? extends Object, ? extends Object> $entry) {
+					return $entry.getValue(0) == Boolean.TRUE;
 				}
 			});
 		}
@@ -235,6 +251,26 @@ public class Table extends Component implements Iterable<Column> {
 				$c.getColumn($columnHeaders[$i]).setPreferredWidth($columns[$i].$width.getValue());
 			}
 		}
+		
+		$c.setDefaultRenderer(java.util.Date.class, new DefaultTableCellRenderer() {
+
+			private static final long serialVersionUID = 8519130125457693769L;
+
+			@Override
+			public java.awt.Component getTableCellRendererComponent(final JTable $table,
+					final Object $value, final boolean $isSelected, final boolean $hasFocus, final int $row, final int $column) {
+				
+				super.getTableCellRendererComponent($table, $value, $isSelected, $hasFocus, $row, $column);
+				if ($value instanceof Date) {
+					String $date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Date) $value);
+					this.setText($date);
+				}
+				
+				return this;
+			}
+
+		});
+		
 		$realComponent = $c;
 		$component = new JScrollPane($c);
 		$c.setFillsViewportHeight(true);

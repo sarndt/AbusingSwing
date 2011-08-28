@@ -36,7 +36,7 @@ public class Numeric extends Component {
 			$max = 100.0;
 		}
 		if ($step == null) {
-			$value = 1.0;
+			$step = 1.0;
 		}
 		if ($value == null) {
 			$value = $min;
