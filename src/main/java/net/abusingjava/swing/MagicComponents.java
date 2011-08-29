@@ -272,6 +272,11 @@ public class MagicComponents {
 	 * {@link Class#isAssignableFrom(Class)}, i.e. if the underlying {@link JComponent}
 	 * is (for example) a {@link JXTable} (which is a JTable, too) it will match
 	 * in the above example.
+	 * <p>
+	 * This method is <b>not</b> <i>thread-safe</i>, since it exposes the underlying
+	 * JComponents to any calling thread. Don’t get me wrong dude, calling the method
+	 * itself from any thread causes no harm, however, you will be responsible for
+	 * invoking methods of the returned components on the AWT Event Queue.
 	 */
 	@SuppressWarnings("unchecked")
 	public <T extends JComponent> T as(final Class<T> $class) {
@@ -307,14 +312,14 @@ public class MagicComponents {
 	 * actions will execute in the AWT-Event-Queue.
 	 */
 	public MagicComponents show() {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				for (Component $comp : $components) {
+		for (final Component $comp : $components) {
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
 					$comp.getJComponent().setVisible(true);
 				}
-			}
-		});
+			});
+		}
 		return this;
 	}
 

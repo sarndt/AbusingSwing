@@ -14,12 +14,8 @@ import net.abusingjava.swing.magic.MenuBar;
 import net.abusingjava.swing.magic.Window;
 
 /**
- * A JFrame-component that is built by an XML-definition and offers certain extra functionality
- * such as easy fullscreen, minimum-, and maximum-size. A MagicWindow contains a {@link MagicPanel}.
+ * A MagicWindow is a JFrame that is built according to a specified definition written in XML.
  * <p>
- * To create a MagicWindow, use {@link AbusingSwing#makeWindow(java.io.InputStream) AbusingSwing.makeWindow}.
- * <p>
- * A MagicWindow is by default created at the center of the screen.
  */
 @Author("Julian Fleischer")
 public class MagicWindow extends JFrame {

@@ -31,6 +31,13 @@ import net.abusingjava.swing.magic.Panel;
 import net.abusingjava.swing.magic.Window;
 import net.abusingjava.xml.AbusingXML;
 
+/**
+ * This class contains usefull static methods for handling Swing.
+ * <p>
+ * AbusingSwing eases handling Swing and SwingX components using a custom XML dialect.
+ *
+ *
+ */
 @Author("Julian Fleischer")
 @Version("2011-06-21")
 final public class AbusingSwing {
@@ -49,7 +56,19 @@ final public class AbusingSwing {
 			// TODO: AbusingExceptions.warning($exc);
 		}
 	}
-
+	
+	/**
+	 * Runs the method on the given object in the AWT Event Queue.
+	 */
+	public static void invokeLater(final Object $object, final String $method, final Object... $args) {
+		
+	}
+	
+	/**
+	 * 
+	 */
+	
+	
 	/**
 	 * Sets the Nimbus Look And Feel which is available since Java 6 Update 10.
 	 */
@@ -95,6 +114,11 @@ final public class AbusingSwing {
 		return showPanel($panel, true, $width, $height);
 	}
 	
+	/**
+	 * Show a MagicPanel which is defined in the named $resource in a temporary JFrame.
+	 * <p>
+	 * The resource should be located in the same directory as the calling class.
+	 */
 	public static JFrame showPanel(final JPanel $panel, final boolean $close, final int $width, final int $height) {
 		final JFrame $frame = new JFrame() {
 			private static final long serialVersionUID = -5067180055790051146L;
@@ -117,6 +141,11 @@ final public class AbusingSwing {
 		return $frame;
 	}
 
+	/**
+	 * Show a MagicWindow whic is defined in the resource named $resource.
+	 * <p>
+	 * The resource should be located in the same directory as the calling class.
+	 */
 	public static MagicWindow showWindow(final String $resource) {
 		MagicWindow $window = makeWindow($resource);
 		$window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -124,6 +153,9 @@ final public class AbusingSwing {
 		return $window;
 	}
 
+	/**
+	 * Show a MagicPanel which is defined in $resource with $width and $height.
+	 */
 	public static MagicPanel showPanel(final String $resource, final int $width, final int $height) {
 		MagicPanel $panel = makePanel($resource);
 		JFrame $window = new JFrame();
@@ -134,6 +166,9 @@ final public class AbusingSwing {
 		return $panel;
 	}
 
+	/**
+	 * Create a MagicPanel from the given $resource.
+	 */
 	public static MagicPanel makePanel(final String $resource) {
 		int $i = 0;
 		String $className;
@@ -148,6 +183,9 @@ final public class AbusingSwing {
 		}
 	}
 	
+	/**
+	 * Make a MagicWindow from the given $resource.
+	 */
 	public static MagicWindow makeWindow(final String $resource) {
 		int $i = 0;
 		String $className;
@@ -162,11 +200,17 @@ final public class AbusingSwing {
 		}
 	}
 	
+	/**
+	 * Make a MagicWindow from the given $stream.
+	 */
 	public static MagicWindow makeWindow(final InputStream $stream) {
 		Window $window = AbusingXML.loadXML($stream, Window.class);
 		return new MagicWindow($window);
 	}
 	
+	/**
+	 * Make a MagicPanel from the given $stream.
+	 */
 	public static MagicPanel makePanel(final InputStream $stream) {
 		Panel $panel = AbusingXML.loadXML($stream, Panel.class);
 		return new MagicPanel($panel);

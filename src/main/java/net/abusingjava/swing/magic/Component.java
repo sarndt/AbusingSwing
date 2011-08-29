@@ -1,5 +1,6 @@
 package net.abusingjava.swing.magic;
 
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.*;
 import java.util.Locale;
@@ -104,6 +105,9 @@ abstract public class Component {
 	Boolean $opaque;
 	
 	@XmlAttribute
+	String $cursor;
+	
+	@XmlAttribute
 	ClassNames $class;
 	
 	@XmlAttribute
@@ -172,6 +176,10 @@ abstract public class Component {
 		}
 		if ($realComponent == null) {
 			$realComponent = $component;
+		}
+		
+		if (($cursor != null) && $cursor.equalsIgnoreCase("hand")) {
+			$component.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		}
 		
 		$main.registerComponent($name, this);

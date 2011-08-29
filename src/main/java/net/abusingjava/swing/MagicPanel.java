@@ -31,6 +31,10 @@ import net.abusingjava.swing.magic.Binding;
 import net.abusingjava.xml.AbusingXML;
 import net.abusingjava.xml.XmlElement;
 
+/**
+ * A MagicWindow is a JPanel that is built according to a specified definition written in XML.
+ * <p>
+ */
 @Author("Julian Fleischer")
 @Since(value = "2011-08-15", version = "1.0")
 @Version("2011-08-25")

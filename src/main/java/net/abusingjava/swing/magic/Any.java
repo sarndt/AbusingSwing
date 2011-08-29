@@ -13,6 +13,7 @@ public class Any extends Component {
 	@XmlAttribute("class")
 	JavaType $class;
 	
+	
 	public JavaType getJavaType() {
 		return $class;
 	}
