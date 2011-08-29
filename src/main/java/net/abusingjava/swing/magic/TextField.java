@@ -15,7 +15,7 @@ import net.abusingjava.xml.XmlElement;
 @XmlElement("textfield")
 public class TextField extends TextComponent {
 	
-	@XmlAttribute("default-text")
+	// @XmlAttribute("default-text")
 	String $defaultText = "";
 
 	@XmlAttribute("filter-mode")

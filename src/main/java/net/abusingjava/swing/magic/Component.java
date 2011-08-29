@@ -116,6 +116,8 @@ abstract public class Component {
 	protected JComponent $component;
 	
 	protected JComponent $realComponent = null;
+
+	private boolean $update = false;
 	
 	
 	public JComponent getJComponent() {
@@ -233,12 +235,14 @@ abstract public class Component {
 			ActionListener $listener = new ActionListener() {
 				@Override
 				public void actionPerformed(final ActionEvent $ev) {
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							$onaction.call($main.getInvocationHandler());
-						}
-					}).start();
+					if (!$update) {
+						new Thread(new Runnable() {
+							@Override
+							public void run() {
+								$onaction.call($main.getInvocationHandler(), $ev.getSource());
+							}
+						}).start();
+					}
 				}
 			};
 			if (AbusingReflection.hasMethod($realComponent, "addActionListener")) {
@@ -435,5 +439,9 @@ abstract public class Component {
 		}
 		
 		$realComponent.setLocale(Locale.GERMAN);
+	}
+
+	public void setUpdate(final boolean $updateMode) {
+		$update = $updateMode;
 	}
 }

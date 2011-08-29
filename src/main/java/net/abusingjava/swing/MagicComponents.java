@@ -18,6 +18,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.tree.TreeModel;
 
+import org.jdesktop.swingx.JXTable;
+
 import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
@@ -256,6 +258,21 @@ public class MagicComponents {
 		return this;
 	}
 
+	/**
+	 * Returns the underlying components as the specified $class.
+	 * <p>
+	 * This applies to the first component in the list which can be
+	 * cast to the specified list.
+	 * <p>
+	 * <b>Example:</b> <code>$(".allComponentsOfThisClass").as(JTable.class)</code>
+	 * will return the underlying JTable of the first component in the class
+	 * “.allComponentsOfThisClass” that is actually realized by a JTable.
+	 * <p>
+	 * The check whether the shoe fits or not is done using
+	 * {@link Class#isAssignableFrom(Class)}, i.e. if the underlying {@link JComponent}
+	 * is (for example) a {@link JXTable} (which is a JTable, too) it will match
+	 * in the above example.
+	 */
 	@SuppressWarnings("unchecked")
 	public <T extends JComponent> T as(final Class<T> $class) {
 		if ($class.isArray()) {
@@ -280,7 +297,15 @@ public class MagicComponents {
 	public int count() {
 		return $components.size();
 	}
-	
+
+	/**
+	 * Applies to any component. Shows the components.
+	 * <p>
+	 * This works by calling {@link JComponent#setVisible(boolean)}.
+	 * <p>
+	 * This method is <i>thread-safe</i>. You can call it from any thread, it’s
+	 * actions will execute in the AWT-Event-Queue.
+	 */
 	public MagicComponents show() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -293,6 +318,16 @@ public class MagicComponents {
 		return this;
 	}
 
+	/**
+	 * Applies to any component. Hides the components.
+	 * <p>
+	 * This works by calling {@link JComponent#setVisible(boolean)}. The components will simply
+	 * not be shown anymore, however, they are not removed from the layout (i.e. they will
+	 * leave an empty space).
+	 * <p>
+	 * This method is <i>thread-safe</i>. You can call it from any thread, it’s
+	 * actions will execute in the AWT-Event-Queue.
+	 */
 	public MagicComponents hide() {
 		for (final Component $comp : $components) {
 			SwingUtilities.invokeLater(new Runnable() {
@@ -306,6 +341,14 @@ public class MagicComponents {
 		return this;
 	}
 
+	/**
+	 * Applies to any component. Enables the components.
+	 * <p>
+	 * This works by calling {@link JComponent#setEnabled(boolean)}.
+	 * <p>
+	 * This method is <i>thread-safe</i>. You can call it from any thread, it’s
+	 * actions will execute in the AWT-Event-Queue.
+	 */
 	public MagicComponents enable() {
 		for (final Component $comp : $components) {
 			SwingUtilities.invokeLater(new Runnable() {
@@ -318,6 +361,14 @@ public class MagicComponents {
 		return this;
 	}
 
+	/**
+	 * Applies to any component. Disables the components.
+	 * <p>
+	 * This works by calling {@link JComponent#setEnabled(boolean)}.
+	 * <p>
+	 * This method is <i>thread-safe</i>. You can call it from any thread, it’s
+	 * actions will execute in the AWT-Event-Queue.
+	 */
 	public MagicComponents disable() {
 		for (final Component $comp : $components) {
 			SwingUtilities.invokeLater(new Runnable() {
@@ -366,18 +417,32 @@ public class MagicComponents {
 		return this;
 	}
 
+	/**
+	 * Applies to any component. Sets the background color of the particular components.
+	 * <p>
+	 * This method is <i>thread-safe</i>. You can call it from any thread, it’s
+	 * actions will execute in the AWT-Event-Queue.
+	 */
 	public MagicComponents setBackground(final String $hexColor) {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				for (Component $comp : $components) {
+		for (final Component $comp : $components) {
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
 					$comp.getRealComponent().setBackground(new net.abusingjava.swing.types.Color($hexColor).getColor());
 				}
-			}
-		});
+			});
+		}
 		return this;
 	}
 
+	/**
+	 * Applies to any component. Sets the font of the particular components.
+	 * <p>
+	 * The font is identified by calling {@link Font#decode(String)}.
+	 * <p>
+	 * This method is <i>thread-safe</i>. You can call it from any thread, it’s
+	 * actions will execute in the AWT-Event-Queue.
+	 */
 	public MagicComponents setFont(final String $font) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -391,16 +456,22 @@ public class MagicComponents {
 		return this;
 	}
 
+	/**
+	 * Applies to any component. Sets the font size of the particular component.
+	 * <p>
+	 * This method is <i>thread-safe</i>. You can call it from any thread, it’s
+	 * actions will execute in the AWT-Event-Queue.
+	 */
 	public MagicComponents setFontSize(final int $size) {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				for (Component $comp : $components) {
-					JComponent $c = $comp.getRealComponent();
-					$c.setFont($c.getFont().deriveFont((float) $size));
+		for (Component $comp : $components) {
+			final JComponent $c = $comp.getRealComponent();
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+				$c.setFont($c.getFont().deriveFont((float) $size));
 				}
-			}
-		});
+			});
+		}
 		return this;
 	}
 
@@ -436,6 +507,12 @@ public class MagicComponents {
 		return this;
 	}
 
+	/**
+	 * Applies to all &lt;table&gt;-Objects. Adds the row, specified as Array.
+	 * <p>
+	 * This method is <i>thread-safe</i>. You can call it from any thread, it’s
+	 * actions will execute in the AWT-Event-Queue.
+	 */
 	public MagicComponents addRow(final Object[] $values) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
@@ -454,36 +531,25 @@ public class MagicComponents {
 		return this;
 	}
 
+	/**
+	 * Applies to all &lt;table&gt;-Objects. Adds multiple rows.
+	 * <p>
+	 * This method is <i>thread-safe</i>. You can call it from any thread, it’s
+	 * actions will execute in the AWT-Event-Queue.
+	 */
 	public MagicComponents addRows(final Object[][] $values) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JTable) {
-				TableModel $m = ((JTable)$c).getModel();
+				final TableModel $m = ((JTable)$c).getModel();
 				if ($m instanceof DefaultTableModel) {
-					for (Object[] $row : $values) {
-						((DefaultTableModel)$m).addRow($row);
-					}
-				}
-			}
-		}
-		return this;
-	}
-	
-	public MagicComponents add(final Object[] $values) {
-		for (Component $comp : $components) {
-			JComponent $c = $comp.getRealComponent();
-			if ($c instanceof JComboBox) {
-				ComboBoxModel $m = ((JComboBox)$c).getModel();
-				if ($m instanceof DefaultComboBoxModel) {
-					for (Object $value : $values) {
-						((DefaultComboBoxModel)$m).addElement($value);
-					}
-				}
-			} else if ($c instanceof JList) {
-				ListModel $m = ((JList)$c).getModel();
-				if ($m instanceof DefaultListModel) {
-					for (Object $value : $values) {
-						((DefaultListModel)$m).addElement($value);
+					for (final Object[] $row : $values) {
+						SwingUtilities.invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								((DefaultTableModel)$m).addRow($row);
+							}
+						});
 					}
 				}
 			}
@@ -491,8 +557,52 @@ public class MagicComponents {
 		return this;
 	}
 
-	public MagicComponents add(final Object $value) {
+	/**
+	 * Applies to all &lt;combobx&gt;, and &lt;list&gt;-Objects. Adds an item to the underlying model.
+	 * <p>
+	 * This method is <i>thread-safe</i>. You can call it from any thread, it’s
+	 * actions will execute in the AWT-Event-Queue.
+	 */
+	public MagicComponents add(final Object[] $values) {
 		for (Component $comp : $components) {
+			JComponent $c = $comp.getRealComponent();
+			if ($c instanceof JComboBox) {
+				final ComboBoxModel $m = ((JComboBox)$c).getModel();
+				if ($m instanceof DefaultComboBoxModel) {
+					for (final Object $value : $values) {
+						SwingUtilities.invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								((DefaultComboBoxModel)$m).addElement($value);
+							}
+						});
+					}
+				}
+			} else if ($c instanceof JList) {
+				final ListModel $m = ((JList)$c).getModel();
+				if ($m instanceof DefaultListModel) {
+					for (final Object $value : $values) {
+						SwingUtilities.invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								((DefaultListModel)$m).addElement($value);
+							}
+						});
+					}
+				}
+			}
+		}
+		return this;
+	}
+
+	/**
+	 * Applies to all &lt;combobox&gt;, &lt;list&gt;, and &lt;multilist&gt;-Objects. Adds an item to the underlying model.
+	 * <p>
+	 * This method is <i>thread-safe</i>. You can call it from any thread, it’s
+	 * actions will execute in the AWT-Event-Queue.
+	 */
+	public MagicComponents add(final Object $value) {
+		for (final Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
 				final ComboBoxModel $m = ((JComboBox)$c).getModel();
@@ -500,7 +610,9 @@ public class MagicComponents {
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
+							$comp.setUpdate(true);
 							((DefaultComboBoxModel)$m).addElement($value);
+							$comp.setUpdate(false);
 						}
 					});
 				}
@@ -551,12 +663,31 @@ public class MagicComponents {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
+				$comp.setUpdate(true);
 				ComboBoxModel $m = ((JComboBox)$c).getModel();
 				if ($m instanceof DefaultComboBoxModel) {
 					$m.setSelectedItem($item);
 				}
+				$comp.setUpdate(false);
 			} else if ($c instanceof JList) {
 				((JList)$c).setSelectedValue($item, true);
+			}
+		}
+		return this;
+	}
+	
+	public MagicComponents setSelectedIndex(final int $index) {
+		for (Component $comp : $components) {
+			JComponent $c = $comp.getRealComponent();
+			if ($c instanceof JComboBox) {
+				$comp.setUpdate(true);
+				ComboBoxModel $m = ((JComboBox)$c).getModel();
+				if ($m instanceof DefaultComboBoxModel) {
+					$m.setSelectedItem($m.getElementAt($index));
+				}
+				$comp.setUpdate(false);
+			} else if ($c instanceof JList) {
+				((JList)$c).setSelectedIndex($index);
 			}
 		}
 		return this;
@@ -597,6 +728,21 @@ public class MagicComponents {
 		return null;
 	}
 
+	public int getSelectedIndex() {
+		for (Component $comp : $components) {
+			JComponent $c = $comp.getRealComponent();
+			if ($c instanceof JComboBox) {
+				ComboBoxModel $m = ((JComboBox)$c).getModel();
+				if ($m instanceof DefaultComboBoxModel) {
+					return ((DefaultComboBoxModel) $m).getIndexOf($m.getSelectedItem());
+				}
+			} else if ($c instanceof JList) {
+				return ((JList)$c).getSelectedIndex();
+			}
+		}
+		return -1;
+	}
+	
 	public MagicComponents setValue(final int $value) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -621,6 +767,9 @@ public class MagicComponents {
 		return this;
 	}
 
+	/**
+	 * Applies to all Components which have a “setMax” method (such as &lt;progressbar&gt;, &lt;numeric&gt;)
+	 */
 	public MagicComponents setMax(final int $value) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -645,18 +794,9 @@ public class MagicComponents {
 		return this;
 	}
 
-	public int getMax() {
-		return 0;
-	}
-
-	public int getMin() {
-		return 0;
-	}
-
-	public int getValue() {
-		return 0;
-	}
-
+	/**
+	 * Applies on &lt;multilist&gt;-Components only: Shows only the selected items in the list.
+	 */
 	public void showSelectedOnly(final boolean $selected) {
 		for (final Component $comp : $components) {
 			if ($comp instanceof MultiList) {

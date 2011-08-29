@@ -1,14 +1,18 @@
 package net.abusingjava.swing.magic;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
+import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 import org.jdesktop.swingbinding.JTableBinding;
@@ -16,6 +20,7 @@ import org.jdesktop.swingx.JXTable;
 
 import net.abusingjava.arrays.AbusingArrays;
 import net.abusingjava.swing.MagicPanel;
+import net.abusingjava.swing.TableActionEvent;
 import net.abusingjava.swing.magic.Table.Column;
 import net.abusingjava.swing.types.*;
 import net.abusingjava.xml.XmlAttribute;
@@ -60,6 +65,9 @@ public class Table extends Component implements Iterable<Column> {
 	
 	@XmlAttribute("filter-mode")
 	FilterMode $filterMode = new FilterMode("and");
+	
+	@XmlAttribute
+	MethodType $ondblclick;
 	
 	// @XmlAttribute("")
 	
@@ -218,7 +226,22 @@ public class Table extends Component implements Iterable<Column> {
 			}
 		};
 		
-		JXTable $c = new JXTable($model);
+		@SuppressWarnings("serial")
+		final JXTable $c = new JXTable($model) {
+			@Override
+			public java.awt.Component prepareRenderer(final TableCellRenderer $renderer,
+                    final int $rowIndex, final int $vColIndex) {
+				java.awt.Component $c = super.prepareRenderer($renderer, $rowIndex, $vColIndex);
+				if ($c instanceof JComponent) {
+					JComponent $jc = (JComponent) $c;
+					Object $value = getValueAt($rowIndex, $vColIndex);
+					if ($value instanceof String) {
+						$jc.setToolTipText($value.toString());
+					}
+				}
+				return $c;
+			}
+		};
 		$c.setEditable($editable);
 		$c.setSortable($sortable);
 		$c.setColumnControlVisible($columnControlVisible);
@@ -270,6 +293,21 @@ public class Table extends Component implements Iterable<Column> {
 			}
 
 		});
+		
+		if (($ondblclick != null) && !$editable) {
+			$c.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(final MouseEvent $ev) {
+					if ($ev.getClickCount() == 2) {
+						$ondblclick.call($main.getInvocationHandler(),
+							new TableActionEvent($c,
+									$c.rowAtPoint($ev.getPoint()),
+									$c.columnAtPoint($ev.getPoint())
+								));
+					}
+				}
+			});
+		}
 		
 		$realComponent = $c;
 		$component = new JScrollPane($c);

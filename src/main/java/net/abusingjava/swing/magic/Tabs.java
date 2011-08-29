@@ -99,7 +99,7 @@ public class Tabs extends Component implements Iterable<Tab> {
 	                        @Override
 	                        public void actionPerformed(final ActionEvent $ev) {
 	                            if ($t.$onclose != null) {
-	                            	TabCloseEvent $e = new TabCloseEvent();
+	                            	TabCloseEvent $e = new TabCloseEvent($c);
 	                            	$t.$onclose.call($main.getInvocationHandler(), $e);
 	                            	if (!$e.isCanceled()) {
 	                            		$c.remove($scrollPane);

@@ -21,7 +21,7 @@ public class Label extends TextComponent {
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		if ($height == null) {
-			$height = new Value("20px");
+			$height = new Value("27px");
 		}
 
 		int $align = JLabel.LEFT;
