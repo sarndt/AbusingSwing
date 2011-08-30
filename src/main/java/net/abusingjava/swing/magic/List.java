@@ -8,7 +8,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import net.abusingjava.swing.MagicPanel;
-import net.abusingjava.swing.types.MethodType;
+import net.abusingjava.swing.magix.types.MethodType;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlElement;
 

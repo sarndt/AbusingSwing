@@ -16,7 +16,7 @@ import net.abusingjava.arrays.AbusingArrays;
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.TabCloseEvent;
 import net.abusingjava.swing.magic.Tabs.Tab;
-import net.abusingjava.swing.types.MethodType;
+import net.abusingjava.swing.magix.types.MethodType;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlChildElements;
 import net.abusingjava.xml.XmlElement;

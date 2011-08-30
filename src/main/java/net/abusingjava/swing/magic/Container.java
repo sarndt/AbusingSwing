@@ -9,7 +9,7 @@ import net.abusingjava.Since;
 import net.abusingjava.Version;
 import net.abusingjava.arrays.AbusingArrays;
 import net.abusingjava.swing.MagicPanel;
-import net.abusingjava.swing.types.Value;
+import net.abusingjava.swing.magix.types.Value;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlChildElements;
 

@@ -1,6 +1,6 @@
 package net.abusingjava.swing.magic;
 
-import net.abusingjava.swing.types.MethodType;
+import net.abusingjava.swing.magix.types.MethodType;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlElement;
 

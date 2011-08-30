@@ -403,7 +403,7 @@ public class MagicComponents {
 			@Override
 			public void run() {
 				for (Component $comp : $components) {
-					$comp.getRealComponent().setForeground(new net.abusingjava.swing.types.Color($hexColor).getColor());
+					$comp.getRealComponent().setForeground(new net.abusingjava.swing.magix.types.Color($hexColor).getColor());
 				}
 			}
 		});
@@ -433,7 +433,7 @@ public class MagicComponents {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-					$comp.getRealComponent().setBackground(new net.abusingjava.swing.types.Color($hexColor).getColor());
+					$comp.getRealComponent().setBackground(new net.abusingjava.swing.magix.types.Color($hexColor).getColor());
 				}
 			});
 		}

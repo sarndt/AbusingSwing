@@ -6,9 +6,9 @@ import java.awt.event.FocusEvent;
 
 import javax.swing.JTextField;
 import net.abusingjava.swing.MagicPanel;
-import net.abusingjava.swing.types.Filter;
-import net.abusingjava.swing.types.FilterMode;
-import net.abusingjava.swing.types.Value;
+import net.abusingjava.swing.magix.types.Filter;
+import net.abusingjava.swing.magix.types.FilterMode;
+import net.abusingjava.swing.magix.types.Value;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlElement;
 

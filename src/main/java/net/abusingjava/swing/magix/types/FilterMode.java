@@ -1,4 +1,4 @@
-package net.abusingjava.swing.types;
+package net.abusingjava.swing.magix.types;
 
 import net.abusingjava.Author;
 import net.abusingjava.Since;

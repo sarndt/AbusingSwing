@@ -22,7 +22,7 @@ import net.abusingjava.arrays.AbusingArrays;
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.TableActionEvent;
 import net.abusingjava.swing.magic.Table.Column;
-import net.abusingjava.swing.types.*;
+import net.abusingjava.swing.magix.types.*;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlChildElements;
 import net.abusingjava.xml.XmlElement;

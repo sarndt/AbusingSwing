@@ -8,8 +8,8 @@ import org.jdesktop.swingx.JXTable;
 
 import net.abusingjava.functions.AbusingFunctions;
 import net.abusingjava.swing.MagicPanel;
-import net.abusingjava.swing.types.FilterMode;
-import net.abusingjava.swing.types.JavaType;
+import net.abusingjava.swing.magix.types.FilterMode;
+import net.abusingjava.swing.magix.types.JavaType;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlElement;
 

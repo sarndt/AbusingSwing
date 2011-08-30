@@ -8,7 +8,7 @@ import java.awt.LayoutManager;
 import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
-import net.abusingjava.swing.types.Unit;
+import net.abusingjava.swing.magix.types.Unit;
 
 @Author("Julian Fleischer")
 @Version("2011-08-21")

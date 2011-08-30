@@ -3,7 +3,7 @@ package net.abusingjava.swing.magic;
 import javax.swing.JComponent;
 
 import net.abusingjava.swing.MagicPanel;
-import net.abusingjava.swing.types.JavaType;
+import net.abusingjava.swing.magix.types.JavaType;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlElement;
 

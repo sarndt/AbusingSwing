@@ -7,7 +7,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 import net.abusingjava.swing.MagicPanel;
-import net.abusingjava.swing.types.Value;
+import net.abusingjava.swing.magix.types.Value;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlElement;
 import net.abusingjava.xml.XmlTextContent;

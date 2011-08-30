@@ -2,7 +2,7 @@ package net.abusingjava.swing.magic;
 
 import net.abusingjava.NotGonnaHappenException;
 import net.abusingjava.swing.magic.Password.EchoChar;
-import net.abusingjava.swing.types.*;
+import net.abusingjava.swing.magix.types.*;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlChildElements;
 import net.abusingjava.xml.XmlElement;
