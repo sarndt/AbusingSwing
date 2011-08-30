@@ -41,7 +41,7 @@ public class MagicWindow extends JFrame {
 		}
 	}
 	
-	MagicWindow(final Window $window) {
+	public MagicWindow(final Window $window) {
 		super($window.getTitle());
 		
 		if ($window.hasMinSize()) {

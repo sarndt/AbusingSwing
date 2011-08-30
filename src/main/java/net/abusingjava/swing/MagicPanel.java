@@ -344,6 +344,8 @@ public class MagicPanel extends JPanel {
 			for (Property $p : $b) {
 				JComponent $target = $main.$("#" + $p.getTarget()).as(JComponent.class);
 
+				
+				
 				String $targetProperty = "";
 
 				if ($target instanceof JTextComponent) {

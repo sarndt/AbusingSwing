@@ -6,13 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
-import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 import org.jdesktop.swingbinding.JTableBinding;
@@ -228,19 +226,7 @@ public class Table extends Component implements Iterable<Column> {
 		
 		@SuppressWarnings("serial")
 		final JXTable $c = new JXTable($model) {
-			@Override
-			public java.awt.Component prepareRenderer(final TableCellRenderer $renderer,
-                    final int $rowIndex, final int $vColIndex) {
-				java.awt.Component $c = super.prepareRenderer($renderer, $rowIndex, $vColIndex);
-				if ($c instanceof JComponent) {
-					JComponent $jc = (JComponent) $c;
-					Object $value = getValueAt($rowIndex, $vColIndex);
-					if ($value instanceof String) {
-						$jc.setToolTipText($value.toString());
-					}
-				}
-				return $c;
-			}
+			
 		};
 		$c.setEditable($editable);
 		$c.setSortable($sortable);
