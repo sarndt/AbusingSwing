@@ -295,7 +295,7 @@ public class MagicPanel extends JPanel {
 		
 		for (Rule $rule : $panel.getStyleRules()) {
 			if ($rule.matches($o)) {
-				Field[] $fields = AbusingReflection.getFields($o.getClass());
+				Field[] $fields = AbusingReflection.fields($o.getClass());
 				for (Field $field : $fields) {
 					$field.setAccessible(true);
 					try {
