@@ -6,7 +6,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import javax.swing.JCheckBox;
-import net.abusingjava.beans.SupportsPropertyChangeEvents;
+
+import net.abusingjava.SupportsPropertyChangeEvents;
 
 /**
  * A JCheckBox with Bean-Style Properties “visible”, “selected”, and “enabled”.
