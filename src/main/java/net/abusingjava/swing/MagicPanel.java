@@ -16,10 +16,10 @@ import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.JTableBinding.ColumnBinding;
 import org.jdesktop.swingbinding.SwingBindings;
 
+import net.abusingjava.AbusingReflection;
 import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
-import net.abusingjava.reflection.AbusingReflection;
 import net.abusingjava.swing.magic.*;
 import net.abusingjava.swing.magic.Binding.Property;
 import net.abusingjava.swing.magic.Cards.Card;

@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import org.jdesktop.beansbinding.BindingGroup;
 
-import net.abusingjava.arrays.AbusingArrays;
+import net.abusingjava.AbusingArrays;
 import net.abusingjava.swing.magic.Binding.Property;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlChildElements;

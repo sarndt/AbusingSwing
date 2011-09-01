@@ -6,7 +6,7 @@ import java.util.Iterator;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import net.abusingjava.arrays.AbusingArrays;
+import net.abusingjava.AbusingArrays;
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.magic.Cards.Card;
 import net.abusingjava.xml.XmlAttribute;

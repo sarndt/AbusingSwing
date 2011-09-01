@@ -7,7 +7,7 @@ import javax.swing.JScrollPane;
 import org.jdesktop.swingx.JXTaskPane;
 import org.jdesktop.swingx.JXTaskPaneContainer;
 
-import net.abusingjava.arrays.AbusingArrays;
+import net.abusingjava.AbusingArrays;
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.magic.Panes.Pane;
 import net.abusingjava.xml.XmlAttribute;

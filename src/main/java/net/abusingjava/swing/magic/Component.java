@@ -7,10 +7,11 @@ import java.util.Locale;
 
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
+
+import net.abusingjava.AbusingReflection;
 import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
-import net.abusingjava.reflection.AbusingReflection;
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.magix.types.*;
 import net.abusingjava.xml.XmlAttribute;

@@ -4,10 +4,10 @@ import java.util.Iterator;
 
 import javax.swing.JScrollPane;
 
+import net.abusingjava.AbusingArrays;
 import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
-import net.abusingjava.arrays.AbusingArrays;
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.magix.types.Value;
 import net.abusingjava.xml.XmlAttribute;

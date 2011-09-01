@@ -58,18 +58,6 @@ final public class AbusingSwing {
 	}
 	
 	/**
-	 * Runs the method on the given object in the AWT Event Queue.
-	 */
-	public static void invokeLater(final Object $object, final String $method, final Object... $args) {
-		
-	}
-	
-	/**
-	 * 
-	 */
-	
-	
-	/**
 	 * Sets the Nimbus Look And Feel which is available since Java 6 Update 10.
 	 */
 	public static void setNimbusLookAndFeel() {

@@ -5,7 +5,7 @@ import javax.swing.JComboBox;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
-import net.abusingjava.arrays.AbusingArrays;
+import net.abusingjava.AbusingArrays;
 import net.abusingjava.functions.AbusingFunctions;
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.magix.types.JavaType;

@@ -16,7 +16,7 @@ import javax.swing.table.TableModel;
 import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingx.JXTable;
 
-import net.abusingjava.arrays.AbusingArrays;
+import net.abusingjava.AbusingArrays;
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.TableActionEvent;
 import net.abusingjava.swing.magic.Table.Column;

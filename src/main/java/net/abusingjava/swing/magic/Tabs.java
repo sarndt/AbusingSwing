@@ -12,7 +12,7 @@ import java.util.Iterator;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
 
-import net.abusingjava.arrays.AbusingArrays;
+import net.abusingjava.AbusingArrays;
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.TabCloseEvent;
 import net.abusingjava.swing.magic.Tabs.Tab;
