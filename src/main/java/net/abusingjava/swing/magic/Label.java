@@ -1,8 +1,7 @@
 package net.abusingjava.swing.magic;
 
 import javax.swing.JLabel;
-
-import org.jdesktop.swingx.JXLabel;
+import javax.swing.SwingConstants;
 
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.magix.types.Value;
@@ -14,40 +13,40 @@ public class Label extends TextComponent {
 
 	@XmlAttribute("text-align")
 	String $textAlign;
-	
+
 	@XmlAttribute("vertical-align")
 	String $verticalAlignment;
-	
+
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		if ($height == null) {
 			$height = new Value("27px");
 		}
 
-		int $align = JLabel.LEFT;
+		int $align = SwingConstants.LEFT;
 		if ("right".equals($textAlign)) {
-			$align = JLabel.RIGHT;
+			$align = SwingConstants.RIGHT;
 		} else if ("center".equals($textAlign)) {
-			$align = JLabel.CENTER;
+			$align = SwingConstants.CENTER;
 		}
-		
+
 		JLabel $c = new JLabel($text, $align);
-		
+
 		if ("top".equals($verticalAlignment)) {
-			$c.setVerticalAlignment(JXLabel.TOP);
+			$c.setVerticalAlignment(SwingConstants.TOP);
 		} else if ("bottom".equals($verticalAlignment)) {
-			$c.setVerticalAlignment(JXLabel.BOTTOM);
+			$c.setVerticalAlignment(SwingConstants.BOTTOM);
 		}
 
 		if (($background != null) && ($opaque == null)) {
 			$opaque = true;
 		}
-		
+
 		$component = $c;
-		
+
 		$realComponent = $c;
-		
+
 		super.create($main, $parent);
 	}
-	
+
 }

@@ -1,6 +1,7 @@
 package net.abusingjava.swing.magic;
 
 import javax.swing.JSlider;
+import javax.swing.SwingConstants;
 
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.magix.types.Value;
@@ -61,13 +62,13 @@ public class Slider extends Component {
 			if ($width == null) {
 				$width = new Value("17px");
 			}
-			$c.setOrientation(JSlider.VERTICAL);
+			$c.setOrientation(SwingConstants.VERTICAL);
 			break;
 		case VERTICAL:
 			if ($height == null) {
 				$height = new Value("17px");
 			}
-			$c.setOrientation(JSlider.HORIZONTAL);
+			$c.setOrientation(SwingConstants.HORIZONTAL);
 			break;
 		case FIXED:
 			break;

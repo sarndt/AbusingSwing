@@ -1,6 +1,7 @@
 package net.abusingjava.swing.magic;
 
 import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -60,13 +61,13 @@ public class ProgressBar extends Component {
 			if ($width == null) {
 				$width = new Value("17px");
 			}
-			$c.setOrientation(JProgressBar.VERTICAL);
+			$c.setOrientation(SwingConstants.VERTICAL);
 			break;
 		case VERTICAL:
 			if ($height == null) {
 				$height = new Value("17px");
 			}
-			$c.setOrientation(JProgressBar.HORIZONTAL);
+			$c.setOrientation(SwingConstants.HORIZONTAL);
 			break;
 		case FIXED:
 			break;
