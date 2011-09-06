@@ -20,7 +20,8 @@ abstract public class TextComponent extends Component {
 	
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
-		
+
+		$text = $text.trim();
 		
 		super.create($main, $parent);
 	}

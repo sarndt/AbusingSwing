@@ -28,7 +28,7 @@ public class ToggleButton extends TextComponent {
 			$selected = false;
 		}
 		
-		final JToggleButton $c = new JToggleButton($text, $selected);
+		final JToggleButton $c = new JToggleButton($text.trim(), $selected);
 		
 		if ($filters != null) {
 			final String $filter = $filters.charAt(0) == '#' ? $filters.substring(1) : $filters;

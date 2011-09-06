@@ -19,8 +19,6 @@ public class Label extends TextComponent {
 
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
-		$text = $text.trim();
-		
 		if ($height == null) {
 			$height = new Value("27px");
 		}
@@ -32,7 +30,7 @@ public class Label extends TextComponent {
 			$align = SwingConstants.CENTER;
 		}
 
-		JLabel $c = new JLabel($text, $align);
+		JLabel $c = new JLabel($text.trim(), $align);
 
 		if ("top".equals($verticalAlignment)) {
 			$c.setVerticalAlignment(SwingConstants.TOP);

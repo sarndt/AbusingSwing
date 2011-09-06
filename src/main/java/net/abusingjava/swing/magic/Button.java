@@ -15,9 +15,7 @@ public class Button extends TextComponent {
 			$height = new Value("27px");
 		}
 		
-		$text = $text.trim();
-		
-		$component = new JButton($text);
+		$component = new JButton($text.trim());
 		
 		super.create($main, $parent);
 	}
