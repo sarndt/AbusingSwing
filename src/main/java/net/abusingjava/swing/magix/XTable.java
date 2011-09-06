@@ -9,11 +9,12 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import net.abusingjava.Author;
 import net.abusingjava.swing.AbusingSwing;
 
 import org.jdesktop.swingx.JXTable;
 
-
+@Author("Julian Fleischer")
 public class XTable extends JXTable {
 
 	private static final long serialVersionUID = -1110662927738700425L;

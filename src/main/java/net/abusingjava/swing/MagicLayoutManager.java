@@ -11,7 +11,7 @@ import net.abusingjava.Version;
 import net.abusingjava.swing.magix.types.Unit;
 
 @Author("Julian Fleischer")
-@Version("2011-08-21")
+@Version("2011-09-06")
 @Since(value = "2011-08-21", version = "1.0")
 public class MagicLayoutManager implements LayoutManager {
 
@@ -49,23 +49,26 @@ public class MagicLayoutManager implements LayoutManager {
 			double $posX = 0;
 			double $posY = 0;
 
+			double $remainingWidth = $width;
+			double $remainingHeight = $height;
+			
 			if ($def.getPaddingLeft().getUnit() == Unit.PIXEL) {
 				$posX = $def.getPaddingLeft().getValue();
-				$width -= $posX;
+				$remainingWidth -= $posX;
 			}
 			if ($def.getPaddingTop().getUnit() == Unit.PIXEL) {
 				$posY = $def.getPaddingTop().getValue();
-				$height -= $posY;
+				$remainingHeight -= $posY;
 			}
 			if ($def.getPaddingRight().getUnit() == Unit.PIXEL) {
-				$width -= $def.getPaddingRight().getValue();
+				$remainingWidth -= $def.getPaddingRight().getValue();
 			}
 			if ($def.getPaddingBottom().getUnit() == Unit.PIXEL) {
-				$height -= $def.getPaddingBottom().getValue();
+				$remainingHeight -= $def.getPaddingBottom().getValue();
 			}
 			
-			double $remainingWidth = $width;
-			double $remainingHeight = $height;
+			double $innerWidth = $remainingWidth;
+			double $innerHeight = $remainingHeight;
 			
 			int $newWidth = 0;
 			int $newHeight = 0;
@@ -84,7 +87,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$starsHeight += $c.getHeight().getValue();
 						break;
 					case PERCENT:
-						$remainingHeight -= Math.round(($c.getHeight().getValue() / 100.0) * $height);
+						$remainingHeight -= Math.round(($c.getHeight().getValue() / 100.0) * $innerHeight);
 						break;
 					case AUTO:
 						$starsHeight++;
@@ -115,7 +118,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$starsWidth += $c.getWidth().getValue();
 						break;
 					case PERCENT:
-						$remainingWidth -= Math.round(($c.getWidth().getValue() / 100.0) * $width);
+						$remainingWidth -= Math.round(($c.getWidth().getValue() / 100.0) * $innerWidth);
 						break;
 					case AUTO:
 						$starsWidth++;
@@ -155,7 +158,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$newHeight = (int) Math.round(($c.getHeight().getValue() / (double) $starsHeight) * $remainingHeight);
 						break;
 					case PERCENT:
-						$newHeight = (int) Math.round(($c.getHeight().getValue() / 100.0) * $height);
+						$newHeight = (int) Math.round(($c.getHeight().getValue() / 100.0) * $innerHeight);
 						break;
 					case AUTO:
 						$newHeight = (int) Math.round((1 / (double) $starsHeight) * $remainingHeight);
@@ -169,14 +172,14 @@ public class MagicLayoutManager implements LayoutManager {
 						$newWidth = $c.getWidth().getValue();
 						break;
 					case STAR:
-						$newWidth = (int) Math.round(($c.getWidth().getValue() / (double) $starsWidth) * $width);
+						$newWidth = (int) Math.round(($c.getWidth().getValue() / (double) $starsWidth) * $innerWidth);
 						break;
 					case PERCENT:
-						$newWidth = (int) Math.round(($c.getWidth().getValue() / 100.0) * $width);
+						$newWidth = (int) Math.round(($c.getWidth().getValue() / 100.0) * $innerWidth);
 						break;
 					case AUTO:
 					case INTRINSIC:
-						$newWidth = (int) Math.round($width);
+						$newWidth = (int) Math.round($innerWidth);
 						break;
 					}
 					$newX = (int) Math.round($posX);
@@ -194,7 +197,7 @@ public class MagicLayoutManager implements LayoutManager {
 						$newWidth = (int) Math.round(($c.getWidth().getValue() / (double) $starsWidth) * $remainingWidth);
 						break;
 					case PERCENT:
-						$newWidth = (int) Math.round(($c.getWidth().getValue() / 100.0) * $width);
+						$newWidth = (int) Math.round(($c.getWidth().getValue() / 100.0) * $innerWidth);
 						break;
 					case AUTO:
 						$newWidth = (int) Math.round((1 / (double) $starsWidth) * $remainingWidth);
@@ -208,14 +211,14 @@ public class MagicLayoutManager implements LayoutManager {
 						$newHeight = $c.getHeight().getValue();
 						break;
 					case STAR:
-						$newHeight = (int) Math.round(($c.getHeight().getValue() / (double) $starsHeight) * $height);
+						$newHeight = (int) Math.round(($c.getHeight().getValue() / (double) $starsHeight) * $innerHeight);
 						break;
 					case PERCENT:
-						$newHeight = (int) Math.round(($c.getHeight().getValue() / 100.0) * $height);
+						$newHeight = (int) Math.round(($c.getHeight().getValue() / 100.0) * $innerHeight);
 						break;
 					case AUTO:
 					case INTRINSIC:
-						$newHeight = (int) Math.round($height);
+						$newHeight = (int) Math.round($innerHeight);
 						break;
 					}
 					$newX = (int) Math.round($posX);
