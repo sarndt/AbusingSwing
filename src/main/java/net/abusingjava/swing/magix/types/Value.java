@@ -19,6 +19,8 @@ public class Value {
 				$unit = Unit.STAR;
 			} else if ($declaration.endsWith("%")) {
 				$unit = Unit.PERCENT;
+			} else if ($declaration.endsWith("pt")) {
+				$unit = Unit.POINT;
 			} else if ("intrinsic".equalsIgnoreCase($declaration)) {
 				$unit = Unit.INTRINSIC;
 			}

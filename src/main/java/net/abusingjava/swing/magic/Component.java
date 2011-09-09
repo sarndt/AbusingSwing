@@ -211,7 +211,7 @@ abstract public class Component {
 		if (($fontStyle != null) && $fontStyle.isItalic()) {
 			$realComponent.setFont($realComponent.getFont().deriveFont(Font.ITALIC));
 		}
-		if (($fontSize != null) && ($fontSize.getUnit() == Unit.PIXEL)) {
+		if (($fontSize != null) && ($fontSize.getUnit() == Unit.POINT)) {
 			$realComponent.setFont($realComponent.getFont().deriveFont((float)$fontSize.getValue()));
 		}
 		
