@@ -10,12 +10,6 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
-import org.jdesktop.beansbinding.*;
-import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
-import org.jdesktop.swingbinding.JTableBinding;
-import org.jdesktop.swingbinding.JTableBinding.ColumnBinding;
-import org.jdesktop.swingbinding.SwingBindings;
-
 import net.abusingjava.AbusingReflection;
 import net.abusingjava.Author;
 import net.abusingjava.Since;
@@ -31,8 +25,15 @@ import net.abusingjava.swing.magic.Binding;
 import net.abusingjava.xml.AbusingXML;
 import net.abusingjava.xml.XmlElement;
 
+import org.jdesktop.beansbinding.*;
+import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
+import org.jdesktop.swingbinding.JTableBinding;
+import org.jdesktop.swingbinding.JTableBinding.ColumnBinding;
+import org.jdesktop.swingbinding.SwingBindings;
+
 /**
- * A MagicWindow is a JPanel that is built according to a specified definition written in XML.
+ * A MagicWindow is a JPanel that is built according to a specified definition
+ * written in XML.
  * <p>
  */
 @Author("Julian Fleischer")
@@ -51,8 +52,8 @@ public class MagicPanel extends JPanel {
 	private final Container $definition;
 	private final Panel $panel;
 
-	Map<String,Component> $componentsByName = new HashMap<String,Component>();
-	Map<String,JPopupMenu> $popupMenus = new HashMap<String,JPopupMenu>();
+	Map<String, Component> $componentsByName = new HashMap<String, Component>();
+	Map<String, JPopupMenu> $popupMenus = new HashMap<String, JPopupMenu>();
 	ArrayList<Component> $myComponents = new ArrayList<Component>();
 
 	private Object $invocationHandler = this;
@@ -99,7 +100,8 @@ public class MagicPanel extends JPanel {
 
 	public MagicPanel(final MagicPanel $main, final Container $container) {
 		if ($main == null) {
-			throw new IllegalArgumentException("Won’t construct a panel which is not the root panel without a parent ($main may not be null).");
+			throw new IllegalArgumentException(
+					"Won’t construct a panel which is not the root panel without a parent ($main may not be null).");
 		}
 		this.$panel = $main.getDefinitionPanel();
 
@@ -129,15 +131,18 @@ public class MagicPanel extends JPanel {
 			if ($c instanceof TextField) {
 				TextField $f = (TextField) $c;
 				if ($f.hasFilter()) {
-					final Component $t = $componentsByName.get($f.getFilterTableName());
+					final Component $t = $componentsByName.get($f
+							.getFilterTableName());
 					if ($t instanceof Table) {
-						final Filter $filter = ((Table)$t).newFilter($f.getFilterColumns());
-						final JTextField $tf = (JTextField) $f.getRealComponent();
+						final Filter $filter = ((Table) $t).newFilter($f
+								.getFilterColumns());
+						final JTextField $tf = (JTextField) $f
+								.getRealComponent();
 						$tf.addKeyListener(new KeyAdapter() {
 							@Override
 							public void keyReleased(final KeyEvent $ev) {
 								$filter.setFilterString($tf.getText());
-								((Table)$t).updateFilters();
+								((Table) $t).updateFilters();
 							}
 						});
 					}
@@ -201,7 +206,8 @@ public class MagicPanel extends JPanel {
 		} else {
 			List<Component> $list = new LinkedList<Component>();
 			for (Component $c : $componentsByName.values()) {
-				if ($c.getClass().getAnnotation(XmlElement.class).value().equals($selector)) {
+				if ($c.getClass().getAnnotation(XmlElement.class).value()
+						.equals($selector)) {
 					$list.add($c);
 				}
 			}
@@ -212,8 +218,10 @@ public class MagicPanel extends JPanel {
 	public MagicComponents $(final Class<?> $componentClass) {
 		List<Component> $components = new LinkedList<Component>();
 		for (Component $c : $componentsByName.values()) {
-			if (($componentClass.isAssignableFrom($c.getJComponent().getClass()))
-					|| ($componentClass.isAssignableFrom($c.getRealComponent().getClass()))
+			if (($componentClass
+					.isAssignableFrom($c.getJComponent().getClass()))
+					|| ($componentClass.isAssignableFrom($c.getRealComponent()
+							.getClass()))
 					|| ($componentClass.isAssignableFrom($c.getClass()))) {
 				$components.add($c);
 			}
@@ -271,17 +279,17 @@ public class MagicPanel extends JPanel {
 			if ($c instanceof Container) {
 				applyStyles((Container) $c);
 			} else if ($c instanceof Tabs) {
-				for (Tab $tab : (Tabs)$c) {
+				for (Tab $tab : (Tabs) $c) {
 					applyStyle($tab);
 					applyStyles($tab.getContainer());
 				}
 			} else if ($c instanceof Cards) {
-				for (Card $card : (Cards)$c) {
+				for (Card $card : (Cards) $c) {
 					applyStyle($card);
 					applyStyles($card.getContainer());
 				}
 			} else if ($c instanceof Panes) {
-				for (Pane $pane : (Panes)$c) {
+				for (Pane $pane : (Panes) $c) {
 					applyStyle($pane);
 					applyStyles($pane.getContainer());
 				}
@@ -290,9 +298,9 @@ public class MagicPanel extends JPanel {
 			}
 		}
 	}
-	
+
 	private void applyStyle(final Object $o) {
-		
+
 		for (Rule $rule : $panel.getStyleRules()) {
 			if ($rule.matches($o)) {
 				Field[] $fields = AbusingReflection.fields($o.getClass());
@@ -302,15 +310,16 @@ public class MagicPanel extends JPanel {
 						if ($field.get($o) == null) {
 							$field.set($o, $rule.get($field.getName()));
 						}
-					} catch (IllegalAccessException $exc) {}
-					
+					} catch (IllegalAccessException $exc) {
+					}
+
 					$field.setAccessible(false);
 				}
 			}
 		}
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public MagicPanel bind(final String $bindingName, final Object $object) {
 		Binding $b = $panel.getBinding($bindingName);
 		if ($b == null) {
@@ -319,19 +328,22 @@ public class MagicPanel extends JPanel {
 		}
 
 		if ($b.isTableBinding() && ($object instanceof List)) {
-			Table $tableDefinition = (Table) $main.$componentsByName.get($b.getTableName());
+			Table $tableDefinition = (Table) $main.$componentsByName.get($b
+					.getTableName());
 			JTable $table = $main.$("#" + $b.getTableName()).as(JTable.class);
 
 			$tableDefinition.clearBinding();
 
 			JTableBinding $tableBinding = SwingBindings.createJTableBinding(
-					AutoBinding.UpdateStrategy.READ_WRITE, (List<?>) $object, $table);
+					AutoBinding.UpdateStrategy.READ_WRITE, (List<?>) $object,
+					$table);
 
 			for (Property $p : $b) {
-				ColumnBinding $columnBinding = $tableBinding.addColumnBinding(
-						BeanProperty.create($p.getName()));
+				ColumnBinding $columnBinding = $tableBinding
+						.addColumnBinding(BeanProperty.create($p.getName()));
 				$columnBinding.setColumnName($p.getTarget());
-				$columnBinding.setColumnClass($tableDefinition.getColumn($p.getTarget()).getJavaType());
+				$columnBinding.setColumnClass($tableDefinition.getColumn(
+						$p.getTarget()).getJavaType());
 			}
 
 			$tableDefinition.setBinding($tableBinding);
@@ -342,10 +354,9 @@ public class MagicPanel extends JPanel {
 			BindingGroup $bindingGroup = new BindingGroup();
 
 			for (Property $p : $b) {
-				JComponent $target = $main.$("#" + $p.getTarget()).as(JComponent.class);
+				JComponent $target = $main.$("#" + $p.getTarget()).as(
+						JComponent.class);
 
-				
-				
 				String $targetProperty = "";
 
 				if ($target instanceof JTextComponent) {
@@ -354,32 +365,34 @@ public class MagicPanel extends JPanel {
 					$targetProperty = "selected";
 				}
 
-				AutoBinding $binding = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
-						$object, BeanProperty.create($p.getName()),
-						$target, BeanProperty.create($targetProperty));
+				try {
+					AutoBinding $binding = Bindings.createAutoBinding(
+							UpdateStrategy.READ_WRITE, $object,
+							BeanProperty.create($p.getName()), $target,
+							BeanProperty.create($targetProperty));
 
-				/* try {
-					Class<?> $type = $object.getClass().getMethod("get" + AbusingStrings.capitalize($p.getName())).getReturnType();
-					if (($type == Integer.class) || ($type == int.class)) {
-						$binding.setConverter(new Converter() {
+					/*
+					 * try { Class<?> $type = $object.getClass().getMethod("get"
+					 * +
+					 * AbusingStrings.capitalize($p.getName())).getReturnType();
+					 * if (($type == Integer.class) || ($type == int.class)) {
+					 * $binding.setConverter(new Converter() {
+					 * 
+					 * @Override public Object convertForward(final Object
+					 * $value) { return $value.toString(); }
+					 * 
+					 * @Override public Object convertReverse(final Object
+					 * $value) { return Integer.parseInt($value.toString()); }
+					 * 
+					 * }); } } catch (Exception $exc) {
+					 * System.err.println("Binding: No such source property found."
+					 * + $exc); }
+					 */
 
-							@Override
-							public Object convertForward(final Object $value) {
-								return $value.toString();
-							}
-
-							@Override
-							public Object convertReverse(final Object $value) {
-								return Integer.parseInt($value.toString());
-							}
-
-						});
-					}
-				} catch (Exception $exc) {
-					System.err.println("Binding: No such source property found." + $exc);
-				} */
-
-				$bindingGroup.addBinding($binding);
+					$bindingGroup.addBinding($binding);
+				} catch (IllegalArgumentException $exc) {
+					$exc.printStackTrace(System.err);
+				}
 			}
 
 			$b.setBinding($bindingGroup);
