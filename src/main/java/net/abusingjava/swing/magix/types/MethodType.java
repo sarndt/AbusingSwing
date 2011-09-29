@@ -14,10 +14,10 @@ public class MethodType {
 	
 	public void call(final Object $obj, final Object... $args) {
 		try {
-			AbusingFunctions.callback($obj, $method).call($args);
+			AbusingFunctions.accessibleCallback($obj, $method).call($args);
 		} catch (DynamicInvocationTargetException $exc) {
 			if ($exc.getCause() instanceof NoSuchMethodException) {
-				AbusingFunctions.callback($obj, $method).call();
+				AbusingFunctions.accessibleCallback($obj, $method).call();
 			} else {
 				throw $exc;
 			}
