@@ -15,6 +15,7 @@ import net.abusingjava.Version;
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.magix.types.*;
 import net.abusingjava.xml.XmlAttribute;
+import net.java.balloontip.BalloonTip;
 
 @Author("Julian Fleischer")
 @Version("2011-08-21")
@@ -121,9 +122,19 @@ abstract public class Component {
 	protected JComponent $component;
 	
 	protected JComponent $realComponent = null;
+	
+	protected BalloonTip $balloonTip = null;
 
 	private boolean $update = false;
 	
+	
+	public BalloonTip getBalloonTip() {
+		return $balloonTip;
+	}
+	
+	public void setBalloonTip(final BalloonTip $tip) {
+		$balloonTip = $tip;
+	}
 	
 	public JComponent getJComponent() {
 		return $component;

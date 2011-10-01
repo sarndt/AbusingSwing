@@ -5,6 +5,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
 import javax.swing.JTextField;
+
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.magix.types.Filter;
 import net.abusingjava.swing.magix.types.FilterMode;
@@ -51,11 +52,6 @@ public class TextField extends TextComponent {
 			return "";
 		}
 		return super.getText();
-	}
-	
-	@Override
-	public void setText(final String $text) {
-		
 	}
 	
 	@Override

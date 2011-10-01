@@ -18,8 +18,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.tree.TreeModel;
 
-import org.jdesktop.swingx.JXTable;
-
 import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
@@ -27,6 +25,9 @@ import net.abusingjava.swing.magic.CheckBox;
 import net.abusingjava.swing.magic.Component;
 import net.abusingjava.swing.magic.MultiList;
 import net.abusingjava.swing.magic.TextComponent;
+import net.java.balloontip.BalloonTip;
+
+import org.jdesktop.swingx.JXTable;
 
 /**
  * A Collection of Components on which you may apply a function as you want.
@@ -811,6 +812,26 @@ public class MagicComponents {
 						((MultiList) $comp).showSelectedOnly($selected);
 					}
 				});
+			}
+		}
+	}
+	
+	public void showBubble(final String $message) {
+		for (final Component $comp : $components) {
+			JComponent $c = $comp.getJComponent();
+			if ($comp.getBalloonTip() != null) {
+				$comp.getBalloonTip().closeBalloon();
+			}
+			BalloonTip $tip = new BalloonTip($c, $message);
+			$comp.setBalloonTip($tip);
+		}
+	}
+	
+	public void clearBubble() {
+		for (final Component $comp : $components) {
+			if ($comp.getBalloonTip() != null) {
+				$comp.getBalloonTip().closeBalloon();
+				$comp.setBalloonTip(null);
 			}
 		}
 	}

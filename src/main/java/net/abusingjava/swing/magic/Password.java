@@ -3,11 +3,12 @@ package net.abusingjava.swing.magic;
 import javax.swing.JPasswordField;
 
 import net.abusingjava.swing.MagicPanel;
+import net.abusingjava.swing.magix.types.Value;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlElement;
 
 @XmlElement("password")
-public class Password extends TextField {
+public class Password extends TextComponent {
 	
 	public static class EchoChar {
 		public final Character $char;
@@ -25,16 +26,20 @@ public class Password extends TextField {
 	EchoChar $echoChar;
 	
 	@Override
+	public String getText() {
+		return super.getText();
+	}
+	
+	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
-		super.create($main, $parent);
-		
-		JPasswordField $c = new JPasswordField();
-		
-		if ($echoChar != null) {
-			$c.setEchoChar($echoChar.$char);
+		if ($height == null) {
+			$height = new Value("27px");
 		}
+		final JPasswordField $c = new JPasswordField($text);
 		
 		$component = $c;
-		$realComponent = $c;
+
+		super.create($main, $parent);
 	}
+	
 }
