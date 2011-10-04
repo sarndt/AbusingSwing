@@ -733,6 +733,20 @@ public class MagicComponents {
 		}
 		return null;
 	}
+	
+	public Object getValueAt(final int $modelRow, final int $modelColumn) {
+		for (Component $comp : $components) {
+			JComponent $c = $comp.getRealComponent();
+			if ($c instanceof JTable) {
+				TableModel $m = ((JTable) $c).getModel();
+				if ($m instanceof DefaultTableModel) {
+					
+				}
+				return $m.getValueAt($modelRow, $modelColumn);
+			}
+		}
+		return null;
+	}
 
 	public int getSelectedIndex() {
 		for (Component $comp : $components) {

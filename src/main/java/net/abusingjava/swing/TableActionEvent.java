@@ -11,12 +11,16 @@ public class TableActionEvent extends EventObject {
 	final JTable $table;
 	final int $row;
 	final int $col;
+	final int $modelRow;
+	final int $modelCol;
 	
 	public TableActionEvent(final JTable $table, final int $row, final int $col) {
 		super($table);
 		this.$table = $table;
 		this.$row = $row;
 		this.$col = $col;
+		this.$modelRow = $table.convertRowIndexToModel($row);
+		this.$modelCol = $table.convertColumnIndexToModel($col);
 	}
 	
 	public int getRowIndex() {
@@ -25,6 +29,14 @@ public class TableActionEvent extends EventObject {
 	
 	public int getColumnIndex() {
 		return $col;
+	}
+	
+	public int getModelRowIndex() {
+		return $modelRow;
+	}
+	
+	public int getModelColumnIndex() {
+		return $modelCol;
 	}
 	
 	@Override

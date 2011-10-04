@@ -367,31 +367,9 @@ public class MagicPanel extends JPanel {
 
 						try {
 							AutoBinding $binding = Bindings.createAutoBinding(
-									UpdateStrategy.READ_WRITE, $object,
-									BeanProperty.create($p.getName()), $target,
-									BeanProperty.create($targetProperty));
-
-							/*
-							 * try { Class<?> $type =
-							 * $object.getClass().getMethod("get" +
-							 * AbusingStrings
-							 * .capitalize($p.getName())).getReturnType(); if
-							 * (($type == Integer.class) || ($type ==
-							 * int.class)) { $binding.setConverter(new
-							 * Converter() {
-							 * 
-							 * @Override public Object convertForward(final
-							 * Object $value) { return $value.toString(); }
-							 * 
-							 * @Override public Object convertReverse(final
-							 * Object $value) { return
-							 * Integer.parseInt($value.toString()); }
-							 * 
-							 * }); } } catch (Exception $exc) {
-							 * System.err.println
-							 * ("Binding: No such source property found." +
-							 * $exc); }
-							 */
+									UpdateStrategy.READ_WRITE,
+									$object, BeanProperty.create($p.getName()),
+									$target, BeanProperty.create($targetProperty));
 
 							$bindingGroup.addBinding($binding);
 						} catch (IllegalArgumentException $exc) {

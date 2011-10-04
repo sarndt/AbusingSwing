@@ -13,9 +13,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import org.jdesktop.swingbinding.JTableBinding;
-import org.jdesktop.swingx.JXTable;
-
 import net.abusingjava.AbusingArrays;
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.TableActionEvent;
@@ -25,6 +22,9 @@ import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlChildElements;
 import net.abusingjava.xml.XmlElement;
 import net.abusingjava.xml.XmlTextContent;
+
+import org.jdesktop.swingbinding.JTableBinding;
+import org.jdesktop.swingx.JXTable;
 
 @XmlElement("table")
 public class Table extends Component implements Iterable<Column> {
@@ -66,6 +66,9 @@ public class Table extends Component implements Iterable<Column> {
 	
 	@XmlAttribute
 	MethodType $ondblclick;
+
+	@XmlAttribute
+	MethodType $onselect;
 	
 	// @XmlAttribute("")
 	
@@ -286,6 +289,20 @@ public class Table extends Component implements Iterable<Column> {
 				public void mouseClicked(final MouseEvent $ev) {
 					if ($ev.getClickCount() == 2) {
 						$ondblclick.call($main.getInvocationHandler(),
+							new TableActionEvent($c,
+									$c.rowAtPoint($ev.getPoint()),
+									$c.columnAtPoint($ev.getPoint())
+								));
+					}
+				}
+			});
+		}
+		if ($onselect != null) {
+			$c.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(final MouseEvent $ev) {
+					if ($ev.getClickCount() == 1) {
+						$onselect.call($main.getInvocationHandler(),
 							new TableActionEvent($c,
 									$c.rowAtPoint($ev.getPoint()),
 									$c.columnAtPoint($ev.getPoint())
