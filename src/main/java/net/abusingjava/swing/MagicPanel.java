@@ -319,85 +319,91 @@ public class MagicPanel extends JPanel {
 		}
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	public MagicPanel bind(final String $bindingName, final Object $object) {
-		Binding $b = $panel.getBinding($bindingName);
+		final Binding $b = $panel.getBinding($bindingName);
 		if ($b == null) {
 			System.err.println("Binding: no such binding found");
 			return this;
 		}
 
-		if ($b.isTableBinding() && ($object instanceof List)) {
-			Table $tableDefinition = (Table) $main.$componentsByName.get($b
-					.getTableName());
-			JTable $table = $main.$("#" + $b.getTableName()).as(JTable.class);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				if ($b.isTableBinding() && ($object instanceof List)) {
+					Table $tableDefinition = (Table) $main.$componentsByName.get($b.getTableName());
+					JTable $table = $main.$("#" + $b.getTableName()).as(JTable.class);
 
-			$tableDefinition.clearBinding();
+					$tableDefinition.clearBinding();
 
-			JTableBinding $tableBinding = SwingBindings.createJTableBinding(
-					AutoBinding.UpdateStrategy.READ_WRITE, (List<?>) $object,
-					$table);
+					JTableBinding $tableBinding = SwingBindings.createJTableBinding(
+							AutoBinding.UpdateStrategy.READ_WRITE, (List<?>) $object,
+							$table);
 
-			for (Property $p : $b) {
-				ColumnBinding $columnBinding = $tableBinding
-						.addColumnBinding(BeanProperty.create($p.getName()));
-				$columnBinding.setColumnName($p.getTarget());
-				$columnBinding.setColumnClass($tableDefinition.getColumn(
-						$p.getTarget()).getJavaType());
-			}
+					for (Property $p : $b) {
+						ColumnBinding $columnBinding = $tableBinding
+								.addColumnBinding(BeanProperty.create($p.getName()));
+						$columnBinding.setColumnName($p.getTarget());
+						$columnBinding.setColumnClass($tableDefinition.getColumn($p.getTarget()).getJavaType());
+					}
 
-			$tableDefinition.setBinding($tableBinding);
-			$tableBinding.bind();
-		} else {
-			$b.clearBinding();
+					$tableDefinition.setBinding($tableBinding);
+					$tableBinding.bind();
+				} else {
+					$b.clearBinding();
 
-			BindingGroup $bindingGroup = new BindingGroup();
+					final BindingGroup $bindingGroup = new BindingGroup();
 
-			for (Property $p : $b) {
-				JComponent $target = $main.$("#" + $p.getTarget()).as(
-						JComponent.class);
+					for (Property $p : $b) {
+						JComponent $target = $main.$("#" + $p.getTarget()).as(JComponent.class);
 
-				String $targetProperty = "";
+						String $targetProperty = "";
 
-				if ($target instanceof JTextComponent) {
-					$targetProperty = "text";
-				} else if ($target instanceof JCheckBox) {
-					$targetProperty = "selected";
+						if ($target instanceof JTextComponent) {
+							$targetProperty = "text";
+						} else if ($target instanceof JCheckBox) {
+							$targetProperty = "selected";
+						}
+
+						try {
+							AutoBinding $binding = Bindings.createAutoBinding(
+									UpdateStrategy.READ_WRITE, $object,
+									BeanProperty.create($p.getName()), $target,
+									BeanProperty.create($targetProperty));
+
+							/*
+							 * try { Class<?> $type =
+							 * $object.getClass().getMethod("get" +
+							 * AbusingStrings
+							 * .capitalize($p.getName())).getReturnType(); if
+							 * (($type == Integer.class) || ($type ==
+							 * int.class)) { $binding.setConverter(new
+							 * Converter() {
+							 * 
+							 * @Override public Object convertForward(final
+							 * Object $value) { return $value.toString(); }
+							 * 
+							 * @Override public Object convertReverse(final
+							 * Object $value) { return
+							 * Integer.parseInt($value.toString()); }
+							 * 
+							 * }); } } catch (Exception $exc) {
+							 * System.err.println
+							 * ("Binding: No such source property found." +
+							 * $exc); }
+							 */
+
+							$bindingGroup.addBinding($binding);
+						} catch (IllegalArgumentException $exc) {
+							$exc.printStackTrace(System.err);
+						}
+					}
+
+					$b.setBinding($bindingGroup);
+					$bindingGroup.bind();
 				}
-
-				try {
-					AutoBinding $binding = Bindings.createAutoBinding(
-							UpdateStrategy.READ_WRITE, $object,
-							BeanProperty.create($p.getName()), $target,
-							BeanProperty.create($targetProperty));
-
-					/*
-					 * try { Class<?> $type = $object.getClass().getMethod("get"
-					 * +
-					 * AbusingStrings.capitalize($p.getName())).getReturnType();
-					 * if (($type == Integer.class) || ($type == int.class)) {
-					 * $binding.setConverter(new Converter() {
-					 * 
-					 * @Override public Object convertForward(final Object
-					 * $value) { return $value.toString(); }
-					 * 
-					 * @Override public Object convertReverse(final Object
-					 * $value) { return Integer.parseInt($value.toString()); }
-					 * 
-					 * }); } } catch (Exception $exc) {
-					 * System.err.println("Binding: No such source property found."
-					 * + $exc); }
-					 */
-
-					$bindingGroup.addBinding($binding);
-				} catch (IllegalArgumentException $exc) {
-					$exc.printStackTrace(System.err);
-				}
 			}
-
-			$b.setBinding($bindingGroup);
-			$bindingGroup.bind();
-		}
+		});
 
 		return this;
 	}
