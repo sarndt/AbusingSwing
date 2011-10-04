@@ -35,6 +35,7 @@ public class MagicLayoutManager implements LayoutManager {
 		
 	}
 	
+	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void layoutContainer(final Container $container) {
 		if ($panel == $container) {
@@ -292,6 +293,7 @@ public class MagicLayoutManager implements LayoutManager {
 		}
 	}
 
+	@SuppressWarnings("incomplete-switch")
 	@Override
 	public Dimension minimumLayoutSize(final Container $container) {
 		int $width = 0;
