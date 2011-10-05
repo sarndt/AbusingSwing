@@ -30,6 +30,7 @@ import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.JTableBinding.ColumnBinding;
 import org.jdesktop.swingbinding.SwingBindings;
+import org.jdesktop.swingx.JXDatePicker;
 
 /**
  * A MagicWindow is a JPanel that is built according to a specified definition
@@ -363,6 +364,10 @@ public class MagicPanel extends JPanel {
 							$targetProperty = "text";
 						} else if ($target instanceof JCheckBox) {
 							$targetProperty = "selected";
+						} else if ($target instanceof JXDatePicker) {
+							$targetProperty = "date";
+						} else if ($target instanceof JSpinner) {
+							$targetProperty = "value";
 						}
 
 						try {
@@ -371,8 +376,14 @@ public class MagicPanel extends JPanel {
 									$object, BeanProperty.create($p.getName()),
 									$target, BeanProperty.create($targetProperty));
 
+							if ($target instanceof JCheckBox) {
+								$binding.setTargetNullValue(false);
+							}
+							
 							$bindingGroup.addBinding($binding);
 						} catch (IllegalArgumentException $exc) {
+							System.err.println($p.getName());
+							System.err.println($targetProperty);
 							$exc.printStackTrace(System.err);
 						}
 					}

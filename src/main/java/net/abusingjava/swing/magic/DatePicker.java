@@ -1,10 +1,10 @@
 package net.abusingjava.swing.magic;
 
-import org.jdesktop.swingx.JXDatePicker;
-
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.magix.types.Value;
 import net.abusingjava.xml.XmlElement;
+
+import org.jdesktop.swingx.JXDatePicker;
 
 @XmlElement("datepicker")
 public class DatePicker extends Component {
@@ -15,6 +15,7 @@ public class DatePicker extends Component {
 			$height = new Value("27px");
 		}
 		
+		//JSpinner $c = new JSpinner(new SpinnerDateModel());
 		JXDatePicker $c = new JXDatePicker();
 		
 		$component = $c;
