@@ -377,6 +377,7 @@ public class MagicPanel extends JPanel {
 									$target, BeanProperty.create($targetProperty));
 
 							if ($target instanceof JCheckBox) {
+								$binding.setSourceNullValue(false);
 								$binding.setTargetNullValue(false);
 							}
 							
