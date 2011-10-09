@@ -39,7 +39,6 @@ public class MagicComponents {
 
 	final private ArrayList<Component> $components = new ArrayList<Component>();
 
-	
 	public MagicComponents(final Component... $components) {
 		this.$components.ensureCapacity($components.length);
 		for (Component $c : $components) {
@@ -53,12 +52,11 @@ public class MagicComponents {
 			this.$components.add($c);
 		}
 	}
-	
 
 	public Component get(final int $index) {
 		return $components.get($index);
 	}
-	
+
 	public MagicComponents setText(final String $text) {
 		for (final Component $comp : $components) {
 			if ($comp instanceof TextComponent) {
@@ -72,34 +70,34 @@ public class MagicComponents {
 		}
 		return this;
 	}
-	
+
 	public MagicComponents setModel(final Object $model) {
 		if ($model instanceof TableModel) {
 			for (Component $comp : $components) {
 				JComponent $c = $comp.getRealComponent();
 				if ($c instanceof JTable) {
-					((JTable)$c).setModel((TableModel) $model);
+					((JTable) $c).setModel((TableModel) $model);
 				}
 			}
 		} else if ($model instanceof ListModel) {
 			for (Component $comp : $components) {
 				JComponent $c = $comp.getRealComponent();
 				if ($c instanceof JList) {
-					((JList)$c).setModel((ListModel) $model);
+					((JList) $c).setModel((ListModel) $model);
 				}
 			}
 		} else if ($model instanceof TreeModel) {
 			for (Component $comp : $components) {
 				JComponent $c = $comp.getRealComponent();
 				if ($c instanceof JTree) {
-					((JTree)$c).setModel((TreeModel) $model);
+					((JTree) $c).setModel((TreeModel) $model);
 				}
 			}
 		} else if ($model instanceof ComboBoxModel) {
 			for (Component $comp : $components) {
 				JComponent $c = $comp.getRealComponent();
 				if ($c instanceof JComboBox) {
-					((JComboBox)$c).setModel((ComboBoxModel) $model);
+					((JComboBox) $c).setModel((ComboBoxModel) $model);
 				}
 			}
 		}
@@ -129,14 +127,14 @@ public class MagicComponents {
 		}
 		return false;
 	}
-	
+
 	public String getText() {
 		for (final Component $comp : $components) {
 			if ($comp instanceof TextComponent) {
 				FutureTask<String> $task = new FutureTask<String>(new Callable<String>() {
 					@Override
 					public String call() {
-						return ((TextComponent)$comp).getText();
+						return ((TextComponent) $comp).getText();
 					}
 				});
 				SwingUtilities.invokeLater($task);
@@ -164,7 +162,7 @@ public class MagicComponents {
 						@Override
 						public void run() {
 							while ($m.getRowCount() > 0) {
-								((DefaultTableModel)$m).removeRow(0);
+								((DefaultTableModel) $m).removeRow(0);
 							}
 						}
 					});
@@ -183,7 +181,7 @@ public class MagicComponents {
 		}
 		return this;
 	}
-	
+
 	public MagicComponents show(final int $index) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -262,22 +260,24 @@ public class MagicComponents {
 	/**
 	 * Returns the underlying components as the specified $class.
 	 * <p>
-	 * This applies to the first component in the list which can be
-	 * cast to the specified list.
+	 * This applies to the first component in the list which can be cast to the
+	 * specified list.
 	 * <p>
-	 * <b>Example:</b> <code>$(".allComponentsOfThisClass").as(JTable.class)</code>
-	 * will return the underlying JTable of the first component in the class
+	 * <b>Example:</b>
+	 * <code>$(".allComponentsOfThisClass").as(JTable.class)</code> will return
+	 * the underlying JTable of the first component in the class
 	 * “.allComponentsOfThisClass” that is actually realized by a JTable.
 	 * <p>
 	 * The check whether the shoe fits or not is done using
-	 * {@link Class#isAssignableFrom(Class)}, i.e. if the underlying {@link JComponent}
-	 * is (for example) a {@link JXTable} (which is a JTable, too) it will match
-	 * in the above example.
+	 * {@link Class#isAssignableFrom(Class)}, i.e. if the underlying
+	 * {@link JComponent} is (for example) a {@link JXTable} (which is a JTable,
+	 * too) it will match in the above example.
 	 * <p>
-	 * This method is <b>not</b> <i>thread-safe</i>, since it exposes the underlying
-	 * JComponents to any calling thread. Don’t get me wrong dude, calling the method
-	 * itself from any thread causes no harm, however, you will be responsible for
-	 * invoking methods of the returned components on the AWT Event Queue.
+	 * This method is <b>not</b> <i>thread-safe</i>, since it exposes the
+	 * underlying JComponents to any calling thread. Don’t get me wrong dude,
+	 * calling the method itself from any thread causes no harm, however, you
+	 * will be responsible for invoking methods of the returned components on
+	 * the AWT Event Queue.
 	 */
 	@SuppressWarnings("unchecked")
 	public <T extends JComponent> T as(final Class<T> $class) {
@@ -299,7 +299,7 @@ public class MagicComponents {
 		}
 		return null;
 	}
-	
+
 	public int count() {
 		return $components.size();
 	}
@@ -327,9 +327,9 @@ public class MagicComponents {
 	/**
 	 * Applies to any component. Hides the components.
 	 * <p>
-	 * This works by calling {@link JComponent#setVisible(boolean)}. The components will simply
-	 * not be shown anymore, however, they are not removed from the layout (i.e. they will
-	 * leave an empty space).
+	 * This works by calling {@link JComponent#setVisible(boolean)}. The
+	 * components will simply not be shown anymore, however, they are not
+	 * removed from the layout (i.e. they will leave an empty space).
 	 * <p>
 	 * This method is <i>thread-safe</i>. You can call it from any thread, it’s
 	 * actions will execute in the AWT-Event-Queue.
@@ -339,8 +339,8 @@ public class MagicComponents {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-						$comp.getJComponent().setVisible(false);
-					
+					$comp.getJComponent().setVisible(false);
+
 				}
 			});
 		}
@@ -404,7 +404,8 @@ public class MagicComponents {
 			@Override
 			public void run() {
 				for (Component $comp : $components) {
-					$comp.getRealComponent().setForeground(new net.abusingjava.swing.magix.types.Color($hexColor).getColor());
+					$comp.getRealComponent().setForeground(
+							new net.abusingjava.swing.magix.types.Color($hexColor).getColor());
 				}
 			}
 		});
@@ -424,7 +425,8 @@ public class MagicComponents {
 	}
 
 	/**
-	 * Applies to any component. Sets the background color of the particular components.
+	 * Applies to any component. Sets the background color of the particular
+	 * components.
 	 * <p>
 	 * This method is <i>thread-safe</i>. You can call it from any thread, it’s
 	 * actions will execute in the AWT-Event-Queue.
@@ -434,7 +436,8 @@ public class MagicComponents {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-					$comp.getRealComponent().setBackground(new net.abusingjava.swing.magix.types.Color($hexColor).getColor());
+					$comp.getRealComponent().setBackground(
+							new net.abusingjava.swing.magix.types.Color($hexColor).getColor());
 				}
 			});
 		}
@@ -474,7 +477,7 @@ public class MagicComponents {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-				$c.setFont($c.getFont().deriveFont((float) $size));
+					$c.setFont($c.getFont().deriveFont((float) $size));
 				}
 			});
 		}
@@ -484,7 +487,17 @@ public class MagicComponents {
 	public MagicComponents add(final Iterable<?> $values) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
-			if ($c instanceof JComboBox) {
+			if ($comp instanceof MultiList) {
+				final DefaultTableModel $m = (DefaultTableModel)((JTable)$c).getModel();
+				for (final Object $value : $values) {
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							$m.addRow(new Object[] { false, $value });
+						}
+					});
+				}
+			} else if ($c instanceof JComboBox) {
 				final ComboBoxModel $m = ((JComboBox)$c).getModel();
 				if ($m instanceof DefaultComboBoxModel) {
 					for (final Object $value : $values) {
@@ -512,7 +525,6 @@ public class MagicComponents {
 		}
 		return this;
 	}
-
 	/**
 	 * Applies to all &lt;table&gt;-Objects. Adds the row, specified as Array.
 	 * <p>
@@ -523,12 +535,12 @@ public class MagicComponents {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JTable) {
-				final TableModel $m = ((JTable)$c).getModel();
+				final TableModel $m = ((JTable) $c).getModel();
 				if ($m instanceof DefaultTableModel) {
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							((DefaultTableModel)$m).addRow($values);
+							((DefaultTableModel) $m).addRow($values);
 						}
 					});
 				}
@@ -547,13 +559,13 @@ public class MagicComponents {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JTable) {
-				final TableModel $m = ((JTable)$c).getModel();
+				final TableModel $m = ((JTable) $c).getModel();
 				if ($m instanceof DefaultTableModel) {
 					for (final Object[] $row : $values) {
 						SwingUtilities.invokeLater(new Runnable() {
 							@Override
 							public void run() {
-								((DefaultTableModel)$m).addRow($row);
+								((DefaultTableModel) $m).addRow($row);
 							}
 						});
 					}
@@ -564,7 +576,8 @@ public class MagicComponents {
 	}
 
 	/**
-	 * Applies to all &lt;combobx&gt;, and &lt;list&gt;-Objects. Adds an item to the underlying model.
+	 * Applies to all &lt;combobx&gt;, and &lt;list&gt;-Objects. Adds an item to
+	 * the underlying model.
 	 * <p>
 	 * This method is <i>thread-safe</i>. You can call it from any thread, it’s
 	 * actions will execute in the AWT-Event-Queue.
@@ -573,25 +586,25 @@ public class MagicComponents {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
-				final ComboBoxModel $m = ((JComboBox)$c).getModel();
+				final ComboBoxModel $m = ((JComboBox) $c).getModel();
 				if ($m instanceof DefaultComboBoxModel) {
 					for (final Object $value : $values) {
 						SwingUtilities.invokeLater(new Runnable() {
 							@Override
 							public void run() {
-								((DefaultComboBoxModel)$m).addElement($value);
+								((DefaultComboBoxModel) $m).addElement($value);
 							}
 						});
 					}
 				}
 			} else if ($c instanceof JList) {
-				final ListModel $m = ((JList)$c).getModel();
+				final ListModel $m = ((JList) $c).getModel();
 				if ($m instanceof DefaultListModel) {
 					for (final Object $value : $values) {
 						SwingUtilities.invokeLater(new Runnable() {
 							@Override
 							public void run() {
-								((DefaultListModel)$m).addElement($value);
+								((DefaultListModel) $m).addElement($value);
 							}
 						});
 					}
@@ -602,7 +615,8 @@ public class MagicComponents {
 	}
 
 	/**
-	 * Applies to all &lt;combobox&gt;, &lt;list&gt;, and &lt;multilist&gt;-Objects. Adds an item to the underlying model.
+	 * Applies to all &lt;combobox&gt;, &lt;list&gt;, and
+	 * &lt;multilist&gt;-Objects. Adds an item to the underlying model.
 	 * <p>
 	 * This method is <i>thread-safe</i>. You can call it from any thread, it’s
 	 * actions will execute in the AWT-Event-Queue.
@@ -611,34 +625,34 @@ public class MagicComponents {
 		for (final Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
-				final ComboBoxModel $m = ((JComboBox)$c).getModel();
+				final ComboBoxModel $m = ((JComboBox) $c).getModel();
 				if ($m instanceof DefaultComboBoxModel) {
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
 							$comp.setUpdate(true);
-							((DefaultComboBoxModel)$m).addElement($value);
+							((DefaultComboBoxModel) $m).addElement($value);
 							$comp.setUpdate(false);
 						}
 					});
 				}
 			} else if ($c instanceof JList) {
-				final ListModel $m = ((JList)$c).getModel();
+				final ListModel $m = ((JList) $c).getModel();
 				if ($m instanceof DefaultListModel) {
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							((DefaultListModel)$m).addElement($value);
+							((DefaultListModel) $m).addElement($value);
 						}
 					});
 				}
 			} else if ($comp instanceof MultiList) {
-				final TableModel $m = ((JTable)$c).getModel();
+				final TableModel $m = ((JTable) $c).getModel();
 				if ($m instanceof DefaultTableModel) {
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							((DefaultTableModel)$m).addRow(new Object[] { false, $value });
+							((DefaultTableModel) $m).addRow(new Object[]{false, $value});
 						}
 					});
 				}
@@ -651,12 +665,12 @@ public class MagicComponents {
 		for (Component $comp : $components) {
 			if ($comp instanceof MultiList) {
 				JComponent $c = $comp.getRealComponent();
-				final TableModel $m = ((JTable)$c).getModel();
+				final TableModel $m = ((JTable) $c).getModel();
 				if ($m instanceof DefaultTableModel) {
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							((DefaultTableModel)$m).addRow(new Object[] { $selected, $value });
+							((DefaultTableModel) $m).addRow(new Object[]{$selected, $value});
 						}
 					});
 				}
@@ -670,35 +684,35 @@ public class MagicComponents {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
 				$comp.setUpdate(true);
-				ComboBoxModel $m = ((JComboBox)$c).getModel();
+				ComboBoxModel $m = ((JComboBox) $c).getModel();
 				if ($m instanceof DefaultComboBoxModel) {
 					$m.setSelectedItem($item);
 				}
 				$comp.setUpdate(false);
 			} else if ($c instanceof JList) {
-				((JList)$c).setSelectedValue($item, true);
+				((JList) $c).setSelectedValue($item, true);
 			}
 		}
 		return this;
 	}
-	
+
 	public MagicComponents setSelectedIndex(final int $index) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
 				$comp.setUpdate(true);
-				ComboBoxModel $m = ((JComboBox)$c).getModel();
+				ComboBoxModel $m = ((JComboBox) $c).getModel();
 				if ($m instanceof DefaultComboBoxModel) {
 					$m.setSelectedItem($m.getElementAt($index));
 				}
 				$comp.setUpdate(false);
 			} else if ($c instanceof JList) {
-				((JList)$c).setSelectedIndex($index);
+				((JList) $c).setSelectedIndex($index);
 			}
 		}
 		return this;
 	}
-	
+
 	public MagicComponents setSelected(final boolean $selected) {
 		for (Component $comp : $components) {
 			if ($comp instanceof CheckBox) {
@@ -714,18 +728,46 @@ public class MagicComponents {
 		return this;
 	}
 
+	public List<Object> getSelectedItems() {
+		for (Component $comp : $components) {
+			if ($comp instanceof MultiList) {
+				DefaultTableModel $m = (DefaultTableModel)((JTable)$comp.getRealComponent()).getModel();
+				List<Object> $list = new LinkedList<Object>();
+				for (int $i = 0; $i < $m.getRowCount(); $i++) {
+					if ((Boolean) $m.getValueAt($i, 0)) {
+						$list.add($m.getValueAt($i, 1));
+					}
+				}
+				return $list;
+			}
+		}
+		return new ArrayList<Object>(0);
+	}
+	
+	public MagicComponents clearSelection() {
+		for (Component $comp : $components) {
+			if ($comp instanceof MultiList) {
+				DefaultTableModel $m = (DefaultTableModel)((JTable)$comp.getRealComponent()).getModel();
+				for (int $i = 0; $i < $m.getRowCount(); $i++) {
+					$m.setValueAt(false, $i, 0);
+				}
+			}
+		}
+		return this;
+	}
+	
 	public Object getSelectedItem() {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
-				ComboBoxModel $m = ((JComboBox)$c).getModel();
+				ComboBoxModel $m = ((JComboBox) $c).getModel();
 				if ($m instanceof DefaultComboBoxModel) {
 					return $m.getSelectedItem();
 				}
 			} else if ($c instanceof JList) {
-				ListModel $m = ((JList)$c).getModel();
+				ListModel $m = ((JList) $c).getModel();
 				try {
-					return $m.getElementAt(((JList)$c).getSelectedIndex());
+					return $m.getElementAt(((JList) $c).getSelectedIndex());
 				} catch (ArrayIndexOutOfBoundsException $exc) {
 					return null;
 				}
@@ -733,14 +775,14 @@ public class MagicComponents {
 		}
 		return null;
 	}
-	
+
 	public Object getValueAt(final int $modelRow, final int $modelColumn) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JTable) {
 				TableModel $m = ((JTable) $c).getModel();
 				if ($m instanceof DefaultTableModel) {
-					
+
 				}
 				return $m.getValueAt($modelRow, $modelColumn);
 			}
@@ -752,17 +794,17 @@ public class MagicComponents {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($c instanceof JComboBox) {
-				ComboBoxModel $m = ((JComboBox)$c).getModel();
+				ComboBoxModel $m = ((JComboBox) $c).getModel();
 				if ($m instanceof DefaultComboBoxModel) {
 					return ((DefaultComboBoxModel) $m).getIndexOf($m.getSelectedItem());
 				}
 			} else if ($c instanceof JList) {
-				return ((JList)$c).getSelectedIndex();
+				return ((JList) $c).getSelectedIndex();
 			}
 		}
 		return -1;
 	}
-	
+
 	public MagicComponents setValue(final int $value) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -788,7 +830,8 @@ public class MagicComponents {
 	}
 
 	/**
-	 * Applies to all Components which have a “setMax” method (such as &lt;progressbar&gt;, &lt;numeric&gt;)
+	 * Applies to all Components which have a “setMax” method (such as
+	 * &lt;progressbar&gt;, &lt;numeric&gt;)
 	 */
 	public MagicComponents setMax(final int $value) {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -815,7 +858,8 @@ public class MagicComponents {
 	}
 
 	/**
-	 * Applies on &lt;multilist&gt;-Components only: Shows only the selected items in the list.
+	 * Applies on &lt;multilist&gt;-Components only: Shows only the selected
+	 * items in the list.
 	 */
 	public void showSelectedOnly(final boolean $selected) {
 		for (final Component $comp : $components) {
@@ -829,7 +873,7 @@ public class MagicComponents {
 			}
 		}
 	}
-	
+
 	public void showBubble(final String $message) {
 		for (final Component $comp : $components) {
 			JComponent $c = $comp.getJComponent();
@@ -840,7 +884,7 @@ public class MagicComponents {
 			$comp.setBalloonTip($tip);
 		}
 	}
-	
+
 	public void clearBubble() {
 		for (final Component $comp : $components) {
 			if ($comp.getBalloonTip() != null) {
@@ -848,5 +892,9 @@ public class MagicComponents {
 				$comp.setBalloonTip(null);
 			}
 		}
+	}
+
+	public void goTo() {
+		
 	}
 }

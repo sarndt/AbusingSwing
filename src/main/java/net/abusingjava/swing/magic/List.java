@@ -23,6 +23,8 @@ public class List extends Component {
 		final DefaultListModel $m = new DefaultListModel();
 		final JList $c = new JList($m);
 		
+		
+		
 		$c.setVisibleRowCount(-1);
 		$c.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		

@@ -283,16 +283,19 @@ public class Table extends Component implements Iterable<Column> {
 
 		});
 		
+		$realComponent = $c;
+		$component = new JScrollPane($c);
+		$c.setFillsViewportHeight(true);
+
 		if (($ondblclick != null) && !$editable) {
 			$c.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(final MouseEvent $ev) {
 					if ($ev.getClickCount() == 2) {
-						$ondblclick.call($main.getInvocationHandler(),
-							new TableActionEvent($c,
-									$c.rowAtPoint($ev.getPoint()),
-									$c.columnAtPoint($ev.getPoint())
-								));
+						new Thread(eventListener($ondblclick, new TableActionEvent($c,
+								$c.rowAtPoint($ev.getPoint()),
+								$c.columnAtPoint($ev.getPoint())
+							))).start();
 					}
 				}
 			});
@@ -302,19 +305,14 @@ public class Table extends Component implements Iterable<Column> {
 				@Override
 				public void mouseClicked(final MouseEvent $ev) {
 					if ($ev.getClickCount() == 1) {
-						$onselect.call($main.getInvocationHandler(),
-							new TableActionEvent($c,
-									$c.rowAtPoint($ev.getPoint()),
-									$c.columnAtPoint($ev.getPoint())
-								));
+						new Thread(eventListener($onselect, new TableActionEvent($c,
+								$c.rowAtPoint($ev.getPoint()),
+								$c.columnAtPoint($ev.getPoint())
+							))).start();
 					}
 				}
 			});
 		}
-		
-		$realComponent = $c;
-		$component = new JScrollPane($c);
-		$c.setFillsViewportHeight(true);
 		
 		super.create($main, $parent);
 	}

@@ -21,55 +21,55 @@ import net.java.balloontip.BalloonTip;
 @Version("2011-08-21")
 @Since(value = "2011-08-21", version = "1.0")
 abstract public class Component {
-	
+
 	@XmlAttribute
 	Value $width;
-	
+
 	@XmlAttribute
 	Value $height;
-	
+
 	@XmlAttribute
 	Value $minWidth = new Value("0px");
-	
+
 	@XmlAttribute
 	Value $minHeight = new Value("0px");
-	
+
 	@XmlAttribute("left")
 	Value $posX = new Value("0px");
-	
+
 	@XmlAttribute("top")
 	Value $posY = new Value("0px");
-	
+
 	@XmlAttribute
 	Color $foreground;
-	
+
 	@XmlAttribute
 	Color $background;
-	
+
 	@XmlAttribute
 	Boolean $enabled; // true
-	
+
 	@XmlAttribute
 	Boolean $visible; // true
-	
+
 	@XmlAttribute
 	MethodType $onaction;
-	
+
 	@XmlAttribute
 	MethodType $onclick;
-	
+
 	@XmlAttribute
 	MethodType $onblur;
-	
+
 	@XmlAttribute
 	MethodType $onfocus;
-	
+
 	@XmlAttribute
 	MethodType $onmousedown;
-	
+
 	@XmlAttribute
 	MethodType $onmouseup;
-	
+
 	@XmlAttribute
 	MethodType $onmouseover;
 
@@ -81,105 +81,156 @@ abstract public class Component {
 
 	@XmlAttribute
 	MethodType $onmousewheel;
-	
+
 	@XmlAttribute
 	MethodType $onkeydown;
-	
+
 	@XmlAttribute
 	MethodType $onkeypress;
-	
+
 	@XmlAttribute
 	MethodType $onkeyup;
-	
+
 	@XmlAttribute("tool-tip")
 	String $toolTip = "";
-	
+
 	@XmlAttribute("font-weight")
 	FontWeight $fontWeight;
-	
+
 	@XmlAttribute("font-style")
 	FontStyle $fontStyle;
-	
+
 	@XmlAttribute("font-size")
 	Value $fontSize;
-	
+
 	@XmlAttribute
 	Boolean $opaque;
-	
+
 	@XmlAttribute
 	String $cursor;
-	
+
 	@XmlAttribute
 	ClassNames $class;
-	
+
 	@XmlAttribute
 	String $name;
-	
+
 	@XmlAttribute("popup-menu")
 	String $popupMenu;
-	
-	
+
 	protected JComponent $component;
-	
+
 	protected JComponent $realComponent = null;
-	
+
 	protected BalloonTip $balloonTip = null;
 
+	protected MagicPanel $mainPanel;
+
 	private boolean $update = false;
-	
-	
+
 	public BalloonTip getBalloonTip() {
 		return $balloonTip;
 	}
-	
+
 	public void setBalloonTip(final BalloonTip $tip) {
 		$balloonTip = $tip;
 	}
-	
+
 	public JComponent getJComponent() {
 		return $component;
 	}
-	
+
 	public JComponent getRealComponent() {
 		if ($realComponent == null) {
 			return $component;
 		}
 		return $realComponent;
 	}
-	
+
 	public String getName() {
 		return $name;
 	}
-	
+
 	public ClassNames getClasses() {
 		return $class;
 	}
-	
+
 	public boolean hasClass(final String $className) {
 		if (($class == null) || ($className == null)) {
 			return false;
 		}
 		return $class.contains($className);
 	}
-	
+
 	public Value getWidth() {
 		return $width;
 	}
-	
+
 	public Value getHeight() {
 		return $height;
 	}
-	
+
 	public Value getPosX() {
 		return $posX;
 	}
-	
+
 	public Value getPosY() {
 		return $posY;
 	}
 
+	public Runnable eventListener(final MethodType $method, final Object... $args) {
+		final String $specialMethodArg = $method.getSpecialMethodArg();
+		if ($method.isSpecialMethod()) {
+			switch ($method.getSpecialMethodType()) {
+			case GOTO:
+				return new Runnable() {
+					@Override
+					public void run() {
+						$mainPanel.$($specialMethodArg).goTo();
+					}
+				};
+			case HIDE:
+				return new Runnable() {
+					@Override
+					public void run() {
+						$mainPanel.$($specialMethodArg).hide();
+					}
+				};
+			case SHOW:
+				return new Runnable() {
+					@Override
+					public void run() {
+						$mainPanel.$($specialMethodArg).show();
+					}
+				};
+			case ENABLE:
+				return new Runnable() {
+					@Override
+					public void run() {
+						$mainPanel.$($specialMethodArg).enable();
+					}
+				};
+			case DISABLE:
+				return new Runnable() {
+					@Override
+					public void run() {
+						$mainPanel.$($specialMethodArg).disable();
+					}
+				};
+			}
+		}
+		return new Runnable() {
+			@Override
+			public void run() {
+				$method.call($mainPanel.getInvocationHandler(), $args);
+			}
+		};
+	}
+
 	public void create(final MagicPanel $main,
 			@SuppressWarnings("unused") final MagicPanel $parent) {
+		$mainPanel = $main;
+
 		if ($enabled == null) {
 			$enabled = true;
 		}
@@ -189,13 +240,13 @@ abstract public class Component {
 		if ($realComponent == null) {
 			$realComponent = $component;
 		}
-		
+
 		if (($cursor != null) && $cursor.equalsIgnoreCase("hand")) {
 			$component.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		}
-		
+
 		$main.registerComponent($name, this);
-		
+
 		$component.setEnabled($enabled);
 		$component.setVisible($visible);
 		if (!$toolTip.isEmpty()) {
@@ -223,9 +274,9 @@ abstract public class Component {
 			$realComponent.setFont($realComponent.getFont().deriveFont(Font.ITALIC));
 		}
 		if (($fontSize != null) && ($fontSize.getUnit() == Unit.POINT)) {
-			$realComponent.setFont($realComponent.getFont().deriveFont((float)$fontSize.getValue()));
+			$realComponent.setFont($realComponent.getFont().deriveFont((float) $fontSize.getValue()));
 		}
-		
+
 		if ($popupMenu != null) {
 			final JPopupMenu $menu = $main.getPopupMenu($popupMenu);
 			if ($menu != null) {
@@ -236,38 +287,34 @@ abstract public class Component {
 							doPop($ev);
 						}
 					}
-					
+
 					@Override
 					public void mouseReleased(final MouseEvent $ev) {
 						if ($ev.isPopupTrigger()) {
 							doPop($ev);
 						}
 					}
-					
+
 					private void doPop(final MouseEvent $ev) {
 						$menu.show($realComponent, $ev.getX(), $ev.getY());
 					}
 				});
 			}
 		}
-		
+
 		if ($onaction != null) {
 			ActionListener $listener = new ActionListener() {
 				@Override
 				public void actionPerformed(final ActionEvent $ev) {
 					if (!$update) {
-						new Thread(new Runnable() {
-							@Override
-							public void run() {
-								$onaction.call($main.getInvocationHandler(), $ev.getSource());
-							}
-						}).start();
+						new Thread(eventListener($onaction, $ev.getSource())).start();
 					}
 				}
 			};
 			if (AbusingReflection.hasMethod($realComponent, "addActionListener")) {
 				try {
-					$realComponent.getClass().getMethod("addActionListener", ActionListener.class).invoke($realComponent, $listener);
+					$realComponent.getClass().getMethod("addActionListener", ActionListener.class)
+							.invoke($realComponent, $listener);
 				} catch (Exception $exc) {
 					System.err.println($exc);
 				}
@@ -278,12 +325,7 @@ abstract public class Component {
 			MouseAdapter $listener = new MouseAdapter() {
 				@Override
 				public void mouseClicked(final MouseEvent $ev) {
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							$onclick.call($main.getInvocationHandler(), $ev);
-						}
-					}).start();
+					new Thread(eventListener($onaction, $ev)).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -293,12 +335,7 @@ abstract public class Component {
 			MouseAdapter $listener = new MouseAdapter() {
 				@Override
 				public void mouseEntered(final MouseEvent $ev) {
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							$onmouseover.call($main.getInvocationHandler(), $ev);
-						}
-					}).start();
+					new Thread(eventListener($onaction, $ev)).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -308,12 +345,7 @@ abstract public class Component {
 			MouseAdapter $listener = new MouseAdapter() {
 				@Override
 				public void mouseExited(final MouseEvent $ev) {
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							$onmouseout.call($main.getInvocationHandler(), $ev);
-						}
-					}).start();
+					new Thread(eventListener($onaction, $ev)).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -323,12 +355,7 @@ abstract public class Component {
 			MouseAdapter $listener = new MouseAdapter() {
 				@Override
 				public void mouseMoved(final MouseEvent $ev) {
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							$onmousemove.call($main.getInvocationHandler(), $ev);
-						}
-					}).start();
+					new Thread(eventListener($onaction, $ev)).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -338,12 +365,7 @@ abstract public class Component {
 			MouseAdapter $listener = new MouseAdapter() {
 				@Override
 				public void mousePressed(final MouseEvent $ev) {
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							$onmousedown.call($main.getInvocationHandler(), $ev);
-						}
-					}).start();
+					new Thread(eventListener($onaction, $ev)).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -353,12 +375,7 @@ abstract public class Component {
 			MouseAdapter $listener = new MouseAdapter() {
 				@Override
 				public void mouseReleased(final MouseEvent $ev) {
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							$onmouseup.call($main.getInvocationHandler(), $ev);
-						}
-					}).start();
+					new Thread(eventListener($onaction, $ev)).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -366,15 +383,9 @@ abstract public class Component {
 
 		if ($onmousewheel != null) {
 			MouseWheelListener $listener = new MouseWheelListener() {
-				
 				@Override
 				public void mouseWheelMoved(final MouseWheelEvent $ev) {
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							$onmousewheel.call($main.getInvocationHandler(), $ev);
-						}
-					}).start();
+					new Thread(eventListener($onaction, $ev)).start();
 				}
 			};
 			$realComponent.addMouseWheelListener($listener);
@@ -382,15 +393,9 @@ abstract public class Component {
 
 		if ($onkeydown != null) {
 			KeyAdapter $listener = new KeyAdapter() {
-				
 				@Override
 				public void keyPressed(final KeyEvent $ev) {
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							$onkeydown.call($main.getInvocationHandler(), $ev);
-						}
-					}).start();
+					new Thread(eventListener($onaction, $ev)).start();
 				}
 			};
 			$realComponent.addKeyListener($listener);
@@ -398,15 +403,9 @@ abstract public class Component {
 
 		if ($onkeyup != null) {
 			KeyAdapter $listener = new KeyAdapter() {
-				
 				@Override
 				public void keyReleased(final KeyEvent $ev) {
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							$onkeyup.call($main.getInvocationHandler(), $ev);
-						}
-					}).start();
+					new Thread(eventListener($onaction, $ev)).start();
 				}
 			};
 			$realComponent.addKeyListener($listener);
@@ -414,30 +413,19 @@ abstract public class Component {
 
 		if ($onkeypress != null) {
 			KeyAdapter $listener = new KeyAdapter() {
-				
 				@Override
 				public void keyTyped(final KeyEvent $ev) {
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							$onkeypress.call($main.getInvocationHandler(), $ev);
-						}
-					}).start();
+					new Thread(eventListener($onaction, $ev)).start();
 				}
 			};
 			$realComponent.addKeyListener($listener);
 		}
-		
+
 		if ($onfocus != null) {
 			FocusAdapter $listener = new FocusAdapter() {
 				@Override
 				public void focusGained(final FocusEvent $ev) {
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							$onfocus.call($main.getInvocationHandler(), $ev);
-						}
-					}).start();
+					new Thread(eventListener($onaction, $ev)).start();
 				}
 			};
 			$realComponent.addFocusListener($listener);
@@ -447,17 +435,13 @@ abstract public class Component {
 			FocusAdapter $listener = new FocusAdapter() {
 				@Override
 				public void focusLost(final FocusEvent $ev) {
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							$onfocus.call($main.getInvocationHandler(), $ev);
-						}
-					}).start();
+					new Thread(eventListener($onaction, $ev)).start();
 				}
 			};
 			$realComponent.addFocusListener($listener);
 		}
-		
+
+		// TODO: Fix. Ugly. Don’t.
 		$realComponent.setLocale(Locale.GERMAN);
 	}
 

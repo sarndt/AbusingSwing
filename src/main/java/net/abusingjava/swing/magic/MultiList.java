@@ -2,16 +2,19 @@ package net.abusingjava.swing.magic;
 
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-
-import org.jdesktop.swingx.JXTable;
 
 import net.abusingjava.functions.AbusingFunctions;
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.magix.types.FilterMode;
 import net.abusingjava.swing.magix.types.JavaType;
+import net.abusingjava.swing.magix.types.MethodType;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlElement;
+
+import org.jdesktop.swingx.JXTable;
 
 @XmlElement("multilist")
 public class MultiList extends Table {
@@ -22,19 +25,21 @@ public class MultiList extends Table {
 	@XmlAttribute("from")
 	JavaType $from;
 
-	
+	@XmlAttribute
+	MethodType $onchange;
+
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
 
 		$filterMode = new FilterMode("or");
-		
+
 		super.create($main, $parent);
-		
-		String[] $columnHeaders = new String[] { "", $columnHead };
-		
+
+		String[] $columnHeaders = new String[]{"", $columnHead};
+
 		@SuppressWarnings("serial")
 		final JXTable $c = new JXTable(new DefaultTableModel($columnHeaders, 0) {
-			
+
 			@Override
 			public Class<?> getColumnClass(final int $arg) {
 				if ($arg == 0) {
@@ -52,43 +57,34 @@ public class MultiList extends Table {
 		if ($from != null) {
 			Object[] $values = (Object[]) AbusingFunctions.callback($from.getJavaType(), "values").call();
 			for (Object $v : $values) {
-				((DefaultTableModel)$c.getModel()).addRow(new Object[]{ false, $v});
+				((DefaultTableModel) $c.getModel()).addRow(new Object[]{false, $v});
 			}
 		}
-		
+
+		if ($onchange != null) {
+			$c.getModel().addTableModelListener(new TableModelListener() {
+				@Override
+				public void tableChanged(final TableModelEvent $ev) {
+					new Thread(eventListener($onchange, $ev)).start();
+				}
+			});
+		}
+
 		$c.getColumn("").setMinWidth(22);
 		$c.getColumn("").setMaxWidth(22);
 		$c.setFillsViewportHeight(true);
 		$c.setHorizontalScrollEnabled(true);
 		$c.setSortsOnUpdates(false);
 		$c.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
-		/*
-		$c.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(final ListSelectionEvent $ev) {
-				if (!$ev.getValueIsAdjusting()) {
-					int $selected = -1;
-					if ($c.getSelectionModel().isSelectedIndex($ev.getFirstIndex())) {
-						$selected = $ev.getFirstIndex();
-					}
-					if ($c.getSelectionModel().isSelectedIndex($ev.getLastIndex())) {
-						$selected = $ev.getLastIndex();
-					}
-				}
-			}
-		});
-		*/
-		
+
 		$realComponent = $c;
 		$component = new JScrollPane($c);
-		
+
 		if ($columnHead == null) {
 			$c.setTableHeader(null);
-			((JScrollPane)$component).setColumnHeader(null);
+			((JScrollPane) $component).setColumnHeader(null);
 		}
 	}
-
 
 	public void showSelectedOnly(final boolean $selected) {
 		$selectedFilter = $selected;
