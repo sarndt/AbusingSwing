@@ -11,7 +11,6 @@ import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import net.abusingjava.AbusingArrays;
 import net.abusingjava.swing.MagicPanel;
@@ -49,6 +48,9 @@ public class Table extends Component implements Iterable<Column> {
 	@XmlAttribute("horizontal-scroll-enabled")
 	Boolean $horizontalScrollEnabled;
 
+	@XmlAttribute("auto-pack")
+	Boolean $autoPack;
+	
 	@XmlAttribute("column-margin")
 	Integer $columnMargin;
 	
@@ -182,6 +184,9 @@ public class Table extends Component implements Iterable<Column> {
 		@XmlTextContent
 		String $text = "";
 		
+		@XmlAttribute
+		Boolean $editable;
+		
 		public Class<?> getJavaType() {
 			return $type.getJavaType();
 		}
@@ -198,6 +203,9 @@ public class Table extends Component implements Iterable<Column> {
 	
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
+		if ($autoPack == null) {
+			$autoPack = true;
+		}
 		if ($editable == null) {
 			$editable = false;
 		}
@@ -208,13 +216,12 @@ public class Table extends Component implements Iterable<Column> {
 			$columnControlVisible = true;
 		}
 		
-		
-		String[] $columnHeaders = new String[$columns.length];
+		final String[] $columnHeaders = new String[$columns.length];
 		for (int $i = 0; $i < $columns.length; $i++) {
 			$columnHeaders[$i] = $columns[$i].$text;
 		}
 		
-		TableModel $model = new DefaultTableModel($columnHeaders, 0) {
+		DefaultTableModel $model = new DefaultTableModel($columnHeaders, 0) {
 			private static final long serialVersionUID = -135732270243460558L;
 
 			@Override
@@ -230,8 +237,16 @@ public class Table extends Component implements Iterable<Column> {
 		@SuppressWarnings("serial")
 		final JXTable $c = new JXTable($model) {
 			
+			@Override
+			public boolean isCellEditable(final int $rowIndex, int $colIndex) {
+				$colIndex = convertColumnIndexToModel($colIndex);
+				if ($columns[$colIndex].$editable != null) {
+					return $columns[$colIndex].$editable;
+				}
+				return $editable;
+			}
 		};
-		$c.setEditable($editable);
+		
 		$c.setSortable($sortable);
 		$c.setColumnControlVisible($columnControlVisible);
 		if ($horizontalScrollEnabled != null) {
@@ -320,6 +335,10 @@ public class Table extends Component implements Iterable<Column> {
 	@Override
 	public Iterator<Column> iterator() {
 		return AbusingArrays.array($columns).iterator();
+	}
+
+	public boolean getAutoPack() {
+		return $autoPack;
 	}
 	
 }

@@ -31,6 +31,7 @@ import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.JTableBinding.ColumnBinding;
 import org.jdesktop.swingbinding.SwingBindings;
 import org.jdesktop.swingx.JXDatePicker;
+import org.jdesktop.swingx.JXTable;
 
 /**
  * A MagicWindow is a JPanel that is built according to a specified definition
@@ -336,7 +337,7 @@ public class MagicPanel extends JPanel {
 					JTable $table = $main.$("#" + $b.getTableName()).as(JTable.class);
 
 					$tableDefinition.clearBinding();
-
+					
 					JTableBinding $tableBinding = SwingBindings.createJTableBinding(
 							AutoBinding.UpdateStrategy.READ_WRITE, (List<?>) $object,
 							$table);
@@ -350,6 +351,12 @@ public class MagicPanel extends JPanel {
 
 					$tableDefinition.setBinding($tableBinding);
 					$tableBinding.bind();
+
+					if ($table instanceof JXTable) {
+						if ($tableDefinition.getAutoPack()) {
+							((JXTable)$table).packAll();
+						}
+					}
 				} else {
 					$b.clearBinding();
 
@@ -368,6 +375,9 @@ public class MagicPanel extends JPanel {
 							$targetProperty = "date";
 						} else if ($target instanceof JSpinner) {
 							$targetProperty = "value";
+						} else {
+							// TODO: support for more
+							continue;
 						}
 
 						try {
