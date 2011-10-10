@@ -21,10 +21,8 @@ import javax.swing.tree.TreeModel;
 import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
-import net.abusingjava.swing.magic.CheckBox;
-import net.abusingjava.swing.magic.Component;
-import net.abusingjava.swing.magic.MultiList;
-import net.abusingjava.swing.magic.TextComponent;
+import net.abusingjava.swing.magic.Cards.CardComponent;
+import net.abusingjava.swing.magic.*;
 import net.java.balloontip.BalloonTip;
 
 import org.jdesktop.swingx.JXTable;
@@ -38,15 +36,20 @@ import org.jdesktop.swingx.JXTable;
 public class MagicComponents {
 
 	final private ArrayList<Component> $components = new ArrayList<Component>();
+	
+	@SuppressWarnings("unused")
+	final private MagicPanel $parent;
 
-	public MagicComponents(final Component... $components) {
+	public MagicComponents(final MagicPanel $parent, final Component... $components) {
+		this.$parent = $parent;
 		this.$components.ensureCapacity($components.length);
 		for (Component $c : $components) {
 			this.$components.add($c);
 		}
 	}
 
-	public MagicComponents(final Collection<Component> $components) {
+	public MagicComponents(final MagicPanel $parent, final Collection<Component> $components) {
+		this.$parent = $parent;
 		this.$components.ensureCapacity($components.size());
 		for (Component $c : $components) {
 			this.$components.add($c);
@@ -895,6 +898,10 @@ public class MagicComponents {
 	}
 
 	public void goTo() {
-		
+		for (final Component $comp : $components) {
+			if ($comp instanceof CardComponent) {
+				((CardComponent)$comp).goTo();
+			}
+		}
 	}
 }

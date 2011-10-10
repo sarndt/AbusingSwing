@@ -28,6 +28,28 @@ public class MultiList extends Table {
 	@XmlAttribute
 	MethodType $onchange;
 
+	public static class MultiListTable extends JXTable {
+
+		private static final long serialVersionUID = -2230230778375628917L;
+	
+		MultiListTable(final String $columnHead) {
+			super(new DefaultTableModel(new String[]{"", $columnHead}, 0));
+		}
+		
+		@Override
+		public Class<?> getColumnClass(final int $arg) {
+			if ($arg == 0) {
+				return Boolean.class;
+			}
+			return Object.class;
+		}
+
+		@Override
+		public boolean isCellEditable(final int $row, final int $column) {
+			return $column == 0;
+		}
+	}
+	
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
 
@@ -35,24 +57,8 @@ public class MultiList extends Table {
 
 		super.create($main, $parent);
 
-		String[] $columnHeaders = new String[]{"", $columnHead};
-
 		@SuppressWarnings("serial")
-		final JXTable $c = new JXTable(new DefaultTableModel($columnHeaders, 0) {
-
-			@Override
-			public Class<?> getColumnClass(final int $arg) {
-				if ($arg == 0) {
-					return Boolean.class;
-				}
-				return Object.class;
-			}
-
-			@Override
-			public boolean isCellEditable(final int $row, final int $column) {
-				return $column == 0;
-			}
-		});
+		final JXTable $c = new MultiListTable($columnHead);
 
 		if ($from != null) {
 			Object[] $values = (Object[]) AbusingFunctions.callback($from.getJavaType(), "values").call();

@@ -54,9 +54,9 @@ public class MagicPanel extends JPanel {
 	private final Container $definition;
 	private final Panel $panel;
 
-	Map<String, Component> $componentsByName = new HashMap<String, Component>();
-	Map<String, JPopupMenu> $popupMenus = new HashMap<String, JPopupMenu>();
-	ArrayList<Component> $myComponents = new ArrayList<Component>();
+	final Map<String, Component> $componentsByName = new HashMap<String, Component>();
+	final Map<String, JPopupMenu> $popupMenus = new HashMap<String, JPopupMenu>();
+	final ArrayList<Component> $myComponents = new ArrayList<Component>();
 
 	private Object $invocationHandler = this;
 
@@ -189,13 +189,13 @@ public class MagicPanel extends JPanel {
 
 	public MagicComponents $(final String $selector) {
 		if ($selector.equals("*")) {
-			return new MagicComponents($componentsByName.values());
+			return new MagicComponents(this, $componentsByName.values());
 		} else if ($selector.startsWith("#")) {
 			Component $c = $componentsByName.get($selector.substring(1));
 			if ($c != null) {
-				return new MagicComponents($c);
+				return new MagicComponents(this, $c);
 			}
-			return new MagicComponents();
+			return new MagicComponents(this);
 		} else if ($selector.startsWith(".")) {
 			String $className = $selector.substring(1);
 			List<Component> $list = new LinkedList<Component>();
@@ -204,16 +204,19 @@ public class MagicPanel extends JPanel {
 					$list.add($c);
 				}
 			}
-			return new MagicComponents($list);
+			return new MagicComponents(this, $list);
 		} else {
 			List<Component> $list = new LinkedList<Component>();
 			for (Component $c : $componentsByName.values()) {
-				if ($c.getClass().getAnnotation(XmlElement.class).value()
-						.equals($selector)) {
-					$list.add($c);
+				try {
+					if ($c.getClass().getAnnotation(XmlElement.class).value().equals($selector)) {
+						$list.add($c);
+					}
+				} catch (Exception $exc) {
+					// swallow exception
 				}
 			}
-			return new MagicComponents($list);
+			return new MagicComponents(this, $list);
 		}
 	}
 
@@ -228,7 +231,7 @@ public class MagicPanel extends JPanel {
 				$components.add($c);
 			}
 		}
-		return new MagicComponents($components);
+		return new MagicComponents(this, $components);
 	}
 
 	public Orientation getOrientation() {

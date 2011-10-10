@@ -74,7 +74,7 @@ public class List extends Component {
 						if ($index != null) {
 							Object $object = $m.elementAt($index);
 							$onselect.call($main.getInvocationHandler(),
-								new net.abusingjava.swing.ListSelectionEvent($index, $object));
+								new net.abusingjava.swing.ListSelectionEvent($index, $object, $c));
 						}
 					}
 				}

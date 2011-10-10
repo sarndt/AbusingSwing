@@ -24,6 +24,8 @@ public class JavaType {
 			$class = Double.class;
 		} else if ("date".equalsIgnoreCase($javaType)) {
 			$class = java.util.Date.class;
+		} else if ("object".equalsIgnoreCase($javaType)) {
+			$class = java.lang.Object.class;
 		}
 		
 		if ($class == null)
@@ -34,7 +36,7 @@ public class JavaType {
 	
 	public JavaType(final Class<?> $theClass) {
 		$class = $theClass;
-	} 
+	}
 	
 	public Class<?> getJavaType() {
 		return $class;
