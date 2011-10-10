@@ -1,5 +1,8 @@
 package net.abusingjava.swing.magic;
 
+import java.beans.PropertyChangeSupport;
+import java.util.LinkedList;
+
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.TableModelEvent;
@@ -31,9 +34,36 @@ public class MultiList extends Table {
 	public static class MultiListTable extends JXTable {
 
 		private static final long serialVersionUID = -2230230778375628917L;
+		private final PropertyChangeSupport $propertyChangeSupport = new PropertyChangeSupport(this);
 	
 		MultiListTable(final String $columnHead) {
 			super(new DefaultTableModel(new String[]{"", $columnHead}, 0));
+			
+			getModel().addTableModelListener(new TableModelListener() {
+				@Override
+				public void tableChanged(final TableModelEvent $ev) {
+					$propertyChangeSupport.firePropertyChange("selectedObjects", "", "");
+				}
+			});
+		}
+		
+		public void setSelectedObjects(final java.util.List<?> $objects) {
+			int $rows = getModel().getRowCount();
+			for (int $i = 0; $i < $rows; $i++) {
+				getModel().setValueAt($objects.contains(getModel().getValueAt($i, 1)), $i, 0);
+			}
+			
+		}
+		
+		public java.util.List<?> getSelectedObjects() {
+			int $rows = getModel().getRowCount();
+			java.util.List<Object> $list = new LinkedList<Object>();
+			for (int $i = 0; $i < $rows; $i++) {
+				if (getModel().getValueAt($i, 0).equals(true)) {
+					$list.add(getModel().getValueAt($i, 1));
+				}
+			}
+			return $list;
 		}
 		
 		@Override
@@ -48,6 +78,11 @@ public class MultiList extends Table {
 		public boolean isCellEditable(final int $row, final int $column) {
 			return $column == 0;
 		}
+		
+		@Override
+		public DefaultTableModel getModel() {
+			return (DefaultTableModel) super.getModel();
+		}
 	}
 	
 	@Override
@@ -58,12 +93,12 @@ public class MultiList extends Table {
 		super.create($main, $parent);
 
 		@SuppressWarnings("serial")
-		final JXTable $c = new MultiListTable($columnHead);
+		final MultiListTable $c = new MultiListTable($columnHead);
 
 		if ($from != null) {
 			Object[] $values = (Object[]) AbusingFunctions.callback($from.getJavaType(), "values").call();
 			for (Object $v : $values) {
-				((DefaultTableModel) $c.getModel()).addRow(new Object[]{false, $v});
+				$c.getModel().addRow(new Object[]{false, $v});
 			}
 		}
 
