@@ -41,19 +41,19 @@
       <artifactId>AbusingJava</artifactId>
       <version>1.0-alpha-1</version>
     </dependency>
-    
+
     <dependency>
       <groupId>org.swinglabs</groupId>
       <artifactId>swingx</artifactId>
       <version>1.6.1</version>
     </dependency>
-    
+
     <dependency>
       <groupId>net.java.balloontip</groupId>
       <artifactId>balloontip</artifactId>
       <version>1.2.1</version>
     </dependency>
-    
+
     <dependency>
       <groupId>org.jdesktop</groupId>
       <artifactId>beansbinding</artifactId>
@@ -61,9 +61,18 @@
     </dependency>
 
     <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.5.6</version>
+      <type>jar</type>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
       <version>1.2.16</version>
+      <scope>compile</scope>
     </dependency>
+
   </dependencies>
 </project>
