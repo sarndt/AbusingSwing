@@ -2,6 +2,7 @@ package net.abusingjava.swing;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeListener;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.*;
@@ -15,14 +16,13 @@ import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
 import net.abusingjava.swing.magic.*;
-import net.abusingjava.swing.magic.Binding.Property;
+import net.abusingjava.swing.magic.BindingDefinition.Property;
 import net.abusingjava.swing.magic.Cards.Card;
 import net.abusingjava.swing.magic.MultiList.MultiListTable;
 import net.abusingjava.swing.magic.Panes.Pane;
 import net.abusingjava.swing.magic.Style.Rule;
 import net.abusingjava.swing.magic.Table.Filter;
 import net.abusingjava.swing.magic.Tabs.Tab;
-import net.abusingjava.swing.magic.Binding;
 import net.abusingjava.xml.AbusingXML;
 import net.abusingjava.xml.XmlElement;
 
@@ -327,8 +327,8 @@ public class MagicPanel extends JPanel {
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public MagicPanel bind(final String $bindingName, final Object $object) {
-		final Binding $b = $panel.getBinding($bindingName);
-		if ($b == null) {
+		final BindingDefinition $bindings = $panel.getBinding($bindingName);
+		if ($bindings == null) {
 			System.err.println("Binding: no such binding found");
 			return this;
 		}
@@ -336,9 +336,9 @@ public class MagicPanel extends JPanel {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				if ($b.isTableBinding() && ($object instanceof List)) {
-					Table $tableDefinition = (Table) $main.$componentsByName.get($b.getTableName());
-					JTable $table = $main.$("#" + $b.getTableName()).as(JTable.class);
+				if ($bindings.isTableBinding() && ($object instanceof List)) {
+					Table $tableDefinition = (Table) $main.$componentsByName.get($bindings.getTableName());
+					JTable $table = $main.$("#" + $bindings.getTableName()).as(JTable.class);
 
 					$tableDefinition.clearBinding();
 					
@@ -346,7 +346,7 @@ public class MagicPanel extends JPanel {
 							AutoBinding.UpdateStrategy.READ_WRITE, (List<?>) $object,
 							$table);
 
-					for (Property $p : $b) {
+					for (Property $p : $bindings) {
 						ColumnBinding $columnBinding = $tableBinding
 								.addColumnBinding(BeanProperty.create($p.getName()));
 						$columnBinding.setColumnName($p.getTarget());
@@ -362,11 +362,18 @@ public class MagicPanel extends JPanel {
 						}
 					}
 				} else {
-					$b.clearBinding();
+					Binding[] $oldBindings = $bindings.getBindings();
+					for (Binding $binding : $oldBindings) {
+						try {
+							$binding.unbind();
+						} catch (RuntimeException $exc) {
+							$exc.printStackTrace(System.err);
+						} finally {
+							$bindings.removeBinding($binding);
+						}
+					}
 
-					final BindingGroup $bindingGroup = new BindingGroup();
-
-					for (Property $p : $b) {
+					for (Property $p : $bindings) {
 						JComponent $target = $main.$("#" + $p.getTarget()).as(JComponent.class);
 
 						String $targetProperty = "";
@@ -381,6 +388,10 @@ public class MagicPanel extends JPanel {
 							$targetProperty = "value";
 						} else if ($target instanceof MultiListTable) {
 							$targetProperty = "selectedObjects";
+							MultiListTable $table = (MultiListTable) $target;
+							for (PropertyChangeListener $l : $table.getPropertyChangeListeners()) {
+								$table.removePropertyChangeListener($l);
+							}
 						} else {
 							// TODO: support for more
 							continue;
@@ -397,7 +408,12 @@ public class MagicPanel extends JPanel {
 								$binding.setTargetNullValue(false);
 							}
 							
-							$bindingGroup.addBinding($binding);
+							try {
+								$binding.bind();
+								$bindings.addBinding($binding);
+							} catch (NullPointerException $exc) {
+								$exc.printStackTrace(System.err);
+							}
 						} catch (IllegalArgumentException $exc) {
 							System.err.println($p.getName());
 							System.err.println($targetProperty);
@@ -405,8 +421,6 @@ public class MagicPanel extends JPanel {
 						}
 					}
 
-					$b.setBinding($bindingGroup);
-					$bindingGroup.bind();
 				}
 			}
 		});

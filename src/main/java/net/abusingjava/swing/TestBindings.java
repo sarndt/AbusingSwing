@@ -10,11 +10,6 @@ import javax.swing.JFrame;
 
 import net.abusingjava.swing.magic.MultiList.MultiListTable;
 
-import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
-import org.jdesktop.beansbinding.BeanProperty;
-import org.jdesktop.beansbinding.Binding;
-import org.jdesktop.beansbinding.Bindings;
-
 public class TestBindings {
 
 	public static class TestBean {
@@ -22,10 +17,10 @@ public class TestBindings {
 		List<Object> $strings = new LinkedList<Object>();
 		private final PropertyChangeSupport $propertyChangeSupport;
 		
-		TestBean() {
+		TestBean(final String... $selected) {
 			$propertyChangeSupport = new PropertyChangeSupport(this);
 			
-			$strings.addAll(Arrays.asList("Flowers"));
+			$strings.addAll(Arrays.asList($selected));
 		}
 		
 		public List<?> getStrings() {
@@ -59,7 +54,8 @@ public class TestBindings {
 		
 		final MagicPanel $panel;
 		final MultiListTable $multiList;
-		final TestBean $bean = new TestBean();
+		final TestBean $bean = new TestBean("Flowers");
+		final TestBean $bean2 = new TestBean("the gloom");
 		
 		Frame() {
 			$panel = AbusingSwing.makePanel("TestBindings.xml");
@@ -79,12 +75,12 @@ public class TestBindings {
 			
 			$panel.$("#multi").add(new String[] {"Flowers", "maybe Daisies", "the gloom", "hush love hush"});
 			
-			// $panel.bind("testBinding", $bean);
-			@SuppressWarnings("rawtypes")
+			$panel.bind("testBinding", $bean);
+			/*@SuppressWarnings("rawtypes")
 			Binding $b = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
 					$bean, BeanProperty.create("strings"),
 					$multiList, BeanProperty.create("selectedObjects"));
-			$b.bind();
+			$b.bind();*/
 			
 			$bean.addPropertyChangeListener(new PropertyChangeListener() {
 				@Override
@@ -108,6 +104,10 @@ public class TestBindings {
 		
 		public void action3() {
 			$multiList.setSelectedObjects(Arrays.asList("Flowers"));
+		}
+		
+		public void action4() {
+			$panel.bind("testBinding", $bean2);
 		}
 	}
 	

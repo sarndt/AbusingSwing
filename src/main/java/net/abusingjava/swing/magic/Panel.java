@@ -11,7 +11,7 @@ public class Panel {
 	Container[] $containers = new Container[] {};
 	
 	@XmlChildElements
-	Binding[] $bindings = new Binding[] {};
+	BindingDefinition[] $bindings = new BindingDefinition[] {};
 	
 	@XmlChildElements
 	Style[] $style = new Style[] {};
@@ -27,8 +27,8 @@ public class Panel {
 		return $menus;
 	}
 	
-	public Binding getBinding(final String $name) {
-		for (Binding $b : $bindings) {
+	public BindingDefinition getBinding(final String $name) {
+		for (BindingDefinition $b : $bindings) {
 			if ($b.getName().equals($name)) {
 				return $b;
 			}

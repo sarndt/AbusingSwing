@@ -9,6 +9,8 @@ import java.util.List;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -316,6 +318,20 @@ public class Table extends Component implements Iterable<Column> {
 			});
 		}
 		if ($onselect != null) {
+			$c.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+				@Override
+				public void valueChanged(final ListSelectionEvent $ev) {
+					if (!$ev.getValueIsAdjusting()) {
+						new Thread(eventListener($onselect, new TableActionEvent($c,
+								$c.getSelectedRow(),
+								$c.getSelectedColumn()
+						))).start();
+					}
+				}
+				
+			});
+			/*
 			$c.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(final MouseEvent $ev) {
@@ -327,6 +343,7 @@ public class Table extends Component implements Iterable<Column> {
 					}
 				}
 			});
+			*/
 		}
 		
 		super.create($main, $parent);

@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.SwingPropertyChangeSupport;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -49,7 +50,7 @@ public class MultiList extends Table {
 			
 			setRolloverEnabled(false);
 			
-			$propertyChangeSupport = new PropertyChangeSupport(this);
+			$propertyChangeSupport = new SwingPropertyChangeSupport(this);
 			
 			getModel().addTableModelListener(new TableModelListener() {
 				@Override
@@ -69,9 +70,8 @@ public class MultiList extends Table {
 				try {
 					getModel().setValueAt($objects.contains($obj), $i, 0);
 				} catch (NullPointerException $exc) {
-					// I really don’t know where this exception comes from.
-					// Swallow it.
 					// TODO: Find out.
+					$exc.printStackTrace(System.err);
 				}
 			}
 			// $propertyChangeSupport.firePropertyChange("selectedObjects", $oldValues, getSelectedObjects());
@@ -81,8 +81,12 @@ public class MultiList extends Table {
 			int $rows = getModel().getRowCount();
 			java.util.List<Object> $list = new LinkedList<Object>();
 			for (int $i = 0; $i < $rows; $i++) {
-				if (getModel().getValueAt($i, 0).equals(true)) {
-					$list.add(getModel().getValueAt($i, 1));
+				Boolean $trueOrNot = getModel().getValueAt($i, 0).equals(true);
+				if ($trueOrNot) {
+					Object $value = getModel().getValueAt($i, 1);
+					if ($value != null) {
+						$list.add($value);
+					}
 				}
 			}
 			return $list;
@@ -101,15 +105,20 @@ public class MultiList extends Table {
 			if ($propertyChangeSupport != null) {
 				$propertyChangeSupport.addPropertyChangeListener($listener);
 			}
-			super.addPropertyChangeListener($listener);
+			//super.addPropertyChangeListener($listener);
 		}
 		
 		@Override
 		public void removePropertyChangeListener(final PropertyChangeListener $listener) {
 			if ($propertyChangeSupport != null) {
-				$propertyChangeSupport.addPropertyChangeListener($listener);
+				$propertyChangeSupport.removePropertyChangeListener($listener);
 			}
-			super.addPropertyChangeListener($listener);
+			//super.addPropertyChangeListener($listener);
+		}
+		
+		@Override
+		public PropertyChangeListener[] getPropertyChangeListeners() {
+			return $propertyChangeSupport.getPropertyChangeListeners();
 		}
 		
 		@Override

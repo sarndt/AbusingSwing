@@ -1,18 +1,19 @@
 package net.abusingjava.swing.magic;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.jdesktop.beansbinding.BindingGroup;
-
 import net.abusingjava.AbusingArrays;
-import net.abusingjava.swing.magic.Binding.Property;
+import net.abusingjava.swing.magic.BindingDefinition.Property;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlChildElements;
 import net.abusingjava.xml.XmlElement;
 import net.abusingjava.xml.XmlTextContent;
 
+import org.jdesktop.beansbinding.Binding;
+
 @XmlElement("binding")
-public class Binding implements Iterable<Property> {
+public class BindingDefinition implements Iterable<Property> {
 	
 	@XmlAttribute
 	String $name;
@@ -40,17 +41,22 @@ public class Binding implements Iterable<Property> {
 		}
 	}
 	
-	BindingGroup $group = null;
+	@SuppressWarnings("rawtypes")
+	final java.util.List<Binding> $bindings = new ArrayList<Binding>();
 	
-	public void setBinding(final BindingGroup $group) {
-		this.$group = $group;
+	@SuppressWarnings("rawtypes")
+	public void addBinding(final Binding $binding) {
+		$bindings.add($binding);
 	}
 	
-	public void clearBinding() {
-		if ($group != null) {
-			$group.unbind();
-			$group = null;
-		}
+	@SuppressWarnings("rawtypes")
+	public Binding[] getBindings() {
+		return $bindings.toArray(new Binding[$bindings.size()]);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public void removeBinding(final Binding $binding) {
+		$bindings.remove($binding);
 	}
 	
 	public String getName() {
