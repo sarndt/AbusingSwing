@@ -17,6 +17,7 @@ import net.abusingjava.Version;
 import net.abusingjava.swing.magic.*;
 import net.abusingjava.swing.magic.Binding.Property;
 import net.abusingjava.swing.magic.Cards.Card;
+import net.abusingjava.swing.magic.MultiList.MultiListTable;
 import net.abusingjava.swing.magic.Panes.Pane;
 import net.abusingjava.swing.magic.Style.Rule;
 import net.abusingjava.swing.magic.Table.Filter;
@@ -378,6 +379,8 @@ public class MagicPanel extends JPanel {
 							$targetProperty = "date";
 						} else if ($target instanceof JSpinner) {
 							$targetProperty = "value";
+						} else if ($target instanceof MultiListTable) {
+							$targetProperty = "selectedObjects";
 						} else {
 							// TODO: support for more
 							continue;
@@ -388,7 +391,7 @@ public class MagicPanel extends JPanel {
 									UpdateStrategy.READ_WRITE,
 									$object, BeanProperty.create($p.getName()),
 									$target, BeanProperty.create($targetProperty));
-
+							
 							if ($target instanceof JCheckBox) {
 								$binding.setSourceNullValue(false);
 								$binding.setTargetNullValue(false);

@@ -1,5 +1,6 @@
 package net.abusingjava.swing.magic;
 
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.LinkedList;
 
@@ -34,25 +35,46 @@ public class MultiList extends Table {
 	public static class MultiListTable extends JXTable {
 
 		private static final long serialVersionUID = -2230230778375628917L;
-		private final PropertyChangeSupport $propertyChangeSupport = new PropertyChangeSupport(this);
-	
+		private final PropertyChangeSupport $propertyChangeSupport;
+		private java.util.List<?> $selectedObjects = new LinkedList<Object>();
+		
+		private void selectionChanged() {
+			java.util.List<?> $oldValue = $selectedObjects;
+			$selectedObjects = getSelectedObjects();
+			$propertyChangeSupport.firePropertyChange("selectedObjects", $oldValue, $selectedObjects);
+		}
+		
 		MultiListTable(final String $columnHead) {
 			super(new DefaultTableModel(new String[]{"", $columnHead}, 0));
+			
+			setRolloverEnabled(false);
+			
+			$propertyChangeSupport = new PropertyChangeSupport(this);
 			
 			getModel().addTableModelListener(new TableModelListener() {
 				@Override
 				public void tableChanged(final TableModelEvent $ev) {
-					$propertyChangeSupport.firePropertyChange("selectedObjects", "", "");
+					selectionChanged();
 				}
 			});
 		}
 		
 		public void setSelectedObjects(final java.util.List<?> $objects) {
+			if ($objects == null) {
+				return;
+			}
 			int $rows = getModel().getRowCount();
 			for (int $i = 0; $i < $rows; $i++) {
-				getModel().setValueAt($objects.contains(getModel().getValueAt($i, 1)), $i, 0);
+				Object $obj = getModel().getValueAt($i, 1);
+				try {
+					getModel().setValueAt($objects.contains($obj), $i, 0);
+				} catch (NullPointerException $exc) {
+					// I really don’t know where this exception comes from.
+					// Swallow it.
+					// TODO: Find out.
+				}
 			}
-			
+			// $propertyChangeSupport.firePropertyChange("selectedObjects", $oldValues, getSelectedObjects());
 		}
 		
 		public java.util.List<?> getSelectedObjects() {
@@ -73,7 +95,23 @@ public class MultiList extends Table {
 			}
 			return Object.class;
 		}
-
+		
+		@Override
+		public void addPropertyChangeListener(final PropertyChangeListener $listener) {
+			if ($propertyChangeSupport != null) {
+				$propertyChangeSupport.addPropertyChangeListener($listener);
+			}
+			super.addPropertyChangeListener($listener);
+		}
+		
+		@Override
+		public void removePropertyChangeListener(final PropertyChangeListener $listener) {
+			if ($propertyChangeSupport != null) {
+				$propertyChangeSupport.addPropertyChangeListener($listener);
+			}
+			super.addPropertyChangeListener($listener);
+		}
+		
 		@Override
 		public boolean isCellEditable(final int $row, final int $column) {
 			return $column == 0;

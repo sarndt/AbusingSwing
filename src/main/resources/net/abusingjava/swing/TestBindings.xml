@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<panel>
+
+  <binding name="testBinding">
+    <property name="strings">multi</property>
+  </binding>
+
+  <vbox>
+  
+    <button onaction="action1">action1()</button>
+    <button onaction="action2">action2()</button>
+    <button onaction="action3">action3()</button>
+    <button visible="false" />
+    <textfield name="textfield" />
+    <datepicker name="date" />
+    <multilist name="multi">
+      
+    </multilist>
+  
+  </vbox>
+
+</panel>

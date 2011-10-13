@@ -23,6 +23,7 @@ import net.abusingjava.Since;
 import net.abusingjava.Version;
 import net.abusingjava.swing.magic.Cards.CardComponent;
 import net.abusingjava.swing.magic.*;
+import net.abusingjava.swing.magic.MultiList.MultiListTable;
 import net.java.balloontip.BalloonTip;
 
 import org.jdesktop.swingx.JXTable;
@@ -588,7 +589,11 @@ public class MagicComponents {
 	public MagicComponents add(final Object[] $values) {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
-			if ($c instanceof JComboBox) {
+			if ($c instanceof MultiListTable) {
+				for (Object $value : $values) {
+					add($value);
+				}
+			} else if ($c instanceof JComboBox) {
 				final ComboBoxModel $m = ((JComboBox) $c).getModel();
 				if ($m instanceof DefaultComboBoxModel) {
 					for (final Object $value : $values) {
