@@ -78,7 +78,7 @@ public class MagicPanel extends JPanel {
 		applyStyles($panel.getContainer());
 		makeMenus();
 		buildPanel();
-		bind();
+		bindFilters();
 	}
 
 	public MagicPanel(final Panel $panel) {
@@ -98,7 +98,7 @@ public class MagicPanel extends JPanel {
 		applyStyles($panel.getContainer());
 		makeMenus();
 		buildPanel();
-		bind();
+		bindFilters();
 	}
 
 	public MagicPanel(final MagicPanel $main, final Container $container) {
@@ -128,7 +128,7 @@ public class MagicPanel extends JPanel {
 		return $popupMenus.get($name);
 	}
 
-	private void bind() {
+	private void bindFilters() {
 
 		for (Component $c : $componentsByName.values()) {
 			if ($c instanceof TextField) {
@@ -325,6 +325,33 @@ public class MagicPanel extends JPanel {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
+	public MagicPanel unbind(final String $bindingName) {
+		final BindingDefinition $bindings = $panel.getBinding($bindingName);
+		if ($bindings == null) {
+			System.err.println("Binding: no such binding found");
+			return this;
+		}
+		if (!$bindings.isTableBinding()) {
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					Binding[] $oldBindings = $bindings.getBindings();
+					for (Binding $binding : $oldBindings) {
+						try {
+							$binding.unbind();
+						} catch (RuntimeException $exc) {
+							$exc.printStackTrace(System.err);
+						} finally {
+							$bindings.removeBinding($binding);
+						}
+					}
+				}
+			});
+		}
+		return this;
+	}
+
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public MagicPanel bind(final String $bindingName, final Object $object) {
 		final BindingDefinition $bindings = $panel.getBinding($bindingName);
@@ -341,7 +368,7 @@ public class MagicPanel extends JPanel {
 					JTable $table = $main.$("#" + $bindings.getTableName()).as(JTable.class);
 
 					$tableDefinition.clearBinding();
-					
+
 					JTableBinding $tableBinding = SwingBindings.createJTableBinding(
 							AutoBinding.UpdateStrategy.READ_WRITE, (List<?>) $object,
 							$table);
@@ -358,7 +385,7 @@ public class MagicPanel extends JPanel {
 
 					if ($table instanceof JXTable) {
 						if ($tableDefinition.getAutoPack()) {
-							((JXTable)$table).packAll();
+							((JXTable) $table).packAll();
 						}
 					}
 				} else {
@@ -402,12 +429,12 @@ public class MagicPanel extends JPanel {
 									UpdateStrategy.READ_WRITE,
 									$object, BeanProperty.create($p.getName()),
 									$target, BeanProperty.create($targetProperty));
-							
+
 							if ($target instanceof JCheckBox) {
 								$binding.setSourceNullValue(false);
 								$binding.setTargetNullValue(false);
 							}
-							
+
 							try {
 								$binding.bind();
 								$bindings.addBinding($binding);
