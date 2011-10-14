@@ -30,75 +30,73 @@ import org.jdesktop.swingx.JXTable;
 @XmlElement("table")
 public class Table extends Component implements Iterable<Column> {
 
-	
 	@XmlChildElements
 	Column[] $columns;
-	
-	
+
 	@XmlAttribute
 	Boolean $sortable;
 
 	@XmlAttribute
 	Boolean $editable;
-	
+
 	@XmlAttribute("grid-color")
 	Color $gridColor;
-		
+
 	@XmlAttribute("column-control-visible")
 	Boolean $columnControlVisible;
-	
+
 	@XmlAttribute("horizontal-scroll-enabled")
 	Boolean $horizontalScrollEnabled;
 
 	@XmlAttribute("auto-pack")
 	Boolean $autoPack;
-	
+
 	@XmlAttribute("column-margin")
 	Integer $columnMargin;
-	
+
 	@XmlAttribute("terminate-edit-on-focus-lost")
 	Boolean $terminateEditOnFocusLost;
-	
+
 	@XmlAttribute("sorts-on-update")
 	Boolean $sortsOnUpdate;
-	
+
 	@XmlAttribute("row-height")
 	Value $rowHeight;
-	
+
 	@XmlAttribute("filter-mode")
 	FilterMode $filterMode = new FilterMode("and");
-	
+
 	@XmlAttribute
 	MethodType $ondblclick;
 
 	@XmlAttribute
 	MethodType $onselect;
-	
+
 	// @XmlAttribute("")
-	
+
 	boolean $selectedFilter = false;
-	
+
 	public class Filter {
-		
+
 		final int[] $columnIndizes;
 		String $filterString = "";
-		
+
 		Filter(final String[] $columns) {
-			
+
 			if (Table.this instanceof MultiList) {
-				this.$columnIndizes = new int[] { 1 };
+				this.$columnIndizes = new int[]{1};
 			} else {
 				this.$columnIndizes = new int[$columns.length];
 				for (int $i = 0; $i < $columns.length; $i++) {
-					$columnIndizes[$i] = ((JXTable)$realComponent).getColumn($columns[$i]).getModelIndex();
+					$columnIndizes[$i] = ((JXTable) $realComponent).getColumn($columns[$i]).getModelIndex();
 				}
 			}
 		}
-		
+
 		public void setFilterString(final String $filterString) {
 			this.$filterString = $filterString.toLowerCase();
 		}
-		
+
 		public boolean apply(final javax.swing.RowFilter.Entry<? extends Object, ? extends Object> $entry) {
 			if ($filterString.isEmpty()) {
 				if ($selectedFilter) {
@@ -113,45 +111,43 @@ public class Table extends Component implements Iterable<Column> {
 			return $result;
 		}
 	}
-	
+
 	List<Filter> $filterList = new ArrayList<Filter>();
-	
+
 	public Filter newFilter(final String[] $columns) {
 		Filter $filter = new Filter($columns);
 		$filterList.add($filter);
 		return $filter;
 	}
-	
+
 	public void updateFilters() {
-		List<RowFilter<Object,Object>> $filters = new LinkedList<RowFilter<Object,Object>>();
-		
+		List<RowFilter<Object, Object>> $filters = new LinkedList<RowFilter<Object, Object>>();
+
 		for (final Filter $f : $filterList) {
-			$filters.add(new RowFilter<Object,Object>() {
+			$filters.add(new RowFilter<Object, Object>() {
 				@Override
 				public boolean include(final javax.swing.RowFilter.Entry<? extends Object, ? extends Object> $entry) {
 					return $f.apply($entry);
 				}
 			});
 		}
-		
+
 		if ($selectedFilter) {
-			$filters.add(new RowFilter<Object,Object>() {
+			$filters.add(new RowFilter<Object, Object>() {
 				@Override
 				public boolean include(final javax.swing.RowFilter.Entry<? extends Object, ? extends Object> $entry) {
 					return $entry.getValue(0) == Boolean.TRUE;
 				}
 			});
 		}
-		
-		RowFilter<Object,Object> $filter = $filterMode.isAnd()
+
+		RowFilter<Object, Object> $filter = $filterMode.isAnd()
 				? RowFilter.andFilter($filters)
 				: RowFilter.orFilter($filters);
-		
-		((JXTable)$realComponent).setRowFilter($filter);
+
+		((JXTable) $realComponent).setRowFilter($filter);
 	}
-	
-	
-	
+
 	@SuppressWarnings("rawtypes")
 	private JTableBinding $binding = null;
 
@@ -159,41 +155,39 @@ public class Table extends Component implements Iterable<Column> {
 	public void setBinding(final JTableBinding $binding) {
 		this.$binding = $binding;
 	}
-	
-	
+
 	public void clearBinding() {
 		if ($binding != null) {
 			$binding.unbind();
 			$binding = null;
 		}
 	}
-	
-	
+
 	@XmlElement("col")
 	public static class Column {
 		@XmlAttribute
 		JavaType $type = new JavaType(java.lang.Object.class);
-		
+
 		@XmlAttribute("min-width")
 		Value $minWidth;
-		
+
 		@XmlAttribute("max-width")
 		Value $maxWidth;
-		
+
 		@XmlAttribute("width")
 		Value $width;
-		
+
 		@XmlTextContent
 		String $text = "";
-		
+
 		@XmlAttribute
 		Boolean $editable;
-		
+
 		public Class<?> getJavaType() {
 			return $type.getJavaType();
 		}
 	}
-	
+
 	public Column getColumn(final String $label) {
 		for (Column $c : $columns) {
 			if ($c.$text.equals($label)) {
@@ -202,7 +196,7 @@ public class Table extends Component implements Iterable<Column> {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		if ($autoPack == null) {
@@ -217,12 +211,12 @@ public class Table extends Component implements Iterable<Column> {
 		if ($columnControlVisible == null) {
 			$columnControlVisible = true;
 		}
-		
+
 		final String[] $columnHeaders = new String[$columns.length];
 		for (int $i = 0; $i < $columns.length; $i++) {
 			$columnHeaders[$i] = $columns[$i].$text;
 		}
-		
+
 		DefaultTableModel $model = new DefaultTableModel($columnHeaders, 0) {
 			private static final long serialVersionUID = -135732270243460558L;
 
@@ -235,10 +229,10 @@ public class Table extends Component implements Iterable<Column> {
 				}
 			}
 		};
-		
+
 		@SuppressWarnings("serial")
 		final JXTable $c = new JXTable($model) {
-			
+
 			@Override
 			public boolean isCellEditable(final int $rowIndex, int $colIndex) {
 				$colIndex = convertColumnIndexToModel($colIndex);
@@ -248,7 +242,7 @@ public class Table extends Component implements Iterable<Column> {
 				return $editable;
 			}
 		};
-		
+
 		$c.setSortable($sortable);
 		$c.setColumnControlVisible($columnControlVisible);
 		if ($horizontalScrollEnabled != null) {
@@ -273,33 +267,34 @@ public class Table extends Component implements Iterable<Column> {
 			if (($columns[$i].$maxWidth != null) && ($columns[$i].$maxWidth.getUnit() == Unit.PIXEL)) {
 				$c.getColumn($columnHeaders[$i]).setMaxWidth($columns[$i].$maxWidth.getValue());
 			}
-			if (($columns[$i].$minWidth != null)  && ($columns[$i].$maxWidth.getUnit() == Unit.PIXEL)) {
+			if (($columns[$i].$minWidth != null) && ($columns[$i].$maxWidth.getUnit() == Unit.PIXEL)) {
 				$c.getColumn($columnHeaders[$i]).setMinWidth($columns[$i].$minWidth.getValue());
 			}
-			if (($columns[$i].$width != null)  && ($columns[$i].$width.getUnit() == Unit.PIXEL)) {
+			if (($columns[$i].$width != null) && ($columns[$i].$width.getUnit() == Unit.PIXEL)) {
 				$c.getColumn($columnHeaders[$i]).setPreferredWidth($columns[$i].$width.getValue());
 			}
 		}
-		
+
 		$c.setDefaultRenderer(java.util.Date.class, new DefaultTableCellRenderer() {
 
 			private static final long serialVersionUID = 8519130125457693769L;
 
 			@Override
 			public java.awt.Component getTableCellRendererComponent(final JTable $table,
-					final Object $value, final boolean $isSelected, final boolean $hasFocus, final int $row, final int $column) {
-				
+					final Object $value, final boolean $isSelected, final boolean $hasFocus, final int $row,
+					final int $column) {
+
 				super.getTableCellRendererComponent($table, $value, $isSelected, $hasFocus, $row, $column);
 				if ($value instanceof Date) {
 					String $date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Date) $value);
 					this.setText($date);
 				}
-				
+
 				return this;
 			}
 
 		});
-		
+
 		$realComponent = $c;
 		$component = new JScrollPane($c);
 		$c.setFillsViewportHeight(true);
@@ -312,7 +307,7 @@ public class Table extends Component implements Iterable<Column> {
 						new Thread(eventListener($ondblclick, new TableActionEvent($c,
 								$c.rowAtPoint($ev.getPoint()),
 								$c.columnAtPoint($ev.getPoint())
-							))).start();
+								))).start();
 					}
 				}
 			});
@@ -323,29 +318,28 @@ public class Table extends Component implements Iterable<Column> {
 				@Override
 				public void valueChanged(final ListSelectionEvent $ev) {
 					if (!$ev.getValueIsAdjusting()) {
-						new Thread(eventListener($onselect, new TableActionEvent($c,
-								$c.getSelectedRow(),
-								$c.getSelectedColumn()
-						))).start();
+						try {
+							new Thread(eventListener($onselect, new TableActionEvent($c,
+									$c.getSelectedRow(),
+									$c.getSelectedColumn()
+									))).start();
+						} catch (Exception $exc) {
+							$exc.printStackTrace(System.err);
+						}
 					}
 				}
-				
+
 			});
 			/*
-			$c.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(final MouseEvent $ev) {
-					if ($ev.getClickCount() == 1) {
-						new Thread(eventListener($onselect, new TableActionEvent($c,
-								$c.rowAtPoint($ev.getPoint()),
-								$c.columnAtPoint($ev.getPoint())
-							))).start();
-					}
-				}
-			});
-			*/
+			 * $c.addMouseListener(new MouseAdapter() {
+			 * 
+			 * @Override public void mouseClicked(final MouseEvent $ev) { if
+			 * ($ev.getClickCount() == 1) { new Thread(eventListener($onselect,
+			 * new TableActionEvent($c, $c.rowAtPoint($ev.getPoint()),
+			 * $c.columnAtPoint($ev.getPoint()) ))).start(); } } });
+			 */
 		}
-		
+
 		super.create($main, $parent);
 	}
 
@@ -357,5 +351,5 @@ public class Table extends Component implements Iterable<Column> {
 	public boolean getAutoPack() {
 		return $autoPack;
 	}
-	
+
 }

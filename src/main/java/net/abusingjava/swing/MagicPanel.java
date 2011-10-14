@@ -333,21 +333,25 @@ public class MagicPanel extends JPanel {
 			return this;
 		}
 		if (!$bindings.isTableBinding()) {
-			SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					Binding[] $oldBindings = $bindings.getBindings();
-					for (Binding $binding : $oldBindings) {
-						try {
-							$binding.unbind();
-						} catch (RuntimeException $exc) {
-							$exc.printStackTrace(System.err);
-						} finally {
-							$bindings.removeBinding($binding);
+			try {
+				SwingUtilities.invokeAndWait(new Runnable() {
+					@Override
+					public void run() {
+						Binding[] $oldBindings = $bindings.getBindings();
+						for (Binding $binding : $oldBindings) {
+							try {
+								$binding.unbind();
+							} catch (RuntimeException $exc) {
+								$exc.printStackTrace(System.err);
+							} finally {
+								$bindings.removeBinding($binding);
+							}
 						}
 					}
-				}
-			});
+				});
+			} catch (Exception $exc) {
+
+			}
 		}
 		return this;
 	}
