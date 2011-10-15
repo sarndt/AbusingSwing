@@ -193,7 +193,11 @@ public class MagicComponents {
 				for (Component $comp : $components) {
 					JComponent $c = $comp.getRealComponent();
 					if ($c.getLayout() instanceof CardLayout) {
-						((CardLayout) $c.getLayout()).show($c, "card" + $index);
+						CardLayout $layout = (CardLayout) $c.getLayout();
+						$layout.first($c);
+						for (int $i = 0; $i < $index; $i++) {
+							$layout.next($c);
+						}
 					}
 				}
 			}
