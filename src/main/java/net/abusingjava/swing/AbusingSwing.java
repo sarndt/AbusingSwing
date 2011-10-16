@@ -26,10 +26,14 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import net.abusingjava.Author;
 import net.abusingjava.NotGonnaHappenException;
+import net.abusingjava.Since;
 import net.abusingjava.Version;
 import net.abusingjava.swing.magic.Panel;
 import net.abusingjava.swing.magic.Window;
 import net.abusingjava.xml.AbusingXML;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class contains usefull static methods for handling Swing.
@@ -39,11 +43,14 @@ import net.abusingjava.xml.AbusingXML;
  *
  */
 @Author("Julian Fleischer")
-@Version("2011-06-21")
+@Since("2011-06-21")
+@Version("2011-10-16")
 final public class AbusingSwing {
-	
-	private AbusingSwing() {}
 
+	private static final Logger $logger = LoggerFactory.getLogger(AbusingSwing.class);
+
+	private AbusingSwing() {}
+	
 	public static void setLookAndFeel(final String $name) {
 		try {
 			for (LookAndFeelInfo $info : UIManager.getInstalledLookAndFeels()) {
@@ -53,7 +60,7 @@ final public class AbusingSwing {
 			    }
 			}
 		} catch (Exception $exc) {
-			// TODO: AbusingExceptions.warning($exc);
+			$logger.warn("Could not set Look and feel “" + $name + "”.", $exc);
 		}
 	}
 	
