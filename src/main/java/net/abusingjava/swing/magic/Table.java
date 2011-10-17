@@ -26,6 +26,7 @@ import net.abusingjava.xml.XmlTextContent;
 
 import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingx.JXTable;
+import org.slf4j.LoggerFactory;
 
 @XmlElement("table")
 public class Table extends Component implements Iterable<Column> {
@@ -235,9 +236,13 @@ public class Table extends Component implements Iterable<Column> {
 
 			@Override
 			public boolean isCellEditable(final int $rowIndex, int $colIndex) {
-				$colIndex = convertColumnIndexToModel($colIndex);
-				if ($columns[$colIndex].$editable != null) {
-					return $columns[$colIndex].$editable;
+				try {
+					$colIndex = convertColumnIndexToModel($colIndex);
+					if ($columns[$colIndex].$editable != null) {
+						return $columns[$colIndex].$editable;
+					}
+				} catch (Exception $exc) {
+					LoggerFactory.getLogger(getClass()).warn("This should not happen at all.", $exc);
 				}
 				return $editable;
 			}
@@ -342,7 +347,6 @@ public class Table extends Component implements Iterable<Column> {
 
 		super.create($main, $parent);
 	}
-
 	@Override
 	public Iterator<Column> iterator() {
 		return AbusingArrays.array($columns).iterator();

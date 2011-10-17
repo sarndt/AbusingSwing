@@ -325,7 +325,7 @@ abstract public class Component {
 			MouseAdapter $listener = new MouseAdapter() {
 				@Override
 				public void mouseClicked(final MouseEvent $ev) {
-					new Thread(eventListener($onaction, $ev)).start();
+					new Thread(eventListener($onclick, $ev)).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -335,7 +335,7 @@ abstract public class Component {
 			MouseAdapter $listener = new MouseAdapter() {
 				@Override
 				public void mouseEntered(final MouseEvent $ev) {
-					new Thread(eventListener($onaction, $ev)).start();
+					new Thread(eventListener($onmouseover, $ev)).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -345,7 +345,7 @@ abstract public class Component {
 			MouseAdapter $listener = new MouseAdapter() {
 				@Override
 				public void mouseExited(final MouseEvent $ev) {
-					new Thread(eventListener($onaction, $ev)).start();
+					new Thread(eventListener($onmouseout, $ev)).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -355,7 +355,7 @@ abstract public class Component {
 			MouseAdapter $listener = new MouseAdapter() {
 				@Override
 				public void mouseMoved(final MouseEvent $ev) {
-					new Thread(eventListener($onaction, $ev)).start();
+					new Thread(eventListener($onmousemove, $ev)).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -365,7 +365,7 @@ abstract public class Component {
 			MouseAdapter $listener = new MouseAdapter() {
 				@Override
 				public void mousePressed(final MouseEvent $ev) {
-					new Thread(eventListener($onaction, $ev)).start();
+					new Thread(eventListener($onmousedown, $ev)).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -375,7 +375,7 @@ abstract public class Component {
 			MouseAdapter $listener = new MouseAdapter() {
 				@Override
 				public void mouseReleased(final MouseEvent $ev) {
-					new Thread(eventListener($onaction, $ev)).start();
+					new Thread(eventListener($onmouseup, $ev)).start();
 				}
 			};
 			$realComponent.addMouseListener($listener);
@@ -385,7 +385,7 @@ abstract public class Component {
 			MouseWheelListener $listener = new MouseWheelListener() {
 				@Override
 				public void mouseWheelMoved(final MouseWheelEvent $ev) {
-					new Thread(eventListener($onaction, $ev)).start();
+					new Thread(eventListener($onmousewheel, $ev)).start();
 				}
 			};
 			$realComponent.addMouseWheelListener($listener);
@@ -395,7 +395,7 @@ abstract public class Component {
 			KeyAdapter $listener = new KeyAdapter() {
 				@Override
 				public void keyPressed(final KeyEvent $ev) {
-					new Thread(eventListener($onaction, $ev)).start();
+					new Thread(eventListener($onkeydown, $ev)).start();
 				}
 			};
 			$realComponent.addKeyListener($listener);
@@ -405,7 +405,7 @@ abstract public class Component {
 			KeyAdapter $listener = new KeyAdapter() {
 				@Override
 				public void keyReleased(final KeyEvent $ev) {
-					new Thread(eventListener($onaction, $ev)).start();
+					new Thread(eventListener($onkeyup, $ev)).start();
 				}
 			};
 			$realComponent.addKeyListener($listener);
@@ -415,7 +415,7 @@ abstract public class Component {
 			KeyAdapter $listener = new KeyAdapter() {
 				@Override
 				public void keyTyped(final KeyEvent $ev) {
-					new Thread(eventListener($onaction, $ev)).start();
+					new Thread(eventListener($onkeypress, $ev)).start();
 				}
 			};
 			$realComponent.addKeyListener($listener);
@@ -425,7 +425,7 @@ abstract public class Component {
 			FocusAdapter $listener = new FocusAdapter() {
 				@Override
 				public void focusGained(final FocusEvent $ev) {
-					new Thread(eventListener($onaction, $ev)).start();
+					new Thread(eventListener($onfocus, $ev)).start();
 				}
 			};
 			$realComponent.addFocusListener($listener);
@@ -435,7 +435,7 @@ abstract public class Component {
 			FocusAdapter $listener = new FocusAdapter() {
 				@Override
 				public void focusLost(final FocusEvent $ev) {
-					new Thread(eventListener($onaction, $ev)).start();
+					new Thread(eventListener($onblur, $ev)).start();
 				}
 			};
 			$realComponent.addFocusListener($listener);
