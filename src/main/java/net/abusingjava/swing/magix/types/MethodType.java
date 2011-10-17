@@ -20,7 +20,7 @@ public class MethodType {
 		}
 		$method = $method.trim();
 
-		if ($method.matches("goTo\\(.+\\)")) {
+		if ($method.matches("go[tT]o\\(.+\\)")) {
 			$specialMethodType = SpecialMethodType.GOTO;
 		} else if ($method.matches("show\\(.+\\)")) {
 			$specialMethodType = SpecialMethodType.SHOW;
@@ -32,6 +32,10 @@ public class MethodType {
 			$specialMethodType = SpecialMethodType.DISABLE;
 		} else {
 			this.$specialMethodType = null;
+			if ($method.indexOf('(') > 0) {
+				//String $args = $method.substring($method.indexOf('(')+1);
+				$method = $method.substring(0, $method.indexOf('('));
+			}
 		}
 
 		if ($specialMethodType != null) {
