@@ -7,12 +7,12 @@ import java.beans.PropertyChangeSupport;
 
 import javax.swing.JCheckBox;
 
-import net.abusingjava.SupportsPropertyChangeEvents;
+import net.abusingjava.event.OffersPropertyChangeEvents;
 
 /**
  * A JCheckBox with Bean-Style Properties “visible”, “selected”, and “enabled”.
  */
-public class XCheckBox extends JCheckBox implements SupportsPropertyChangeEvents {
+public class XCheckBox extends JCheckBox implements OffersPropertyChangeEvents {
 
 	private static final long serialVersionUID = 8023132873983973635L;
 
