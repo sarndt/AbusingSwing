@@ -5,8 +5,11 @@ import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeListener;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
@@ -26,8 +29,11 @@ import net.abusingjava.swing.magic.Tabs.Tab;
 import net.abusingjava.xml.AbusingXML;
 import net.abusingjava.xml.XmlElement;
 
-import org.jdesktop.beansbinding.*;
+import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
+import org.jdesktop.beansbinding.BeanProperty;
+import org.jdesktop.beansbinding.Binding;
+import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.JTableBinding.ColumnBinding;
 import org.jdesktop.swingbinding.SwingBindings;
