@@ -417,6 +417,8 @@ public class MagicPanel extends JPanel {
 							$targetProperty = "date";
 						} else if ($target instanceof JSpinner) {
 							$targetProperty = "value";
+						} else if ($target instanceof JComboBox) {
+							$targetProperty = "selectedItem";
 						} else if ($target instanceof MultiListTable) {
 							$targetProperty = "selectedObjects";
 							MultiListTable $table = (MultiListTable) $target;
