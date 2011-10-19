@@ -370,99 +370,99 @@ public class MagicPanel extends JPanel {
 			return this;
 		}
 
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				if ($bindings.isTableBinding() && ($object instanceof List)) {
-					Table $tableDefinition = (Table) $main.$componentsByName.get($bindings.getTableName());
-					JTable $table = $main.$("#" + $bindings.getTableName()).as(JTable.class);
+		//SwingUtilities.invokeLater(new Runnable() {
+		//	@Override
+		//	public void run() {
+		if ($bindings.isTableBinding() && ($object instanceof List)) {
+			Table $tableDefinition = (Table) $main.$componentsByName.get($bindings.getTableName());
+			JTable $table = $main.$("#" + $bindings.getTableName()).as(JTable.class);
 
-					$tableDefinition.clearBinding();
+			$tableDefinition.clearBinding();
 
-					JTableBinding $tableBinding = SwingBindings.createJTableBinding(
-							AutoBinding.UpdateStrategy.READ_WRITE, (List<?>) $object,
-							$table);
+			JTableBinding $tableBinding = SwingBindings.createJTableBinding(
+					AutoBinding.UpdateStrategy.READ_WRITE, (List<?>) $object,
+					$table);
 
-					for (Property $p : $bindings) {
-						ColumnBinding $columnBinding = $tableBinding
-								.addColumnBinding(BeanProperty.create($p.getName()));
-						$columnBinding.setColumnName($p.getTarget());
-						$columnBinding.setColumnClass($tableDefinition.getColumn($p.getTarget()).getJavaType());
-					}
+			for (Property $p : $bindings) {
+				ColumnBinding $columnBinding = $tableBinding
+						.addColumnBinding(BeanProperty.create($p.getName()));
+				$columnBinding.setColumnName($p.getTarget());
+				$columnBinding.setColumnClass($tableDefinition.getColumn($p.getTarget()).getJavaType());
+			}
 
-					$tableDefinition.setBinding($tableBinding);
-					$tableBinding.bind();
+			$tableDefinition.setBinding($tableBinding);
+			$tableBinding.bind();
 
-					if ($table instanceof JXTable) {
-						if ($tableDefinition.getAutoPack()) {
-							((JXTable) $table).packAll();
-						}
-					}
-				} else {
-					Binding[] $oldBindings = $bindings.getBindings();
-					for (Binding $binding : $oldBindings) {
-						try {
-							$binding.unbind();
-						} catch (RuntimeException $exc) {
-							$exc.printStackTrace(System.err);
-						} finally {
-							$bindings.removeBinding($binding);
-						}
-					}
-
-					for (Property $p : $bindings) {
-						JComponent $target = $main.$("#" + $p.getTarget()).as(JComponent.class);
-
-						String $targetProperty = "";
-
-						if ($target instanceof JTextComponent) {
-							$targetProperty = "text";
-						} else if ($target instanceof JCheckBox) {
-							$targetProperty = "selected";
-						} else if ($target instanceof JXDatePicker) {
-							$targetProperty = "date";
-						} else if ($target instanceof JSpinner) {
-							$targetProperty = "value";
-						} else if ($target instanceof JComboBox) {
-							$targetProperty = "selectedItem";
-						} else if ($target instanceof MultiListTable) {
-							$targetProperty = "selectedObjects";
-							MultiListTable $table = (MultiListTable) $target;
-							for (PropertyChangeListener $l : $table.getPropertyChangeListeners()) {
-								$table.removePropertyChangeListener($l);
-							}
-						} else {
-							// TODO: support for more
-							continue;
-						}
-
-						try {
-							AutoBinding $binding = Bindings.createAutoBinding(
-									UpdateStrategy.READ_WRITE,
-									$object, BeanProperty.create($p.getName()),
-									$target, BeanProperty.create($targetProperty));
-
-							if ($target instanceof JCheckBox) {
-								$binding.setSourceNullValue(false);
-								$binding.setTargetNullValue(false);
-							}
-
-							try {
-								$binding.bind();
-								$bindings.addBinding($binding);
-							} catch (NullPointerException $exc) {
-								$exc.printStackTrace(System.err);
-							}
-						} catch (IllegalArgumentException $exc) {
-							System.err.println($p.getName());
-							System.err.println($targetProperty);
-							$exc.printStackTrace(System.err);
-						}
-					}
-
+			if ($table instanceof JXTable) {
+				if ($tableDefinition.getAutoPack()) {
+					((JXTable) $table).packAll();
 				}
 			}
-		});
+		} else {
+			Binding[] $oldBindings = $bindings.getBindings();
+			for (Binding $binding : $oldBindings) {
+				try {
+					$binding.unbind();
+				} catch (RuntimeException $exc) {
+					$exc.printStackTrace(System.err);
+				} finally {
+					$bindings.removeBinding($binding);
+				}
+			}
+
+			for (Property $p : $bindings) {
+				JComponent $target = $main.$("#" + $p.getTarget()).as(JComponent.class);
+
+				String $targetProperty = "";
+
+				if ($target instanceof JTextComponent) {
+					$targetProperty = "text";
+				} else if ($target instanceof JCheckBox) {
+					$targetProperty = "selected";
+				} else if ($target instanceof JXDatePicker) {
+					$targetProperty = "date";
+				} else if ($target instanceof JSpinner) {
+					$targetProperty = "value";
+				} else if ($target instanceof JComboBox) {
+					$targetProperty = "selectedItem";
+				} else if ($target instanceof MultiListTable) {
+					$targetProperty = "selectedObjects";
+					MultiListTable $table = (MultiListTable) $target;
+					for (PropertyChangeListener $l : $table.getPropertyChangeListeners()) {
+						$table.removePropertyChangeListener($l);
+					}
+				} else {
+					// TODO: support for more
+					continue;
+				}
+
+				try {
+					AutoBinding $binding = Bindings.createAutoBinding(
+							UpdateStrategy.READ_WRITE,
+							$object, BeanProperty.create($p.getName()),
+							$target, BeanProperty.create($targetProperty));
+
+					if ($target instanceof JCheckBox) {
+						$binding.setSourceNullValue(false);
+						$binding.setTargetNullValue(false);
+					}
+
+					try {
+						$binding.bind();
+						$bindings.addBinding($binding);
+					} catch (NullPointerException $exc) {
+						$exc.printStackTrace(System.err);
+					}
+				} catch (IllegalArgumentException $exc) {
+					System.err.println($p.getName());
+					System.err.println($targetProperty);
+					$exc.printStackTrace(System.err);
+				}
+			}
+
+		}
+		//	}
+		//});
 
 		return this;
 	}
