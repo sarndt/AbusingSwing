@@ -3,8 +3,6 @@ package net.abusingjava.swing.magic;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
-import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
-
 import net.abusingjava.AbusingArrays;
 import net.abusingjava.functions.AbusingFunctions;
 import net.abusingjava.swing.MagicPanel;
@@ -14,6 +12,8 @@ import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlChildElements;
 import net.abusingjava.xml.XmlElement;
 import net.abusingjava.xml.XmlTextContent;
+
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 @XmlElement("combobox")
 public class ComboBox extends Component {
