@@ -1,4 +1,4 @@
-package net.abusingjava.swing.v1.components.iface;
+package net.abusingjava.swing.v1;
 
 import net.abusingjava.Author;
 import net.abusingjava.Since;

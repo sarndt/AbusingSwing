@@ -3,7 +3,7 @@ package net.abusingjava.swing.v1.components;
 import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
-import net.abusingjava.swing.v1.components.iface.XController;
+import net.abusingjava.swing.v1.XController;
 
 /**
  * A Controller for an {@link XButton}, that is capable of creating one from an

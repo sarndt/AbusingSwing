@@ -1,6 +1,7 @@
 package net.abusingjava.swing.v1.components;
 
-import net.abusingjava.swing.v1.components.iface.XController;
+import net.abusingjava.swing.v1.XController;
+
 
 public class XNumberSpinnerController implements XController<XNumberSpinner> {
 

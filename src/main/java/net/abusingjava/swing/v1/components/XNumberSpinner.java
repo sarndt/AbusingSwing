@@ -2,7 +2,8 @@ package net.abusingjava.swing.v1.components;
 
 import javax.swing.JSpinner;
 
-import net.abusingjava.swing.v1.components.iface.XComponent;
+import net.abusingjava.swing.v1.XComponent;
+
 
 public class XNumberSpinner extends JSpinner implements XComponent {
 

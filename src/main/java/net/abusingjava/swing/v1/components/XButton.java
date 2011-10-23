@@ -2,7 +2,8 @@ package net.abusingjava.swing.v1.components;
 
 import javax.swing.JButton;
 
-import net.abusingjava.swing.v1.components.iface.XComponent;
+import net.abusingjava.swing.v1.XComponent;
+
 
 public class XButton extends JButton implements XComponent {
 
