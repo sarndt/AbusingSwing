@@ -33,7 +33,7 @@ public class MultiList extends Table {
 	@XmlAttribute
 	MethodType $onchange;
 
-	public static class MultiListTable extends JXTable {
+	public class MultiListTable extends JXTable {
 
 		private static final long serialVersionUID = -2230230778375628917L;
 		private final PropertyChangeSupport $propertyChangeSupport;
@@ -74,6 +74,7 @@ public class MultiList extends Table {
 					$exc.printStackTrace(System.err);
 				}
 			}
+			updateFilters();
 			// $propertyChangeSupport.firePropertyChange("selectedObjects", $oldValues, getSelectedObjects());
 		}
 		
