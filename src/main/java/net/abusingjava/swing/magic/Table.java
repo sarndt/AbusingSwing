@@ -3,7 +3,10 @@ package net.abusingjava.swing.magic;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JScrollPane;
@@ -18,7 +21,12 @@ import net.abusingjava.AbusingArrays;
 import net.abusingjava.swing.MagicPanel;
 import net.abusingjava.swing.TableActionEvent;
 import net.abusingjava.swing.magic.Table.Column;
-import net.abusingjava.swing.magix.types.*;
+import net.abusingjava.swing.magix.types.Color;
+import net.abusingjava.swing.magix.types.FilterMode;
+import net.abusingjava.swing.magix.types.JavaType;
+import net.abusingjava.swing.magix.types.MethodType;
+import net.abusingjava.swing.magix.types.Unit;
+import net.abusingjava.swing.magix.types.Value;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlChildElements;
 import net.abusingjava.xml.XmlElement;
@@ -142,11 +150,14 @@ public class Table extends Component implements Iterable<Column> {
 			});
 		}
 
-		RowFilter<Object, Object> $filter = $filterMode.isAnd()
-				? RowFilter.andFilter($filters)
-				: RowFilter.orFilter($filters);
+		if ($filters.size() > 0) {
 
-		((JXTable) $realComponent).setRowFilter($filter);
+			RowFilter<Object, Object> $filter = $filterMode.isAnd()
+					? RowFilter.andFilter($filters)
+					: RowFilter.orFilter($filters);
+
+			((JXTable) $realComponent).setRowFilter($filter);
+		}
 	}
 
 	@SuppressWarnings("rawtypes")
