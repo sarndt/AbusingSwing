@@ -13,12 +13,18 @@ import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
 import net.abusingjava.swing.MagicPanel;
-import net.abusingjava.swing.magix.types.*;
+import net.abusingjava.swing.magix.types.ClassNames;
+import net.abusingjava.swing.magix.types.Color;
+import net.abusingjava.swing.magix.types.FontStyle;
+import net.abusingjava.swing.magix.types.FontWeight;
+import net.abusingjava.swing.magix.types.MethodType;
+import net.abusingjava.swing.magix.types.Unit;
+import net.abusingjava.swing.magix.types.Value;
 import net.abusingjava.xml.XmlAttribute;
 import net.java.balloontip.BalloonTip;
 
 @Author("Julian Fleischer")
-@Version("2011-08-21")
+@Version("2011-10-09")
 @Since(value = "2011-08-21", version = "1.0")
 abstract public class Component {
 
@@ -307,7 +313,7 @@ abstract public class Component {
 				@Override
 				public void actionPerformed(final ActionEvent $ev) {
 					if (!$update) {
-						new Thread(eventListener($onaction, $ev.getSource())).start();
+						new Thread(eventListener($onaction, $ev)).start();
 					}
 				}
 			};
