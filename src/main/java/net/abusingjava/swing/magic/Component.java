@@ -106,6 +106,9 @@ abstract public class Component {
 	@XmlAttribute("font-style")
 	FontStyle $fontStyle;
 
+	@XmlAttribute("font-family")
+	String $fontFamily;
+
 	@XmlAttribute("font-size")
 	Value $fontSize;
 
@@ -273,14 +276,17 @@ abstract public class Component {
 		if ($opaque != null) {
 			$component.setOpaque($opaque);
 		}
+		if (($fontSize != null) && ($fontSize.getUnit() == Unit.POINT)) {
+			$realComponent.setFont($realComponent.getFont().deriveFont((float) $fontSize.getValue()));
+		}
 		if (($fontWeight != null) && $fontWeight.isBold()) {
 			$realComponent.setFont($realComponent.getFont().deriveFont(Font.BOLD));
 		}
 		if (($fontStyle != null) && $fontStyle.isItalic()) {
 			$realComponent.setFont($realComponent.getFont().deriveFont(Font.ITALIC));
 		}
-		if (($fontSize != null) && ($fontSize.getUnit() == Unit.POINT)) {
-			$realComponent.setFont($realComponent.getFont().deriveFont((float) $fontSize.getValue()));
+		if ($fontFamily != null) {
+			$realComponent.setFont(Font.decode($fontFamily));
 		}
 
 		if ($popupMenu != null) {
