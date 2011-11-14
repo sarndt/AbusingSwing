@@ -22,8 +22,11 @@ import net.abusingjava.Author;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
 import net.abusingjava.swing.magic.Cards.CardComponent;
-import net.abusingjava.swing.magic.*;
+import net.abusingjava.swing.magic.CheckBox;
+import net.abusingjava.swing.magic.Component;
+import net.abusingjava.swing.magic.MultiList;
 import net.abusingjava.swing.magic.MultiList.MultiListTable;
+import net.abusingjava.swing.magic.TextComponent;
 import net.java.balloontip.BalloonTip;
 
 import org.jdesktop.swingx.JXTable;
@@ -37,7 +40,7 @@ import org.jdesktop.swingx.JXTable;
 public class MagicComponents {
 
 	final private ArrayList<Component> $components = new ArrayList<Component>();
-	
+
 	@SuppressWarnings("unused")
 	final private MagicPanel $parent;
 
@@ -496,35 +499,35 @@ public class MagicComponents {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
 			if ($comp instanceof MultiList) {
-				final DefaultTableModel $m = (DefaultTableModel)((JTable)$c).getModel();
+				final DefaultTableModel $m = (DefaultTableModel) ((JTable) $c).getModel();
 				for (final Object $value : $values) {
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							$m.addRow(new Object[] { false, $value });
+							$m.addRow(new Object[]{false, $value});
 						}
 					});
 				}
 			} else if ($c instanceof JComboBox) {
-				final ComboBoxModel $m = ((JComboBox)$c).getModel();
+				final ComboBoxModel $m = ((JComboBox) $c).getModel();
 				if ($m instanceof DefaultComboBoxModel) {
 					for (final Object $value : $values) {
 						SwingUtilities.invokeLater(new Runnable() {
 							@Override
 							public void run() {
-								((DefaultComboBoxModel)$m).addElement($value);
+								((DefaultComboBoxModel) $m).addElement($value);
 							}
 						});
 					}
 				}
 			} else if ($c instanceof JList) {
-				final ListModel $m = ((JList)$c).getModel();
+				final ListModel $m = ((JList) $c).getModel();
 				if ($m instanceof DefaultListModel) {
 					for (final Object $value : $values) {
 						SwingUtilities.invokeLater(new Runnable() {
 							@Override
 							public void run() {
-								((DefaultListModel)$m).addElement($value);
+								((DefaultListModel) $m).addElement($value);
 							}
 						});
 					}
@@ -709,19 +712,25 @@ public class MagicComponents {
 	}
 
 	public MagicComponents setSelectedIndex(final int $index) {
-		for (Component $comp : $components) {
-			JComponent $c = $comp.getRealComponent();
-			if ($c instanceof JComboBox) {
-				$comp.setUpdate(true);
-				ComboBoxModel $m = ((JComboBox) $c).getModel();
-				if ($m instanceof DefaultComboBoxModel) {
-					$m.setSelectedItem($m.getElementAt($index));
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				for (Component $comp : $components) {
+					JComponent $c = $comp.getRealComponent();
+					if ($c instanceof JComboBox) {
+						//$comp.setUpdate(true);
+						ComboBoxModel $m = ((JComboBox) $c).getModel();
+						if ($m instanceof DefaultComboBoxModel) {
+							$m.setSelectedItem($m.getElementAt($index));
+						}
+						//$comp.setUpdate(false);
+					} else if ($c instanceof JList) {
+						((JList) $c).setSelectedIndex($index);
+					}
 				}
-				$comp.setUpdate(false);
-			} else if ($c instanceof JList) {
-				((JList) $c).setSelectedIndex($index);
 			}
-		}
+		});
 		return this;
 	}
 
@@ -743,7 +752,7 @@ public class MagicComponents {
 	public List<Object> getSelectedItems() {
 		for (Component $comp : $components) {
 			if ($comp instanceof MultiList) {
-				DefaultTableModel $m = (DefaultTableModel)((JTable)$comp.getRealComponent()).getModel();
+				DefaultTableModel $m = (DefaultTableModel) ((JTable) $comp.getRealComponent()).getModel();
 				List<Object> $list = new LinkedList<Object>();
 				for (int $i = 0; $i < $m.getRowCount(); $i++) {
 					if ((Boolean) $m.getValueAt($i, 0)) {
@@ -755,11 +764,11 @@ public class MagicComponents {
 		}
 		return new ArrayList<Object>(0);
 	}
-	
+
 	public MagicComponents clearSelection() {
 		for (Component $comp : $components) {
 			if ($comp instanceof MultiList) {
-				DefaultTableModel $m = (DefaultTableModel)((JTable)$comp.getRealComponent()).getModel();
+				DefaultTableModel $m = (DefaultTableModel) ((JTable) $comp.getRealComponent()).getModel();
 				for (int $i = 0; $i < $m.getRowCount(); $i++) {
 					$m.setValueAt(false, $i, 0);
 				}
@@ -767,7 +776,7 @@ public class MagicComponents {
 		}
 		return this;
 	}
-	
+
 	public Object getSelectedItem() {
 		for (Component $comp : $components) {
 			JComponent $c = $comp.getRealComponent();
@@ -909,7 +918,7 @@ public class MagicComponents {
 	public void goTo() {
 		for (final Component $comp : $components) {
 			if ($comp instanceof CardComponent) {
-				((CardComponent)$comp).goTo();
+				((CardComponent) $comp).goTo();
 			}
 		}
 	}

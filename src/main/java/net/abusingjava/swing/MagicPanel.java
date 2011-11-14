@@ -362,6 +362,7 @@ public class MagicPanel extends JPanel {
 		return this;
 	}
 
+	@Deprecated
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public MagicPanel bind(final String $bindingName, final Object $object) {
 		final BindingDefinition $bindings = $panel.getBinding($bindingName);
@@ -414,6 +415,8 @@ public class MagicPanel extends JPanel {
 				JComponent $target = $main.$("#" + $p.getTarget()).as(JComponent.class);
 
 				String $targetProperty = "";
+				
+				System.err.println($p.getTarget());
 
 				if ($target instanceof JTextComponent) {
 					$targetProperty = "text";
@@ -445,6 +448,9 @@ public class MagicPanel extends JPanel {
 					if ($target instanceof JCheckBox) {
 						$binding.setSourceNullValue(false);
 						$binding.setTargetNullValue(false);
+					} else if ($target instanceof JTextComponent) {
+						$binding.setSourceNullValue("");
+						$binding.setTargetNullValue("");
 					}
 
 					try {
