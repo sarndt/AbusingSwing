@@ -215,12 +215,11 @@ public class MagicPanel extends JPanel {
 		} else {
 			List<Component> $list = new LinkedList<Component>();
 			for (Component $c : $componentsByName.values()) {
-				try {
-					if ($c.getClass().getAnnotation(XmlElement.class).value().equals($selector)) {
+				XmlElement $annotation = $c.getClass().getAnnotation(XmlElement.class);
+				if ($annotation != null) {
+					if ($annotation.value().equals($selector)) {
 						$list.add($c);
 					}
-				} catch (Exception $exc) {
-					// swallow exception
 				}
 			}
 			return new MagicComponents(this, $list);
