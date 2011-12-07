@@ -195,7 +195,10 @@ public class MagicComponents {
 			public void run() {
 				for (Component $comp : $components) {
 					JComponent $c = $comp.getRealComponent();
-					if ($c.getLayout() instanceof CardLayout) {
+					if ($c instanceof JTabbedPane) {
+						JTabbedPane $pane = (JTabbedPane) $c;
+						$pane.setSelectedIndex($index);
+					} else if ($c.getLayout() instanceof CardLayout) {
 						CardLayout $layout = (CardLayout) $c.getLayout();
 						$layout.first($c);
 						for (int $i = 0; $i < $index; $i++) {
