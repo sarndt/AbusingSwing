@@ -20,7 +20,7 @@ public class XButtonController {
 	Boolean $selected;
 	
 	
-	private XButton $button;
+	XButton $button;
 
 	public void init() {
 		FutureTask<XButton> $task = new FutureTask<XButton>(new Callable<XButton>() {

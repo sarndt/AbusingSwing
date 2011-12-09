@@ -39,10 +39,10 @@ import org.jdesktop.swingx.JXTable;
 @Since(value = "2011-08-19", version = "1.0")
 public class MagicComponents {
 
-	final private ArrayList<Component> $components = new ArrayList<Component>();
+	final ArrayList<Component> $components = new ArrayList<Component>();
 
 	@SuppressWarnings("unused")
-	final private MagicPanel $parent;
+	final MagicPanel $parent;
 
 	public MagicComponents(final MagicPanel $parent, final Component... $components) {
 		this.$parent = $parent;

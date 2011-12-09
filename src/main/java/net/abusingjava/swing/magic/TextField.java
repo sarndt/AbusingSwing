@@ -41,7 +41,7 @@ public class TextField extends TextComponent {
 		return $filters.getTableName();
 	}
 	
-	private boolean $textEntered = false;
+	boolean $textEntered = false;
 
 	@Override
 	public String getText() {

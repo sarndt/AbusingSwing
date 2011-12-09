@@ -10,11 +10,11 @@ import javax.swing.JToggleButton;
 
 public class XToggleButton extends JToggleButton {
 
-	private static final long serialVersionUID = 346881449274433975L;
+	static final long serialVersionUID = 346881449274433975L;
 
 
-	private final PropertyChangeSupport $$ = new PropertyChangeSupport(this);
-	private final boolean $init;
+	final PropertyChangeSupport $$ = new PropertyChangeSupport(this);
+	final boolean $init;
 	
 	public XToggleButton() {
 		$init = true;

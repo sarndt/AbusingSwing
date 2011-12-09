@@ -135,7 +135,7 @@ abstract public class Component {
 
 	protected MagicPanel $mainPanel;
 
-	private boolean $update = false;
+	boolean $update = false;
 
 	public BalloonTip getBalloonTip() {
 		return $balloonTip;

@@ -35,11 +35,10 @@ public class MultiList extends Table {
 
 	public class MultiListTable extends JXTable {
 
-		private static final long serialVersionUID = -2230230778375628917L;
-		private final PropertyChangeSupport $propertyChangeSupport;
-		private java.util.List<?> $selectedObjects = new LinkedList<Object>();
+		final PropertyChangeSupport $propertyChangeSupport;
+		java.util.List<?> $selectedObjects = new LinkedList<Object>();
 		
-		private void selectionChanged() {
+		void selectionChanged() {
 			java.util.List<?> $oldValue = $selectedObjects;
 			$selectedObjects = getSelectedObjects();
 			$propertyChangeSupport.firePropertyChange("selectedObjects", $oldValue, $selectedObjects);

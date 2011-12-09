@@ -12,10 +12,10 @@ public class XTextField extends JTextField {
 
 	private static final long serialVersionUID = -3604515948365529165L;
 
-	private final PropertyChangeSupport $$ = new PropertyChangeSupport(this);
-	private final boolean $init;
+	final PropertyChangeSupport $$ = new PropertyChangeSupport(this);
+	final boolean $init;
 
-	private String $oldValue = "";
+	String $oldValue = "";
 	
 	public XTextField() {
 		super();

@@ -14,10 +14,10 @@ import net.abusingjava.event.OffersPropertyChangeEvents;
  */
 public class XCheckBox extends JCheckBox implements OffersPropertyChangeEvents {
 
-	private static final long serialVersionUID = 8023132873983973635L;
+	static final long serialVersionUID = 8023132873983973635L;
 
-	private final PropertyChangeSupport $$ = new PropertyChangeSupport(this);
-	private final boolean $init;
+	final PropertyChangeSupport $$ = new PropertyChangeSupport(this);
+	final boolean $init;
 	
 	public XCheckBox() {
 		$init = true;

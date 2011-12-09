@@ -1,7 +1,12 @@
 package net.abusingjava.swing;
 
 import java.awt.Dimension;
-import java.beans.*;
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.beans.PropertyDescriptor;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,6 +62,7 @@ public class TestBindings {
 		final TestBean $bean = new TestBean("Flowers");
 		final TestBean $bean2 = new TestBean("the gloom");
 		
+		@SuppressWarnings("deprecation")
 		Frame() {
 			$panel = AbusingSwing.makePanel("TestBindings.xml");
 			$panel.setInvocationHandler(this);
@@ -106,6 +112,7 @@ public class TestBindings {
 			$multiList.setSelectedObjects(Arrays.asList("Flowers"));
 		}
 		
+		@SuppressWarnings("deprecation")
 		public void action4() {
 			$panel.bind("testBinding", $bean2);
 		}
