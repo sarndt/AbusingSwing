@@ -158,6 +158,19 @@ public class MagicComponents {
 		}
 		return "";
 	}
+	
+	public MagicComponents sortBy(final int $columnIndex) {
+		for (Component $comp : $components) {
+			JComponent $real = $comp.getRealComponent();
+			if ($real instanceof JXTable) {
+				final JXTable $jxTable = (JXTable) $real;
+				if ($jxTable.getSortedColumn() == null) {
+					$jxTable.setSortOrder($columnIndex, SortOrder.ASCENDING);
+				}
+			}
+		}
+		return this;
+	}
 
 	public MagicComponents clear() {
 		for (Component $comp : $components) {

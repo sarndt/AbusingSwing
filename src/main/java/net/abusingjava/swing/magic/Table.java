@@ -305,8 +305,14 @@ public class Table extends Component implements Iterable<Column> {
 
 				super.getTableCellRendererComponent($table, $value, $isSelected, $hasFocus, $row, $column);
 				if ($value instanceof Date) {
-					String $date = new SimpleDateFormat($columns[$column].$dateFormat).format((Date) $value);
-					this.setText($date);
+					Date $date = (Date) $value;
+					String $formattedDate;
+					if ($date.compareTo(new Date(System.currentTimeMillis() - (1000L * 60L * 60L * 24L * 365L * 300L))) < 0) {
+						$formattedDate = "<html><font color='red'>ungültig</font>";
+					} else {
+						$formattedDate = new SimpleDateFormat($columns[$column].$dateFormat).format($date);
+					}
+					this.setText($formattedDate);
 				}
 
 				return this;
