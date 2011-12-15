@@ -194,6 +194,9 @@ public class Table extends Component implements Iterable<Column> {
 
 		@XmlAttribute
 		Boolean $editable;
+		
+		@XmlAttribute("date-format")
+		String $dateFormat = "yyyy-MM-dd HH:mm:ss";
 
 		public Class<?> getJavaType() {
 			return $type.getJavaType();
@@ -258,7 +261,7 @@ public class Table extends Component implements Iterable<Column> {
 				return $editable;
 			}
 		};
-
+		
 		$c.setSortable($sortable);
 		$c.setColumnControlVisible($columnControlVisible);
 		if ($horizontalScrollEnabled != null) {
@@ -302,7 +305,7 @@ public class Table extends Component implements Iterable<Column> {
 
 				super.getTableCellRendererComponent($table, $value, $isSelected, $hasFocus, $row, $column);
 				if ($value instanceof Date) {
-					String $date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Date) $value);
+					String $date = new SimpleDateFormat($columns[$column].$dateFormat).format((Date) $value);
 					this.setText($date);
 				}
 
@@ -310,7 +313,7 @@ public class Table extends Component implements Iterable<Column> {
 			}
 
 		});
-
+		
 		$realComponent = $c;
 		$component = new JScrollPane($c);
 		$c.setFillsViewportHeight(true);
