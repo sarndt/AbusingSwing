@@ -27,6 +27,7 @@ import net.abusingjava.swing.magic.Component;
 import net.abusingjava.swing.magic.MultiList;
 import net.abusingjava.swing.magic.MultiList.MultiListTable;
 import net.abusingjava.swing.magic.TextComponent;
+import net.abusingjava.swing.magic.ToggleButton;
 import net.java.balloontip.BalloonTip;
 
 import org.jdesktop.swingx.JXTable;
@@ -758,6 +759,14 @@ public class MagicComponents {
 					@Override
 					public void run() {
 						$checkBox.setSelected($selected);
+					}
+				});
+			} else if ($comp instanceof ToggleButton) {
+				final JToggleButton $toggleButton = (JToggleButton) $comp.getRealComponent();
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						$toggleButton.setSelected($selected);
 					}
 				});
 			}
