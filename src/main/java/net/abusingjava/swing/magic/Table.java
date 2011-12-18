@@ -194,7 +194,10 @@ public class Table extends Component implements Iterable<Column> {
 
 		@XmlAttribute
 		Boolean $editable;
-		
+
+		@XmlAttribute("invalid-date")
+		String $invalidDate;
+
 		@XmlAttribute("date-format")
 		String $dateFormat = "yyyy-MM-dd HH:mm:ss";
 
@@ -261,7 +264,7 @@ public class Table extends Component implements Iterable<Column> {
 				return $editable;
 			}
 		};
-		
+
 		$c.setSortable($sortable);
 		$c.setColumnControlVisible($columnControlVisible);
 		if ($horizontalScrollEnabled != null) {
@@ -306,11 +309,12 @@ public class Table extends Component implements Iterable<Column> {
 				super.getTableCellRendererComponent($table, $value, $isSelected, $hasFocus, $row, $column);
 				if ($value instanceof Date) {
 					Date $date = (Date) $value;
-					String $formattedDate;
-					if ($date.compareTo(new Date(System.currentTimeMillis() - (1000L * 60L * 60L * 24L * 365L * 300L))) < 0) {
-						$formattedDate = "<html><font color='red'>ungültig</font>";
-					} else {
-						$formattedDate = new SimpleDateFormat($columns[$column].$dateFormat).format($date);
+					String $formattedDate = new SimpleDateFormat($columns[$column].$dateFormat).format($date);
+
+					if (($columns[$column].$invalidDate != null)
+							&& ($date.compareTo(new Date(System.currentTimeMillis()
+									- (1000L * 60L * 60L * 24L * 365L * 300L))) < 0)) {
+						$formattedDate = $columns[$column].$invalidDate;
 					}
 					this.setText($formattedDate);
 				}
@@ -319,7 +323,7 @@ public class Table extends Component implements Iterable<Column> {
 			}
 
 		});
-		
+
 		$realComponent = $c;
 		$component = new JScrollPane($c);
 		$c.setFillsViewportHeight(true);
