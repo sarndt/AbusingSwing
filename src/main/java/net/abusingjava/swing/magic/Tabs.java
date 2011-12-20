@@ -9,7 +9,15 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
 
-import javax.swing.*;
+import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicButtonUI;
 
 import net.abusingjava.AbusingArrays;
@@ -32,10 +40,12 @@ public class Tabs extends Component implements Iterable<Tab> {
 
 		@XmlAttribute
 		Boolean $closeable = false;
-		
+
 		@XmlAttribute
 		MethodType $onclose;
-		
+
+		@XmlAttribute
+		MethodType $onselect;
 		
 		public String getTitle() {
 			return $title;
@@ -47,7 +57,7 @@ public class Tabs extends Component implements Iterable<Tab> {
 	}
 
 	@XmlChildElements
-	Tab[] $tabs = new Tab[] {};
+	Tab[] $tabs = new Tab[]{};
 
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
@@ -57,64 +67,82 @@ public class Tabs extends Component implements Iterable<Tab> {
 		for (final Tab $t : $tabs) {
 			Container $con = $t.getContainer();
 			$con.create($main, $parent);
-			
-	        final JScrollPane $scrollPane = new JScrollPane($con.getRealComponent());
-	        $c.add($scrollPane, $t.getTitle());
 
-	        if ($t.getCloseable()) {
-	            @SuppressWarnings("serial")
-				final JButton $closeButton = new JButton("x") {{
-	                setPreferredSize(new Dimension(15, 15));
-	                setUI(new BasicButtonUI());
-	                setContentAreaFilled(false);
-	                setFocusable(false);
-	                setBorder(BorderFactory.createLineBorder(Color.BLACK));
-	                setBorderPainted(false);
-	                addMouseListener(new MouseAdapter() {
-	                    @Override public void mouseEntered(final MouseEvent e) {
-	                        java.awt.Component component = e.getComponent();
-	                        AbstractButton button = (AbstractButton) component;
-	                        button.setBorderPainted(true);
-	                    }
+			final JScrollPane $scrollPane = new JScrollPane($con.getRealComponent());
+			$c.add($scrollPane, $t.getTitle());
 
-	                    @Override public void mouseExited(final MouseEvent e) {
-	                        java.awt.Component component = e.getComponent();
-	                        AbstractButton button = (AbstractButton) component;
-	                        button.setBorderPainted(false);
-	                    }
-	                });
-	                setRolloverEnabled(true);
-	            }};
-	            @SuppressWarnings("serial")
-				JPanel $titlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)) {{
-	                setOpaque(false);
-	                add(new JLabel($t.getTitle()) {{
-	                    setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
-	                }});
-	                add($closeButton);
-	                setSize(new Dimension(getWidth(), 20));
-	                setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+			if ($t.getCloseable()) {
+				@SuppressWarnings("serial")
+				final JButton $closeButton = new JButton("x") {
+					{
+						setPreferredSize(new Dimension(15, 15));
+						setUI(new BasicButtonUI());
+						setContentAreaFilled(false);
+						setFocusable(false);
+						setBorder(BorderFactory.createLineBorder(Color.BLACK));
+						setBorderPainted(false);
+						addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseEntered(final MouseEvent e) {
+								java.awt.Component component = e.getComponent();
+								AbstractButton button = (AbstractButton) component;
+								button.setBorderPainted(true);
+							}
 
-	                $closeButton.addActionListener(new ActionListener() {
-	                        @Override
-	                        public void actionPerformed(final ActionEvent $ev) {
-	                            if ($t.$onclose != null) {
-	                            	TabCloseEvent $e = new TabCloseEvent($c);
-	                            	$t.$onclose.call($main.getInvocationHandler(), $e);
-	                            	if (!$e.isCanceled()) {
-	                            		$c.remove($scrollPane);
-	                            	}
-	                            } else {
-	                            	$c.remove($scrollPane);
-	                            }
-	                        }
-	                });
-	            }};
-	            $c.setTabComponentAt(
-	                    $c.indexOfComponent($scrollPane),
-	                    $titlePanel);
-	        }
+							@Override
+							public void mouseExited(final MouseEvent e) {
+								java.awt.Component component = e.getComponent();
+								AbstractButton button = (AbstractButton) component;
+								button.setBorderPainted(false);
+							}
+						});
+						setRolloverEnabled(true);
+					}
+				};
+				@SuppressWarnings("serial")
+				JPanel $titlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)) {
+					{
+						setOpaque(false);
+						add(new JLabel($t.getTitle()) {
+							{
+								setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
+							}
+						});
+						add($closeButton);
+						setSize(new Dimension(getWidth(), 20));
+						setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+
+						$closeButton.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(final ActionEvent $ev) {
+								if ($t.$onclose != null) {
+									TabCloseEvent $e = new TabCloseEvent($c);
+									$t.$onclose.call($main.getInvocationHandler(), $e);
+									if (!$e.isCanceled()) {
+										$c.remove($scrollPane);
+									}
+								} else {
+									$c.remove($scrollPane);
+								}
+							}
+						});
+					}
+				};
+				$c.setTabComponentAt(
+						$c.indexOfComponent($scrollPane),
+						$titlePanel);
+			}
 		}
+
+		$c.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(final ChangeEvent $ev) {
+				int $i = $c.getSelectedIndex();
+				if ($tabs[$i].$onselect != null) {
+					$tabs[$i].$onselect.call($main.getInvocationHandler());
+				}
+			}
+		});
 
 		$component = $c;
 
