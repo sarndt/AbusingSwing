@@ -21,7 +21,6 @@ public class DatePicker extends Component {
 			$height = new Value("27px");
 		}
 		
-		//JSpinner $c = new JSpinner(new SpinnerDateModel());
 		JXDatePicker $c = new JXDatePicker();
 
 		JButton $button = (JButton) $c.getComponent(1);
