@@ -3,7 +3,6 @@ package net.abusingjava.swing.magic;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.*;
-import java.util.Locale;
 
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
@@ -452,9 +451,6 @@ abstract public class Component {
 			};
 			$realComponent.addFocusListener($listener);
 		}
-
-		// TODO: Fix. Ugly. Don’t.
-		$realComponent.setLocale(Locale.GERMAN);
 	}
 
 	public void setUpdate(final boolean $updateMode) {

@@ -179,7 +179,8 @@ public class MagicComponents {
 			if ($real instanceof JTable) {
 				final TableModel $m = ((JTable) $real).getModel();
 				if ($m instanceof DefaultTableModel) {
-					SwingUtilities.invokeLater(new Runnable() {
+					try {
+					SwingUtilities.invokeAndWait(new Runnable() {
 						@Override
 						public void run() {
 							while ($m.getRowCount() > 0) {
@@ -187,6 +188,9 @@ public class MagicComponents {
 							}
 						}
 					});
+					} catch (Exception $exc) {
+						throw new RuntimeException($exc);
+					}
 				}
 			} else if ($real instanceof JList) {
 				final ListModel $m = ((JList) $real).getModel();
