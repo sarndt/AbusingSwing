@@ -36,7 +36,7 @@ import org.jdesktop.swingx.JXTable;
  * A Collection of Components on which you may apply a function as you want.
  */
 @Author("Julian Fleischer")
-@Version("2011-08-19")
+@Version("2011-12-20")
 @Since(value = "2011-08-19", version = "1.0")
 public class MagicComponents {
 

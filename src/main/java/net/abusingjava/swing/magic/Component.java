@@ -24,7 +24,7 @@ import net.abusingjava.xml.XmlAttribute;
 import net.java.balloontip.BalloonTip;
 
 @Author("Julian Fleischer")
-@Version("2011-10-09")
+@Version("2011-12-20")
 @Since(value = "2011-08-21", version = "1.0")
 abstract public class Component {
 

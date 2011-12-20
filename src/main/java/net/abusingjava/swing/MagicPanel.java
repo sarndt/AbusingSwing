@@ -361,7 +361,9 @@ public class MagicPanel extends JPanel {
 		return this;
 	}
 
-	@Deprecated
+	/**
+	 * <b><font color="#cc0000">Use only if you know what you're doing.</font></b>
+	 */
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public MagicPanel bind(final String $bindingName, final Object $object) {
 		final BindingDefinition $bindings = $panel.getBinding($bindingName);

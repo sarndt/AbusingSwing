@@ -46,7 +46,7 @@ public class Tabs extends Component implements Iterable<Tab> {
 
 		@XmlAttribute
 		MethodType $onselect;
-		
+
 		public String getTitle() {
 			return $title;
 		}
@@ -116,8 +116,13 @@ public class Tabs extends Component implements Iterable<Tab> {
 							@Override
 							public void actionPerformed(final ActionEvent $ev) {
 								if ($t.$onclose != null) {
-									TabCloseEvent $e = new TabCloseEvent($c);
-									$t.$onclose.call($main.getInvocationHandler(), $e);
+									final TabCloseEvent $e = new TabCloseEvent($c);
+									new Thread(new Runnable() {
+										@Override
+										public void run() {
+											$t.$onclose.call($main.getInvocationHandler(), $e);
+										}
+									}).start();
 									if (!$e.isCanceled()) {
 										$c.remove($scrollPane);
 									}
@@ -137,9 +142,14 @@ public class Tabs extends Component implements Iterable<Tab> {
 		$c.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(final ChangeEvent $ev) {
-				int $i = $c.getSelectedIndex();
+				final int $i = $c.getSelectedIndex();
 				if ($tabs[$i].$onselect != null) {
-					$tabs[$i].$onselect.call($main.getInvocationHandler());
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							$tabs[$i].$onselect.call($main.getInvocationHandler());
+						}
+					}).start();
 				}
 			}
 		});
