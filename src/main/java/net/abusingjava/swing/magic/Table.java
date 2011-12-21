@@ -92,15 +92,18 @@ public class Table extends Component implements Iterable<Column> {
 	
 	public static class ComboBoxRenderer extends JComboBox implements TableCellRenderer {
 
+		public ComboBoxRenderer(final Class<?> $class) {
+			Object[] $array = $class.getEnumConstants();
+			for (Object $x : $array) {
+				this.addItem($x);
+			}
+		}
+		
 		@Override
 		public JComponent getTableCellRendererComponent(
 				final JTable $table, final Object $value, final boolean $2,
 				final boolean $3, final int $row, final int $col) {
-			@SuppressWarnings("unchecked")
-			Object[] $array = $value.getClass().getEnumConstants();
-			for (Object $x : $array) {
-				this.addItem($x);
-			}
+			
 			this.setSelectedItem($value);
 
 			return this;
@@ -313,7 +316,7 @@ public class Table extends Component implements Iterable<Column> {
 			if ($colType.isEnum()) {
 				JComboBox $proto = new JComboBox($colType.getEnumConstants());
 				$c.setDefaultEditor($colType, new DefaultCellEditor($proto));
-				$c.setDefaultRenderer($colType, new ComboBoxRenderer());
+				$c.setDefaultRenderer($colType, new ComboBoxRenderer($colType));
 			}
 			if (($columns[$i].$maxWidth != null) && ($columns[$i].$maxWidth.getUnit() == Unit.PIXEL)) {
 				$c.getColumn($columnHeaders[$i]).setMaxWidth($columns[$i].$maxWidth.getValue());
