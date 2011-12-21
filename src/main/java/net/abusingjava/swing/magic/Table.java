@@ -9,6 +9,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
@@ -16,6 +19,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import net.abusingjava.AbusingArrays;
 import net.abusingjava.swing.MagicPanel;
@@ -81,9 +85,27 @@ public class Table extends Component implements Iterable<Column> {
 	@XmlAttribute
 	MethodType $onselect;
 
-	// @XmlAttribute("")
 
+	
 	boolean $selectedFilter = false;
+
+	
+	public static class ComboBoxRenderer extends JComboBox implements TableCellRenderer {
+
+		@Override
+		public JComponent getTableCellRendererComponent(
+				final JTable $table, final Object $value, final boolean $2,
+				final boolean $3, final int $row, final int $col) {
+			@SuppressWarnings("unchecked")
+			Object[] $array = $value.getClass().getEnumConstants();
+			for (Object $x : $array) {
+				this.addItem($x);
+			}
+			this.setSelectedItem($value);
+
+			return this;
+		}
+	}
 
 	public class Filter {
 
@@ -286,10 +308,17 @@ public class Table extends Component implements Iterable<Column> {
 			$c.setGridColor($gridColor.getColor());
 		}
 		for (int $i = 0; $i < $columns.length; $i++) {
+			Class<?> $colType = $columns[$i].$type.getJavaType();
+			
+			if ($colType.isEnum()) {
+				JComboBox $proto = new JComboBox($colType.getEnumConstants());
+				$c.setDefaultEditor($colType, new DefaultCellEditor($proto));
+				$c.setDefaultRenderer($colType, new ComboBoxRenderer());
+			}
 			if (($columns[$i].$maxWidth != null) && ($columns[$i].$maxWidth.getUnit() == Unit.PIXEL)) {
 				$c.getColumn($columnHeaders[$i]).setMaxWidth($columns[$i].$maxWidth.getValue());
 			}
-			if (($columns[$i].$minWidth != null) && ($columns[$i].$maxWidth.getUnit() == Unit.PIXEL)) {
+			if (($columns[$i].$minWidth != null) && ($columns[$i].$minWidth.getUnit() == Unit.PIXEL)) {
 				$c.getColumn($columnHeaders[$i]).setMinWidth($columns[$i].$minWidth.getValue());
 			}
 			if (($columns[$i].$width != null) && ($columns[$i].$width.getUnit() == Unit.PIXEL)) {
