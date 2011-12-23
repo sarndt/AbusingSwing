@@ -64,6 +64,10 @@ public class MagicComponents {
 	public Component get(final int $index) {
 		return $components.get($index);
 	}
+	
+	public MagicComponents setText(final Object $object) {
+		return setText($object.toString());
+	}
 
 	public MagicComponents setText(final String $text) {
 		for (final Component $comp : $components) {
