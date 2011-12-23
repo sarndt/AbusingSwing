@@ -20,11 +20,17 @@ package net.abusingjava.swing;
 
 import java.awt.Dimension;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import net.abusingjava.Author;
+import net.abusingjava.Box;
 import net.abusingjava.NotGonnaHappenException;
 import net.abusingjava.Since;
 import net.abusingjava.Version;
@@ -38,9 +44,10 @@ import org.slf4j.LoggerFactory;
 /**
  * This class contains usefull static methods for handling Swing.
  * <p>
- * AbusingSwing eases handling Swing and SwingX components using a custom XML dialect.
- *
- *
+ * AbusingSwing eases handling Swing and SwingX components using a custom XML
+ * dialect.
+ * 
+ * 
  */
 @Author("Julian Fleischer")
 @Since("2011-06-21")
@@ -49,21 +56,22 @@ final public class AbusingSwing {
 
 	private static final Logger $logger = LoggerFactory.getLogger(AbusingSwing.class);
 
-	private AbusingSwing() {}
-	
+	private AbusingSwing() {
+	}
+
 	public static void setLookAndFeel(final String $name) {
 		try {
 			for (LookAndFeelInfo $info : UIManager.getInstalledLookAndFeels()) {
-			    if ($name.equals($info.getName())) {
-			        UIManager.setLookAndFeel($info.getClassName());
-			        break;
-			    }
+				if ($name.equals($info.getName())) {
+					UIManager.setLookAndFeel($info.getClassName());
+					break;
+				}
 			}
 		} catch (Exception $exc) {
 			$logger.warn("Could not set Look and feel “" + $name + "”.", $exc);
 		}
 	}
-	
+
 	/**
 	 * Sets the Nimbus Look And Feel which is available since Java 6 Update 10.
 	 */
@@ -77,9 +85,10 @@ final public class AbusingSwing {
 	public static JFrame showPanel(final JPanel $panel) {
 		return showPanel($panel, true);
 	}
-	
+
 	/**
-	 * Show a $panel in a temporary frame. If $close, than closing the frame will also shut down the application.
+	 * Show a $panel in a temporary frame. If $close, than closing the frame
+	 * will also shut down the application.
 	 */
 	public static JFrame showPanel(final JPanel $panel, final boolean $close) {
 		final JFrame $frame = new JFrame() {
@@ -108,11 +117,13 @@ final public class AbusingSwing {
 	public static JFrame showPanel(final JPanel $panel, final int $width, final int $height) {
 		return showPanel($panel, true, $width, $height);
 	}
-	
+
 	/**
-	 * Show a MagicPanel which is defined in the named $resource in a temporary JFrame.
+	 * Show a MagicPanel which is defined in the named $resource in a temporary
+	 * JFrame.
 	 * <p>
-	 * The resource should be located in the same directory as the calling class.
+	 * The resource should be located in the same directory as the calling
+	 * class.
 	 */
 	public static JFrame showPanel(final JPanel $panel, final boolean $close, final int $width, final int $height) {
 		final JFrame $frame = new JFrame() {
@@ -139,7 +150,8 @@ final public class AbusingSwing {
 	/**
 	 * Show a MagicWindow whic is defined in the resource named $resource.
 	 * <p>
-	 * The resource should be located in the same directory as the calling class.
+	 * The resource should be located in the same directory as the calling
+	 * class.
 	 */
 	public static MagicWindow showWindow(final String $resource) {
 		MagicWindow $window = makeWindow($resource);
@@ -177,7 +189,7 @@ final public class AbusingSwing {
 			throw new NotGonnaHappenException($exc);
 		}
 	}
-	
+
 	/**
 	 * Make a MagicWindow from the given $resource.
 	 */
@@ -194,7 +206,7 @@ final public class AbusingSwing {
 			throw new NotGonnaHappenException($exc);
 		}
 	}
-	
+
 	/**
 	 * Make a MagicWindow from the given $stream.
 	 */
@@ -202,7 +214,7 @@ final public class AbusingSwing {
 		Window $window = AbusingXML.loadXML($stream, Window.class);
 		return new MagicWindow($window);
 	}
-	
+
 	/**
 	 * Make a MagicPanel from the given $stream.
 	 */
@@ -210,5 +222,84 @@ final public class AbusingSwing {
 		Panel $panel = AbusingXML.loadXML($stream, Panel.class);
 		return new MagicPanel($panel);
 	}
-	
+
+	/**
+	 * Invokes the $runnable using {@link SwingUtilities#invokeLater(Runnable)},
+	 * iff the current thread is the event dispatch thread.
+	 */
+	public static void invokeLater(final Runnable $runnable) {
+		if (SwingUtilities.isEventDispatchThread()) {
+			$runnable.run();
+		} else {
+			SwingUtilities.invokeLater($runnable);
+		}
+	}
+
+	/**
+	 * Invokes the $runnable using
+	 * {@link SwingUtilities#invokeAndWait(Runnable)}, iff the current thread is
+	 * the event dispatch thread.
+	 */
+	public static void invokeAndWait(final Runnable $runnable) {
+		try {
+			if (SwingUtilities.isEventDispatchThread()) {
+				$runnable.run();
+			} else {
+				SwingUtilities.invokeAndWait($runnable);
+			}
+		} catch (Exception $exc) {
+			throw new RuntimeException($exc);
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public static Object get(final Object $object, final String $methodName) {
+		try {
+			final Method $m = $object.getClass().getMethod($methodName);
+			final Box<Object> $b = new Box<Object>();
+			if (SwingUtilities.isEventDispatchThread()) {
+				return $m.invoke($object);
+			}
+			invokeAndWait(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						$b.set($m.invoke($object));
+					} catch (Exception $exc) {
+						throw new RuntimeException($exc);
+					}
+				}
+			});
+			return $b.get();
+		} catch (Exception $exc) {
+			throw new RuntimeException($exc);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> T getT(final Object $object, final String $methodName) {
+		try {
+			final Method $m = $object.getClass().getMethod($methodName);
+			final Box<T> $b = new Box<T>();
+			if (SwingUtilities.isEventDispatchThread()) {
+				return (T) $m.invoke($object);
+			}
+			SwingUtilities.invokeAndWait(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						$b.set((T) $m.invoke($object));
+					} catch (Exception $exc) {
+						throw new RuntimeException($exc);
+					}
+				}
+			});
+			return $b.get();
+		} catch (Exception $exc) {
+			throw new RuntimeException($exc);
+		}
+	}
+
 }
