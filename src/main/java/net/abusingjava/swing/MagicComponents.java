@@ -72,7 +72,7 @@ public class MagicComponents {
 	public MagicComponents setText(final String $text) {
 		for (final Component $comp : $components) {
 			if ($comp instanceof TextComponent) {
-				SwingUtilities.invokeLater(new Runnable() {
+				AbusingSwing.invokeLater(new Runnable() {
 					@Override
 					public void run() {
 						((TextComponent) $comp).setText($text);
@@ -125,7 +125,7 @@ public class MagicComponents {
 						return ((JCheckBox) $comp.getRealComponent()).isSelected();
 					}
 				});
-				SwingUtilities.invokeLater($task);
+				AbusingSwing.invokeLater($task);
 				try {
 					return $task.get();
 				} catch (InterruptedException e) {
@@ -149,7 +149,7 @@ public class MagicComponents {
 						return ((TextComponent) $comp).getText();
 					}
 				});
-				SwingUtilities.invokeLater($task);
+				AbusingSwing.invokeLater($task);
 				try {
 					return $task.get();
 				} catch (InterruptedException e) {
@@ -184,7 +184,7 @@ public class MagicComponents {
 				final TableModel $m = ((JTable) $real).getModel();
 				if ($m instanceof DefaultTableModel) {
 					try {
-					SwingUtilities.invokeAndWait(new Runnable() {
+					AbusingSwing.invokeAndWait(new Runnable() {
 						@Override
 						public void run() {
 							while ($m.getRowCount() > 0) {
@@ -199,7 +199,7 @@ public class MagicComponents {
 			} else if ($real instanceof JList) {
 				final ListModel $m = ((JList) $real).getModel();
 				if ($m instanceof DefaultListModel) {
-					SwingUtilities.invokeLater(new Runnable() {
+					AbusingSwing.invokeLater(new Runnable() {
 						@Override
 						public void run() {
 							((DefaultListModel) $m).setSize(0);
@@ -212,7 +212,7 @@ public class MagicComponents {
 	}
 
 	public MagicComponents show(final int $index) {
-		SwingUtilities.invokeLater(new Runnable() {
+		AbusingSwing.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				for (Component $comp : $components) {
@@ -234,7 +234,7 @@ public class MagicComponents {
 	}
 
 	public MagicComponents showNext() {
-		SwingUtilities.invokeLater(new Runnable() {
+		AbusingSwing.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				for (Component $comp : $components) {
@@ -249,7 +249,7 @@ public class MagicComponents {
 	}
 
 	public MagicComponents showPrev() {
-		SwingUtilities.invokeLater(new Runnable() {
+		AbusingSwing.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				for (Component $comp : $components) {
@@ -264,7 +264,7 @@ public class MagicComponents {
 	}
 
 	public MagicComponents showFirst() {
-		SwingUtilities.invokeLater(new Runnable() {
+		AbusingSwing.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				for (Component $comp : $components) {
@@ -279,7 +279,7 @@ public class MagicComponents {
 	}
 
 	public MagicComponents showLast() {
-		SwingUtilities.invokeLater(new Runnable() {
+		AbusingSwing.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				for (Component $comp : $components) {
@@ -350,7 +350,7 @@ public class MagicComponents {
 	 */
 	public MagicComponents show() {
 		for (final Component $comp : $components) {
-			SwingUtilities.invokeLater(new Runnable() {
+			AbusingSwing.invokeLater(new Runnable() {
 				@Override
 				public void run() {
 					$comp.getJComponent().setVisible(true);
@@ -372,7 +372,7 @@ public class MagicComponents {
 	 */
 	public MagicComponents hide() {
 		for (final Component $comp : $components) {
-			SwingUtilities.invokeLater(new Runnable() {
+			AbusingSwing.invokeLater(new Runnable() {
 				@Override
 				public void run() {
 					$comp.getJComponent().setVisible(false);
@@ -393,7 +393,7 @@ public class MagicComponents {
 	 */
 	public MagicComponents enable() {
 		for (final Component $comp : $components) {
-			SwingUtilities.invokeLater(new Runnable() {
+			AbusingSwing.invokeLater(new Runnable() {
 				@Override
 				public void run() {
 					$comp.getJComponent().setEnabled(true);
@@ -413,7 +413,7 @@ public class MagicComponents {
 	 */
 	public MagicComponents disable() {
 		for (final Component $comp : $components) {
-			SwingUtilities.invokeLater(new Runnable() {
+			AbusingSwing.invokeLater(new Runnable() {
 				@Override
 				public void run() {
 					$comp.getJComponent().setEnabled(false);
@@ -424,7 +424,7 @@ public class MagicComponents {
 	}
 
 	public MagicComponents setForeground(final Color $color) {
-		SwingUtilities.invokeLater(new Runnable() {
+		AbusingSwing.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				for (Component $comp : $components) {
@@ -436,7 +436,7 @@ public class MagicComponents {
 	}
 
 	public MagicComponents setForeground(final String $hexColor) {
-		SwingUtilities.invokeLater(new Runnable() {
+		AbusingSwing.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				for (Component $comp : $components) {
@@ -449,7 +449,7 @@ public class MagicComponents {
 	}
 
 	public MagicComponents setBackground(final Color $color) {
-		SwingUtilities.invokeLater(new Runnable() {
+		AbusingSwing.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				for (Component $comp : $components) {
@@ -469,7 +469,7 @@ public class MagicComponents {
 	 */
 	public MagicComponents setBackground(final String $hexColor) {
 		for (final Component $comp : $components) {
-			SwingUtilities.invokeLater(new Runnable() {
+			AbusingSwing.invokeLater(new Runnable() {
 				@Override
 				public void run() {
 					$comp.getRealComponent().setBackground(
@@ -489,7 +489,7 @@ public class MagicComponents {
 	 * actions will execute in the AWT-Event-Queue.
 	 */
 	public MagicComponents setFont(final String $font) {
-		SwingUtilities.invokeLater(new Runnable() {
+		AbusingSwing.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				for (Component $comp : $components) {
@@ -510,7 +510,7 @@ public class MagicComponents {
 	public MagicComponents setFontSize(final int $size) {
 		for (Component $comp : $components) {
 			final JComponent $c = $comp.getRealComponent();
-			SwingUtilities.invokeLater(new Runnable() {
+			AbusingSwing.invokeLater(new Runnable() {
 				@Override
 				public void run() {
 					$c.setFont($c.getFont().deriveFont((float) $size));
@@ -526,7 +526,7 @@ public class MagicComponents {
 			if ($comp instanceof MultiList) {
 				final DefaultTableModel $m = (DefaultTableModel) ((JTable) $c).getModel();
 				for (final Object $value : $values) {
-					SwingUtilities.invokeLater(new Runnable() {
+					AbusingSwing.invokeLater(new Runnable() {
 						@Override
 						public void run() {
 							$m.addRow(new Object[]{false, $value});
@@ -537,7 +537,7 @@ public class MagicComponents {
 				final ComboBoxModel $m = ((JComboBox) $c).getModel();
 				if ($m instanceof DefaultComboBoxModel) {
 					for (final Object $value : $values) {
-						SwingUtilities.invokeLater(new Runnable() {
+						AbusingSwing.invokeLater(new Runnable() {
 							@Override
 							public void run() {
 								((DefaultComboBoxModel) $m).addElement($value);
@@ -549,7 +549,7 @@ public class MagicComponents {
 				final ListModel $m = ((JList) $c).getModel();
 				if ($m instanceof DefaultListModel) {
 					for (final Object $value : $values) {
-						SwingUtilities.invokeLater(new Runnable() {
+						AbusingSwing.invokeLater(new Runnable() {
 							@Override
 							public void run() {
 								((DefaultListModel) $m).addElement($value);
@@ -573,7 +573,7 @@ public class MagicComponents {
 			if ($c instanceof JTable) {
 				final TableModel $m = ((JTable) $c).getModel();
 				if ($m instanceof DefaultTableModel) {
-					SwingUtilities.invokeLater(new Runnable() {
+					AbusingSwing.invokeLater(new Runnable() {
 						@Override
 						public void run() {
 							((DefaultTableModel) $m).addRow($values);
@@ -598,7 +598,7 @@ public class MagicComponents {
 				final TableModel $m = ((JTable) $c).getModel();
 				if ($m instanceof DefaultTableModel) {
 					for (final Object[] $row : $values) {
-						SwingUtilities.invokeLater(new Runnable() {
+						AbusingSwing.invokeLater(new Runnable() {
 							@Override
 							public void run() {
 								((DefaultTableModel) $m).addRow($row);
@@ -629,7 +629,7 @@ public class MagicComponents {
 				final ComboBoxModel $m = ((JComboBox) $c).getModel();
 				if ($m instanceof DefaultComboBoxModel) {
 					for (final Object $value : $values) {
-						SwingUtilities.invokeLater(new Runnable() {
+						AbusingSwing.invokeLater(new Runnable() {
 							@Override
 							public void run() {
 								((DefaultComboBoxModel) $m).addElement($value);
@@ -641,7 +641,7 @@ public class MagicComponents {
 				final ListModel $m = ((JList) $c).getModel();
 				if ($m instanceof DefaultListModel) {
 					for (final Object $value : $values) {
-						SwingUtilities.invokeLater(new Runnable() {
+						AbusingSwing.invokeLater(new Runnable() {
 							@Override
 							public void run() {
 								((DefaultListModel) $m).addElement($value);
@@ -667,7 +667,7 @@ public class MagicComponents {
 			if ($c instanceof JComboBox) {
 				final ComboBoxModel $m = ((JComboBox) $c).getModel();
 				if ($m instanceof DefaultComboBoxModel) {
-					SwingUtilities.invokeLater(new Runnable() {
+					AbusingSwing.invokeLater(new Runnable() {
 						@Override
 						public void run() {
 							$comp.setUpdate(true);
@@ -679,7 +679,7 @@ public class MagicComponents {
 			} else if ($c instanceof JList) {
 				final ListModel $m = ((JList) $c).getModel();
 				if ($m instanceof DefaultListModel) {
-					SwingUtilities.invokeLater(new Runnable() {
+					AbusingSwing.invokeLater(new Runnable() {
 						@Override
 						public void run() {
 							((DefaultListModel) $m).addElement($value);
@@ -689,7 +689,7 @@ public class MagicComponents {
 			} else if ($comp instanceof MultiList) {
 				final TableModel $m = ((JTable) $c).getModel();
 				if ($m instanceof DefaultTableModel) {
-					SwingUtilities.invokeLater(new Runnable() {
+					AbusingSwing.invokeLater(new Runnable() {
 						@Override
 						public void run() {
 							((DefaultTableModel) $m).addRow(new Object[]{false, $value});
@@ -707,7 +707,7 @@ public class MagicComponents {
 				JComponent $c = $comp.getRealComponent();
 				final TableModel $m = ((JTable) $c).getModel();
 				if ($m instanceof DefaultTableModel) {
-					SwingUtilities.invokeLater(new Runnable() {
+					AbusingSwing.invokeLater(new Runnable() {
 						@Override
 						public void run() {
 							((DefaultTableModel) $m).addRow(new Object[]{$selected, $value});
@@ -737,7 +737,7 @@ public class MagicComponents {
 	}
 
 	public MagicComponents setSelectedIndex(final int $index) {
-		SwingUtilities.invokeLater(new Runnable() {
+		AbusingSwing.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
@@ -763,7 +763,7 @@ public class MagicComponents {
 		for (Component $comp : $components) {
 			if ($comp instanceof CheckBox) {
 				final JCheckBox $checkBox = (JCheckBox) $comp.getRealComponent();
-				SwingUtilities.invokeLater(new Runnable() {
+				AbusingSwing.invokeLater(new Runnable() {
 					@Override
 					public void run() {
 						$checkBox.setSelected($selected);
@@ -771,7 +771,7 @@ public class MagicComponents {
 				});
 			} else if ($comp instanceof ToggleButton) {
 				final JToggleButton $toggleButton = (JToggleButton) $comp.getRealComponent();
-				SwingUtilities.invokeLater(new Runnable() {
+				AbusingSwing.invokeLater(new Runnable() {
 					@Override
 					public void run() {
 						$toggleButton.setSelected($selected);
@@ -860,7 +860,7 @@ public class MagicComponents {
 	}
 
 	public MagicComponents setValue(final int $value) {
-		SwingUtilities.invokeLater(new Runnable() {
+		AbusingSwing.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				for (Component $comp : $components) {
@@ -888,7 +888,7 @@ public class MagicComponents {
 	 * &lt;progressbar&gt;, &lt;numeric&gt;)
 	 */
 	public MagicComponents setMax(final int $value) {
-		SwingUtilities.invokeLater(new Runnable() {
+		AbusingSwing.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				for (Component $comp : $components) {
@@ -918,7 +918,7 @@ public class MagicComponents {
 	public void showSelectedOnly(final boolean $selected) {
 		for (final Component $comp : $components) {
 			if ($comp instanceof MultiList) {
-				SwingUtilities.invokeLater(new Runnable() {
+				AbusingSwing.invokeLater(new Runnable() {
 					@Override
 					public void run() {
 						((MultiList) $comp).showSelectedOnly($selected);
