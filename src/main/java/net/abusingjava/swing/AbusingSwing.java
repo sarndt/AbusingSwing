@@ -59,6 +59,9 @@ final public class AbusingSwing {
 	private AbusingSwing() {
 	}
 
+	/**
+	 * Sets the look and feel with the specified name.
+	 */
 	public static void setLookAndFeel(final String $name) {
 		try {
 			for (LookAndFeelInfo $info : UIManager.getInstalledLookAndFeels()) {
@@ -135,7 +138,6 @@ final public class AbusingSwing {
 				setContentPane(new JScrollPane($panel));
 				pack();
 				setSize($width, $height);
-				// setMinimumSize(new Dimension($width, $height));
 			}
 		};
 		SwingUtilities.invokeLater(new Runnable() {

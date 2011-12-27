@@ -15,6 +15,7 @@ import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -73,6 +74,9 @@ public class Table extends Component implements Iterable<Column> {
 	@XmlAttribute("sorts-on-update")
 	Boolean $sortsOnUpdate;
 
+	@XmlAttribute("fix-vertical-align")
+	boolean $fixVerticalAlign;
+	
 	@XmlAttribute("row-height")
 	Value $rowHeight;
 
@@ -85,11 +89,8 @@ public class Table extends Component implements Iterable<Column> {
 	@XmlAttribute
 	MethodType $onselect;
 
-
-	
 	boolean $selectedFilter = false;
 
-	
 	public static class ComboBoxRenderer extends JComboBox implements TableCellRenderer {
 
 		public ComboBoxRenderer(final Class<?> $class) {
@@ -98,12 +99,12 @@ public class Table extends Component implements Iterable<Column> {
 				this.addItem($x);
 			}
 		}
-		
+
 		@Override
 		public JComponent getTableCellRendererComponent(
 				final JTable $table, final Object $value, final boolean $2,
 				final boolean $3, final int $row, final int $col) {
-			
+
 			this.setSelectedItem($value);
 
 			return this;
@@ -223,6 +224,9 @@ public class Table extends Component implements Iterable<Column> {
 		@XmlAttribute("invalid-date")
 		String $invalidDate;
 
+		@XmlAttribute("fix-vertical-align")
+		Boolean $fixVerticalAlign;
+
 		@XmlAttribute("date-format")
 		String $dateFormat = "yyyy-MM-dd HH:mm:ss";
 
@@ -258,6 +262,9 @@ public class Table extends Component implements Iterable<Column> {
 		final String[] $columnHeaders = new String[$columns.length];
 		for (int $i = 0; $i < $columns.length; $i++) {
 			$columnHeaders[$i] = $columns[$i].$text;
+			if ($columns[$i].$fixVerticalAlign == null) {
+				$columns[$i].$fixVerticalAlign = Table.this.$fixVerticalAlign;
+			}
 		}
 
 		DefaultTableModel $model = new DefaultTableModel($columnHeaders, 0) {
@@ -312,7 +319,7 @@ public class Table extends Component implements Iterable<Column> {
 		}
 		for (int $i = 0; $i < $columns.length; $i++) {
 			Class<?> $colType = $columns[$i].$type.getJavaType();
-			
+
 			if ($colType.isEnum()) {
 				JComboBox $proto = new JComboBox($colType.getEnumConstants());
 				$c.setDefaultEditor($colType, new DefaultCellEditor($proto));
@@ -329,9 +336,42 @@ public class Table extends Component implements Iterable<Column> {
 			}
 		}
 
-		$c.setDefaultRenderer(java.util.Date.class, new DefaultTableCellRenderer() {
+		$c.setDefaultRenderer(String.class, new DefaultTableCellRenderer() {
 
-			private static final long serialVersionUID = 8519130125457693769L;
+			@Override
+			public java.awt.Component getTableCellRendererComponent(final JTable $table,
+					final Object $value, final boolean $isSelected, final boolean $hasFocus, final int $row,
+					final int $column) {
+				super.getTableCellRendererComponent($table, $value, $isSelected, $hasFocus, $row, $column);
+
+				if ($columns[$column].$fixVerticalAlign) {
+					this.setVerticalAlignment(SwingConstants.TOP);
+				}
+
+				return this;
+			}
+		});
+
+		$c.setDefaultRenderer(Integer.class, new DefaultTableCellRenderer() {
+
+			@Override
+			public java.awt.Component getTableCellRendererComponent(final JTable $table,
+					final Object $value, final boolean $isSelected, final boolean $hasFocus, final int $row,
+					final int $column) {
+				super.getTableCellRendererComponent($table, $value, $isSelected, $hasFocus, $row, $column);
+
+				if ($columns[$column].$fixVerticalAlign) {
+					this.setVerticalAlignment(SwingConstants.TOP);
+				}
+				if ($value instanceof Integer) {
+					this.setHorizontalAlignment(SwingConstants.RIGHT);
+				}
+
+				return this;
+			}
+		});
+
+		$c.setDefaultRenderer(java.util.Date.class, new DefaultTableCellRenderer() {
 
 			@Override
 			public java.awt.Component getTableCellRendererComponent(final JTable $table,
