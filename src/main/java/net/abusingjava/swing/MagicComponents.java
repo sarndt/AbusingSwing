@@ -163,7 +163,7 @@ public class MagicComponents {
 		}
 		return "";
 	}
-	
+
 	public MagicComponents sortBy(final int $columnIndex) {
 		for (Component $comp : $components) {
 			JComponent $real = $comp.getRealComponent();
@@ -184,14 +184,14 @@ public class MagicComponents {
 				final TableModel $m = ((JTable) $real).getModel();
 				if ($m instanceof DefaultTableModel) {
 					try {
-					AbusingSwing.invokeAndWait(new Runnable() {
-						@Override
-						public void run() {
-							while ($m.getRowCount() > 0) {
-								((DefaultTableModel) $m).removeRow(0);
+						AbusingSwing.invokeAndWait(new Runnable() {
+							@Override
+							public void run() {
+								while ($m.getRowCount() > 0) {
+									((DefaultTableModel) $m).removeRow(0);
+								}
 							}
-						}
-					});
+						});
 					} catch (Exception $exc) {
 						throw new RuntimeException($exc);
 					}
