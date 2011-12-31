@@ -59,6 +59,11 @@ public class ComboBox extends Component {
 		public boolean equals(final Object $object) {
 			return $text.equals($object.toString());
 		}
+		
+		@Override
+		public int hashCode() {
+			return super.hashCode();
+		}
 	}
 	
 	@Override
