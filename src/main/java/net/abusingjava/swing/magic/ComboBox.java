@@ -54,6 +54,11 @@ public class ComboBox extends Component {
 		public int compareTo(final Val $obj) {
 			return $text.compareTo($obj.$text);
 		}
+		
+		@Override
+		public boolean equals(final Object $object) {
+			return $text.equals($object.toString());
+		}
 	}
 	
 	@Override
