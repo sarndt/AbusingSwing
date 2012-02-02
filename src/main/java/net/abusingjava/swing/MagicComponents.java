@@ -152,16 +152,57 @@ public class MagicComponents {
 				AbusingSwing.invokeLater($task);
 				try {
 					return $task.get();
-				} catch (InterruptedException e) {
+				} catch (InterruptedException $exc) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ExecutionException e) {
+					$exc.printStackTrace();
+				} catch (ExecutionException $exc) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					$exc.printStackTrace();
+				}
+			} else if ($comp.getRealComponent() instanceof JSpinner) {
+				FutureTask<String> $task = new FutureTask<String>(new Callable<String>() {
+					@Override
+					public String call() {
+						return ((JSpinner) ($comp.getRealComponent())).getValue().toString();
+					}
+				});
+				AbusingSwing.invokeLater($task);
+				try {
+					return $task.get();
+				} catch (InterruptedException $exc) {
+					// TODO Auto-generated catch block
+					$exc.printStackTrace();
+				} catch (ExecutionException $exc) {
+					// TODO Auto-generated catch block
+					$exc.printStackTrace();
 				}
 			}
 		}
 		return "";
+	}
+	
+	public Object getValue() {
+		for (final Component $comp : $components) {
+			if ($comp.getRealComponent() instanceof JSpinner) {
+				FutureTask<Object> $task = new FutureTask<Object>(new Callable<Object>() {
+					@Override
+					public Object call() {
+						return ((JSpinner) ($comp.getRealComponent())).getValue();
+					}
+				});
+				AbusingSwing.invokeLater($task);
+				try {
+					return $task.get();
+				} catch (InterruptedException $exc) {
+					// TODO Auto-generated catch block
+					$exc.printStackTrace();
+				} catch (ExecutionException $exc) {
+					// TODO Auto-generated catch block
+					$exc.printStackTrace();
+				}
+			}
+		}
+		return null;
 	}
 
 	public MagicComponents sortBy(final int $columnIndex) {
