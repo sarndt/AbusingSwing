@@ -30,6 +30,7 @@ import net.abusingjava.swing.magic.TextComponent;
 import net.abusingjava.swing.magic.ToggleButton;
 import net.java.balloontip.BalloonTip;
 
+import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.JXTable;
 
 /**
@@ -194,10 +195,23 @@ public class MagicComponents {
 				try {
 					return $task.get();
 				} catch (InterruptedException $exc) {
-					// TODO Auto-generated catch block
 					$exc.printStackTrace();
 				} catch (ExecutionException $exc) {
-					// TODO Auto-generated catch block
+					$exc.printStackTrace();
+				}
+			} else if ($comp.getRealComponent() instanceof JXDatePicker) {
+				FutureTask<Object> $task = new FutureTask<Object>(new Callable<Object>() {
+					@Override
+					public Object call() {
+						return ((JXDatePicker) ($comp.getRealComponent())).getDate();
+					}
+				});
+				AbusingSwing.invokeLater($task);
+				try {
+					return $task.get();
+				} catch (InterruptedException $exc) {
+					$exc.printStackTrace();
+				} catch (ExecutionException $exc) {
 					$exc.printStackTrace();
 				}
 			}
