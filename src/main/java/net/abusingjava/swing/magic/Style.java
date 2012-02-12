@@ -2,7 +2,11 @@ package net.abusingjava.swing.magic;
 
 import net.abusingjava.NotGonnaHappenException;
 import net.abusingjava.swing.magic.Password.EchoChar;
-import net.abusingjava.swing.magix.types.*;
+import net.abusingjava.swing.magix.types.Color;
+import net.abusingjava.swing.magix.types.FilterMode;
+import net.abusingjava.swing.magix.types.FontStyle;
+import net.abusingjava.swing.magix.types.FontWeight;
+import net.abusingjava.swing.magix.types.Value;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlChildElements;
 import net.abusingjava.xml.XmlElement;
@@ -16,8 +20,9 @@ public class Style {
 
 		@XmlAttribute
 		String $match = "";
-
-
+		
+		@XmlAttribute
+		Value $insets;
 
 		@XmlAttribute
 		Boolean $animated;

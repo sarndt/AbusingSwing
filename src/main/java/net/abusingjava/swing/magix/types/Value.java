@@ -12,7 +12,7 @@ public class Value {
 	
 	public Value(final String $declaration) {
 		if (!"auto".equalsIgnoreCase($declaration)) {
-			$value = AbusingJava.parseInt($declaration.replaceAll("[^0-9]", ""), 1);
+			$value = AbusingJava.parseInt($declaration.replaceAll("[^\\-0-9]", ""), 1);
 			if ($declaration.endsWith("px")) {
 				$unit = Unit.PIXEL;
 			} else if ($declaration.endsWith("*")) {
