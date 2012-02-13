@@ -13,6 +13,9 @@ import net.abusingjava.xml.XmlElement;
 @XmlElement("button")
 public class Button extends TextComponent {
 
+	@XmlAttribute("insets")
+	Value $insets = null;
+
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
 		if ($height == null) {
@@ -31,7 +34,4 @@ public class Button extends TextComponent {
 		super.create($main, $parent);
 	}
 	
-	@XmlAttribute("insets")
-	Value $insets = null;
-
 }

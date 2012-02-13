@@ -1,11 +1,13 @@
 package net.abusingjava.swing.magic;
 
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JToggleButton;
 
 import net.abusingjava.swing.MagicPanel;
+import net.abusingjava.swing.magix.types.Unit;
 import net.abusingjava.swing.magix.types.Value;
 import net.abusingjava.xml.XmlAttribute;
 import net.abusingjava.xml.XmlElement;
@@ -18,6 +20,10 @@ public class ToggleButton extends TextComponent {
 	
 	@XmlAttribute
 	String $filters;
+
+	@XmlAttribute("insets")
+	Value $insets = null;
+
 	
 	@Override
 	public void create(final MagicPanel $main, final MagicPanel $parent) {
@@ -39,6 +45,13 @@ public class ToggleButton extends TextComponent {
 				}
 			});
 		}
+
+		if (($insets != null) && ($insets.getUnit() == Unit.PIXEL)) {
+			Insets $in = $c.getMargin();
+			$in.set($in.top, $insets.getValue(), $in.bottom, $insets.getValue());
+			$c.setMargin($in);
+		}
+		
 		
 		$component = $c;
 				

@@ -119,22 +119,20 @@ public class MagicComponents {
 
 	public boolean isSelected() {
 		for (final Component $comp : $components) {
-			if ($comp instanceof CheckBox) {
+			if ($comp instanceof ToggleButton) {
 				FutureTask<Boolean> $task = new FutureTask<Boolean>(new Callable<Boolean>() {
 					@Override
 					public Boolean call() throws Exception {
-						return ((JCheckBox) $comp.getRealComponent()).isSelected();
+						return ((JToggleButton) $comp.getRealComponent()).isSelected();
 					}
 				});
 				AbusingSwing.invokeLater($task);
 				try {
 					return $task.get();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (InterruptedException $ev) {
+					$ev.printStackTrace();
+				} catch (ExecutionException $ev) {
+					$ev.printStackTrace();
 				}
 			}
 		}
