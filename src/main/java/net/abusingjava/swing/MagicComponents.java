@@ -427,7 +427,7 @@ public class MagicComponents {
 				$result.add((T) $c);
 			}
 		}
-		return $result;
+		return ($result.size()>0?$result:null);
 	}
 	
 	public int count() {
